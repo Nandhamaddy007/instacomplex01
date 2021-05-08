@@ -1,0 +1,10 @@
+#product{
+    background-color: lightgray;
+    border-color: maroon ;
+    border-width: 5px;
+    border-style: solid;
+}
+img{
+    height:100px;
+    width:100;
+}
