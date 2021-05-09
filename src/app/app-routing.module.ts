@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddShopAndProductsFormComponent } from './add-shop-and-products-form/add-shop-and-products-form.component';
 
 const routes: Routes = [
-  { path: '', component: AddShopAndProductsFormComponent },
-
-  { path: '**', redirectTo: 'dashboard' }
+  { path: 'AddShop/:ShopName', component: AddShopAndProductsFormComponent },
+  { path: 'AddShop', component: AddShopAndProductsFormComponent },
+  { path: '**', redirectTo: 'AddShop' }
 ];
 
 @NgModule({
