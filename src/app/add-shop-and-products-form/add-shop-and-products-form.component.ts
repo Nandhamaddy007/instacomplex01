@@ -53,7 +53,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               this.fillProductDetails(data['ProductDetails'])
             ])
           });
-          console.log(this.ClientForm);
+          //console.log(this.ClientForm.value);
           this.formLoaded = true;
         },
         err => console.log(err)
@@ -72,7 +72,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
       this.formLoaded = true;
-      //console.log(this.ClientForm.value);
+      console.log(this.ClientForm.value);
     }
   }
   fillProductDetails(products: any): FormGroup[] {
@@ -95,14 +95,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
         })
       );
     }
-    console.log(list);
+    //console.log(list);
 
     return list;
   }
   fillProductVariance(variances): FormGroup[] {
     var list = [];
     for (let variance in variances) {
-      list.push(
+      this.ProductVariance.push(
         this.formBuilder.group({
           productPrice: [
             variances[variance]['productPrice'],
