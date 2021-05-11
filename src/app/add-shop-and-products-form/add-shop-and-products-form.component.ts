@@ -38,6 +38,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (id) {
       this.service.GetShop().subscribe(
         data => {
+          var PDs = this.fillProductDetails(data['ProductDetails']);
           //console.log(data);
           this.ClientForm = this.formBuilder.group({
             shopName: [data['shopName'], Validators.required],
@@ -49,11 +50,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
             shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
             shopOwnerPaytm: [data['shopOwnerPaytm'], Validators.required],
             shopLogo: ['', Validators.required],
-            ProductDetails: this.formBuilder.array([
-              this.fillProductDetails(data['ProductDetails'])
-            ])
+            ProductDetails: PDs
           });
-          //console.log(this.ClientForm.value);
           this.formLoaded = true;
         },
         err => console.log(err)
@@ -72,11 +70,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
       this.formLoaded = true;
+
       console.log(this.ClientForm.value);
     }
   }
-  fillProductDetails(products: any): FormGroup[] {
-    var list = [];
+  fillProductDetails(products: any): FormArray {
+    var list = this.formBuilder.array([]);
     for (let product in products) {
       list.push(
         this.formBuilder.group({
@@ -89,20 +88,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
             products[product]['productColor'],
             Validators.required
           ],
-          ProductVariance: this.formBuilder.array([
-            this.fillProductVariance(products[product]['ProductVariance'])
-          ])
+          ProductVariance: this.fillProductVariance(
+            products[product]['ProductVariance']
+          )
         })
       );
     }
-    //console.log(list);
 
     return list;
   }
-  fillProductVariance(variances): FormGroup[] {
-    var list = [];
+  fillProductVariance(variances): FormArray {
+    var list = this.formBuilder.array([]);
     for (let variance in variances) {
-      this.ProductVariance.push(
+      list.push(
         this.formBuilder.group({
           productPrice: [
             variances[variance]['productPrice'],
@@ -116,7 +114,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         })
       );
     }
-    console.log(list);
+
     return list;
   }
 
