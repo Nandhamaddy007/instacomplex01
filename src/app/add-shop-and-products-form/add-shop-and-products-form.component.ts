@@ -37,7 +37,10 @@ export class AddShopAndProductsFormComponent implements OnInit {
     let id = this.route.snapshot.params.ShopName;
     if (id) {
       this.service.GetShop(id).subscribe(
-        data => {
+        data1 => {
+          console.log(data1);
+          let data = this.service.decryptData(data1.body);
+
           var PDs = this.fillProductDetails(data['ProductDetails']);
           //console.log(data);
           this.ClientForm = this.formBuilder.group({

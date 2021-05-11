@@ -18,18 +18,28 @@ export class BackendTalkerService {
     // return this.http.post(endpoint, formData)
     return this.http.post(this.endpoint, files);
   }
-  GetShop(id) {
-    return this.http.get(this.endpoint + 'GetShop/' + id);
+  GetShop(id: any): any {
+    let d = this.http.get(this.endpoint + 'GetShop/' + id);
+    //console.log(d);
+    return d;
   }
   CreateShop(data: any): any {
     let d = this.encryptData(JSON.stringify(data));
     let str = { body: d };
-    console.log(str);
+    //console.log(str);
     return this.http.post(this.endpoint + 'CreateShop', str);
   }
+  decryptData(data: any) {
+    let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');
+    let key = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(key);
+    let shopData = JSON.parse(key);
+    return shopData;
+  }
+
   encryptData(data: any) {
     let ciphertext = CryptoJS.AES.encrypt(data, '!@#$%^&*()').toString();
-    console.log(ciphertext);
+    //console.log(ciphertext);
     return ciphertext;
   }
 }

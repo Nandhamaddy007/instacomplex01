@@ -9,10 +9,11 @@ import { HelloComponent } from './hello.component';
 import { BackendTalkerService } from './backend-talker.service';
 import { AddShopAndProductsFormComponent } from './add-shop-and-products-form/add-shop-and-products-form.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ShopViewComponent } from './shop-view/shop-view.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule,ReactiveFormsModule,HttpClientModule],
-  declarations: [AppComponent, HelloComponent, AddShopAndProductsFormComponent],
+  declarations: [AppComponent, HelloComponent, AddShopAndProductsFormComponent, ShopViewComponent],
   bootstrap: [AppComponent],
   providers: [BackendTalkerService]
 })
