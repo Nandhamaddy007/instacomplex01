@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 })
 export class BackendTalkerService {
   constructor(private http: HttpClient) {}
-  endpoint = 'https://ib9ui.sse.codesandbox.io/';
+  endpoint = 'https://proe8.sse.codesandbox.io/';
   uploader(files: any): any {
     //console.log('DIR', __dirname);
 
@@ -18,8 +18,8 @@ export class BackendTalkerService {
     // return this.http.post(endpoint, formData)
     return this.http.post(this.endpoint, files);
   }
-  GetShop() {
-    return this.http.get(this.endpoint + 'GetShop');
+  GetShop(id) {
+    return this.http.get(this.endpoint + 'GetShop/' + id);
   }
   CreateShop(data: any): any {
     let d = this.encryptData(JSON.stringify(data));
