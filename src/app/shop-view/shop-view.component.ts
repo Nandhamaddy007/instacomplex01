@@ -13,15 +13,23 @@ export class ShopViewComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
   Products: Array<Object>;
+  Pricelist;
   ngOnInit() {
     let id = this.route.snapshot.params.ShopName;
     this.service.GetShop(id).subscribe(
       data1 => {
         let data = this.service.decryptData(data1.body);
-
         this.Products = data.ProductDetails;
+        this.Pricelist = [this.Products.length];
       },
       err => {}
     );
+  }
+  getPrice(index, j) {
+    console.log(index);
+    console.log(this.Products[index]['ProductVariance'][j]);
+  }
+  disp() {
+    console.log(this.Pricelist);
   }
 }

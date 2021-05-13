@@ -1,6 +1,7 @@
-<div>
+<div class="container">
   <div *ngIf="Products" class="row">
-    <div *ngFor="let product of Products" class="col-sm-3">
+    <div *ngFor="let product of Products; let i =index" class="col-sm-3">
+      <br/>
       <div class="card">
         <img
           class="card-img-top"
@@ -12,8 +13,14 @@
           <p class="card-text">
             This is product Description: {{product['productDescription']}} .
           </p>
+          <label>Size &nbsp;</label>
+          <select style="width:4rem" [(ngModel)]='Pricelist[i]'>
+            <option *ngFor="let variance of product['ProductVariance'];let j=index" >
+              {{variance['productSize']}} - Rs.{{variance['productPrice']}}
+            </option>
+          </select>
+          <span>Price: {{Pricelist[i]|price}}</span>
         </div>
       </div>
     </div>
   </div>
-</div>
