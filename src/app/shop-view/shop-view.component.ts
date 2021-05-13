@@ -12,13 +12,14 @@ export class ShopViewComponent implements OnInit {
     private service: BackendTalkerService,
     private route: ActivatedRoute
   ) {}
-
+  Products: Array<Object>;
   ngOnInit() {
     let id = this.route.snapshot.params.ShopName;
     this.service.GetShop(id).subscribe(
       data1 => {
         let data = this.service.decryptData(data1.body);
-        console.log(data.ProductDetails);
+
+        this.Products = data.ProductDetails;
       },
       err => {}
     );
