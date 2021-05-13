@@ -2,15 +2,18 @@
   <div *ngIf="Products" class="row">
     <div *ngFor="let product of Products" class="col-sm-3">
       <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
+        <img
+          class="card-img-top"
+          src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+          alt="Card image cap"
+        />
         <div class="card-body">
           <h5 class="card-title">{{product['productName']}}</h5>
-          <p class="card-text">This is product Description: {{product['productDescription']}}
-            .</p>
-
+          <p class="card-text">
+            This is product Description: {{product['productDescription']}} .
+          </p>
         </div>
       </div>
-
     </div>
   </div>
 </div>
