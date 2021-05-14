@@ -10,17 +10,15 @@
         />
         <div class="card-body">
           <h5 class="card-title">{{product['productName']}}</h5>
-          <p class="card-text">
-            This is product Description: {{product['productDescription']}} .
-          </p>
+
           <label>Size &nbsp;</label>
-          <select style="width:4rem" (change)="changePriceList(price.value,i)" name='price' id='price' #price>
+          <select style="width:7rem" (change)="changePriceList(price.value,i)" name='price' id='price' #price>
             <option *ngFor="let variance of product['ProductVariance'];let j=index" >
               {{variance['productSize']}} - Rs.{{variance['productPrice']}}
             </option>
           </select>
-          <span>Price: {{Pricelist[i]|price}}</span>
-          <button class="btn btn-success" [disabled]="!Pricelist[i]" (click)="AddProductToCart(product,i)" *ngIf="!Cart[i]" >Add to Cart</button>
+
+          <button class="btn btn-success" (click)="AddProductToCart(product,i)" *ngIf="!Cart[i]" >Add to Cart</button>
           <input type="number" class="form-control" id="count" name="count" min="1" #count *ngIf="Cart[i]"/>
         </div>
       </div>

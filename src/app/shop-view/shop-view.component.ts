@@ -21,7 +21,7 @@ export class ShopViewComponent implements OnInit {
       data1 => {
         let data = this.service.decryptData(data1.body);
         this.Products = data.ProductDetails;
-        this.Pricelist = [];
+        this.Pricelist = {};
         this.Cart = {};
       },
       err => {}
@@ -29,7 +29,9 @@ export class ShopViewComponent implements OnInit {
   }
   AddProductToCart(product, i) {
     //this.Cart[i].ProdID=product.ProdID
+    this.Cart[i] = product;
     this.Cart[i].count = 1;
+    console.log(this.Cart);
   }
   changePriceList(value, i) {
     this.Pricelist[i] = value;
