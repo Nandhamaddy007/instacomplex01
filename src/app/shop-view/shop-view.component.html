@@ -12,13 +12,13 @@
           <h5 class="card-title">{{product['productName']}}</h5>
 
           <label>Size &nbsp;</label>
-          <select style="width:7rem" (change)="changePriceList(price.value,i)" [value]="Pricelist[i]" name='price' id='price' #price>
-            <option *ngFor="let variance of product['ProductVariance'];let j=index" [selected]="j==0">
+          <select style="width:7rem" name='price' id='price' #price>
+            <option *ngFor="let variance of product['ProductVariance'];let j=index" value="{{variance['productSize']}} - Rs.{{variance['productPrice']}}" >
               {{variance['productSize']}} - Rs.{{variance['productPrice']}}
             </option>
           </select>
 
-          <button class="btn btn-success" (click)="AddProductToCart(product,i)"*ngIf="!Cart[i]" >Add to Cart</button>
+          <button class="btn btn-success" (click)="AddProductToCart(product,i,price.value)"*ngIf="!Cart[i]" >Add to Cart</button>
           <input type="number" class="form-control" id="count" name="count" min="1" #count *ngIf="Cart[i]" (change)="changeCount(count.value,i)">
         </div>
       </div>
