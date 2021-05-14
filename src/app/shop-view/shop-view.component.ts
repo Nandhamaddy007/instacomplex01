@@ -14,22 +14,24 @@ export class ShopViewComponent implements OnInit {
   ) {}
   Products: Array<Object>;
   Pricelist;
+  Cart;
   ngOnInit() {
     let id = this.route.snapshot.params.ShopName;
     this.service.GetShop(id).subscribe(
       data1 => {
         let data = this.service.decryptData(data1.body);
         this.Products = data.ProductDetails;
-        this.Pricelist = [this.Products.length];
+        this.Pricelist = [];
+        this.Cart = {};
       },
       err => {}
     );
   }
-  getPrice(index, j) {
-    console.log(index);
-    console.log(this.Products[index]['ProductVariance'][j]);
+  AddProductToCart(product, i) {
+    //this.Cart[i].ProdID=product.ProdID
+    this.Cart[i].count = 1;
   }
-  disp() {
-    console.log(this.Pricelist);
+  changePriceList(value, i) {
+    this.Pricelist[i] = value;
   }
 }
