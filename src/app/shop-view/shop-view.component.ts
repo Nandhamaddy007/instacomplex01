@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { BackendTalkerService } from '../backend-talker.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class ShopViewComponent implements OnInit {
       data1 => {
         let data = this.service.decryptData(data1.body);
         this.Products = data.ProductDetails;
-        this.Pricelist = {};
+        this.Pricelist = new FormControl({});
         this.Cart = {};
       },
       err => {}
@@ -30,10 +31,15 @@ export class ShopViewComponent implements OnInit {
   AddProductToCart(product, i) {
     //this.Cart[i].ProdID=product.ProdID
     this.Cart[i] = product;
+    console.log(this.Pricelist[i]);
     this.Cart[i].count = 1;
     console.log(this.Cart);
   }
   changePriceList(value, i) {
     this.Pricelist[i] = value;
+  }
+  changeCount(value, i) {
+    this.Cart[i].count = value;
+    console.log(this.Cart);
   }
 }
