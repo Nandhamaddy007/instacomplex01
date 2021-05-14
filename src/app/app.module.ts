@@ -12,6 +12,7 @@ import { AddShopAndProductsFormComponent } from './add-shop-and-products-form/ad
 import { AppRoutingModule } from './app-routing.module';
 import { ShopViewComponent } from './shop-view/shop-view.component';
 import { PricePipe } from './shop-view/price.pipe';
+import { CartComponent } from './shop-view/cart/cart.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PricePipe } from './shop-view/price.pipe';
     HelloComponent,
     AddShopAndProductsFormComponent,
     ShopViewComponent,
-    PricePipe
+    PricePipe,
+    CartComponent
   ],
   bootstrap: [AppComponent],
   providers: [BackendTalkerService]
