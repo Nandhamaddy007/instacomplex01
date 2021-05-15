@@ -20,8 +20,7 @@ import { CartComponent } from './shop-view/cart/cart.component';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule
+    HttpClientModule
   ],
   declarations: [
     AppComponent,

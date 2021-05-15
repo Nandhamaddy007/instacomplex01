@@ -1,4 +1,5 @@
 <app-cart [cartValue]='Cart'></app-cart>
+
 <div class="container">
   <div *ngIf="Products" class="row">
     <div *ngFor="let product of Products; let i =index" class="col-sm-3">
@@ -21,8 +22,10 @@
           <div class="row">
             <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart</button>
 
-            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" id="count" name="count" min="1" #count *ngIf="Cart[i]" value="1" (change)="changeCount(count.value,i,price.value)">
+            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
+            <span class="btn btn-danger" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i)">Remove</span>
           </div>
+
         </div>
       </div>
     </div>

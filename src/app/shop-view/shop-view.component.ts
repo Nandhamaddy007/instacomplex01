@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { BackendTalkerService } from '../backend-talker.service';
 
 @Component({
@@ -45,5 +45,9 @@ export class ShopViewComponent implements OnInit {
     if (this.Cart[i] != undefined && this.Cart[i][size] != undefined) {
       this.Cart[i][size].count = value;
     }
+  }
+  removeProduct(i) {
+    delete this.Cart[i];
+    console.log(this.Cart);
   }
 }
