@@ -21,7 +21,7 @@
           <div class="row">
             <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart</button>
 
-            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" id="count" name="count" min="1" #count *ngIf="Cart[i]" (change)="changeCount(count.value,i)">
+            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" id="count" name="count" min="1" #count *ngIf="Cart[i]" value="1" (change)="changeCount(count.value,i)">
           </div>
         </div>
       </div>

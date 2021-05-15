@@ -28,16 +28,16 @@ export class ShopViewComponent implements OnInit {
   }
   AddProductToCart(product, i, price) {
     //this.Cart[i].ProdID=product.ProdID
-
+    if (!this.Cart[i]) {
+      this.Cart[i] = {};
+    }
     var temp = {
       productName: product.productName,
       price: price,
       count: 1,
       productColor: product.productColor
     };
-    console.log(temp);
-    this.Cart[i] = [];
-    this.Cart[i].push(temp);
+    this.Cart[i][price] = temp;
     console.log(this.Cart);
   }
   changeCount(value, i) {
