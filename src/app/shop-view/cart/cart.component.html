@@ -19,13 +19,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let key of keys">
-                <td>{{key}}</td>
-                <td>{{cartValue[key]['productName']}}</td>
-                <td>{{cartValue[key]['productColor']}}</td>
-                <td>{{cartValue[key]['price']|price:'size'}}</td>
-                <td>{{cartValue[key]['price']|price}}</td>
-                <td>x{{cartValue[key]['count']}}</td>
+              <tr *ngFor="let key of keys; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{key['productName']}}</td>
+                <td>{{key['productColor']}}</td>
+                <td>{{key['price']|price:'size'}}</td>
+                <td>{{key['price']|price}}</td>
+                <td>x{{key['count']}}</td>
               </tr>
             </tbody>
           </table>

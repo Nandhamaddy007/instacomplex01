@@ -40,7 +40,10 @@ export class ShopViewComponent implements OnInit {
     this.Cart[i][price] = temp;
     console.log(this.Cart);
   }
-  changeCount(value, i) {
-    //this.Cart[i].count = value;
+  changeCount(value, i, size) {
+    console.log(this.Cart);
+    if (this.Cart[i] != undefined && this.Cart[i][size] != undefined) {
+      this.Cart[i][size].count = value;
+    }
   }
 }
