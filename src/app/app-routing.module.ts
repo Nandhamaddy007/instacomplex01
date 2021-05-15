@@ -4,7 +4,7 @@ import { AddShopAndProductsFormComponent } from './add-shop-and-products-form/ad
 import { ShopViewComponent } from './shop-view/shop-view.component';
 
 const routes: Routes = [
-  { path: 'AddShop/:ShopName', component: AddShopAndProductsFormComponent },
+  { path: 'AddShop/:shopName', component: AddShopAndProductsFormComponent },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopName', component: ShopViewComponent },
   { path: '**', redirectTo: 'AddShop' }

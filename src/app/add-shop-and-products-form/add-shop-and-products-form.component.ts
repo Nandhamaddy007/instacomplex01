@@ -34,7 +34,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ProductDetails: FormArray;
   ProductVariance: FormArray;
   ngOnInit(): void {
-    let id = this.route.snapshot.params.ShopName;
+    let id = this.route.snapshot.params.shopName;
     if (id) {
       this.service.GetShop(id).subscribe(
         data1 => {
