@@ -9,8 +9,5 @@ import { ActivatedRoute } from '@angular/router';
 export class AppComponent {
   Shopname;
   constructor(private route: ActivatedRoute) {}
-  ngOnInit() {
-    this.Shopname = this.route.snapshot.params.shopName;
-    console.log(this.route);
-  }
+  ngOnInit() {}
 }

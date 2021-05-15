@@ -15,9 +15,10 @@ export class ShopViewComponent implements OnInit {
   ) {}
   Products: Array<Object>;
   Cart;
+  shopName;
   ngOnInit() {
-    let id = this.route.snapshot.params.ShopName;
-    this.service.GetShop(id).subscribe(
+    this.shopName = this.route.snapshot.params.shopName;
+    this.service.GetShop(this.shopName).subscribe(
       data1 => {
         let data = this.service.decryptData(data1.body);
         this.Products = data.ProductDetails;
