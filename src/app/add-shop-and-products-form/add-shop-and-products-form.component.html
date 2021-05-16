@@ -45,19 +45,19 @@
           <input formControlName="shopLogo" class="form-control" name="uploadfile" type="file">
         </div>
       </div>
-      <div class="btn btn-success" (click)="addProduct()">Add an Item +</div>
-      <div id="product" formArrayName="ProductDetails"
+      <div class="btn btn-success" style="margin:1rem" (click)="addProduct()">Add an Item +</div>
+      <div id="product" formArrayName="ProductDetails" class="container"
         *ngFor="let Product of ClientForm.get('ProductDetails')['controls']; let i=index;">
         <h4>Product: {{i+1}}</h4>
         <div [formGroupName]="i">
-          <div class="formGroup">
+          <div class="formGroup" style="margin-bottom:0.5rem">
             <label>Product Name</label>:
             <input formControlName="productName" class="form-control" type="text">
           </div>
 
           <div class="formGroup">
             <input  (change)="fileChange($event,i)" type="file" class='form-control' placeholder="File">
-            <button *ngIf="i>0" style="margin-left:20px" class='btn btn-danger' (click)="RemoveProduct(i)">
+            <button *ngIf="i>0" style="margin-top:0.5rem" class='btn btn-danger' (click)="RemoveProduct(i)">
                  Remove
                 </button>
           </div>
@@ -65,11 +65,12 @@
             <label>Product Color</label>:
             <input formControlName="productColor" class="form-control" type="text">
           </div>
-          <div class="btn btn-primary" (click)="addProductVariance(i)">Add Variance +</div>
+          <div class="btn btn-primary" style="margin-top:0.5rem" (click)="addProductVariance(i)">Add Variance +</div>
           <div formArrayName="ProductVariance"
             *ngFor="let Variance of Product.get('ProductVariance')['controls']; let j=index;">
             <div [formGroupName]="j">
-              <div class="btn btn-danger" *ngIf='j>0' (click)="RemoveVariance(i,j)">Remove Variance</div>
+              <div class="btn btn-danger" *ngIf='j>0' style="margin-top:0.5rem" (click)="RemoveVariance(i,j)">Remove
+                Variance</div>
               <div class="formGroup">
                 <label>Price</label>:
                 <input formControlName="productPrice" class="form-control" type="text">
