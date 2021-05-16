@@ -1,25 +1,30 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl" (click)="f()" style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;">Cart <i class="fa fa-shopping-cart"></i></button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="f()" style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;">Cart <i class="fa fa-shopping-cart"></i></button>
 
-<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+
+  <div class="modal-dialog modal-lg">
+
     <div class="modal-content">
-      <h3 style="padding:1rem">Cart</h3>
+      <button type="button" style="text-align:right;padding:0.5rem" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      <h3 style="padding-left:1rem">Cart</h3>
       <div class="container">
         <div>
-          <table class="table table-striped border" style="text-align:center;padding-right:1rem">
-            <thead class='thead-light'>
-              <tr scope="row">
-                <th scope="col">Si no</th>
-                <th scope="col">Product name</th>
-                <th scope="col">Product Color</th>
-                <th scope="col">Size</th>
-                <th scope="col">Price</th>
-                <th scope="col">Count</th>
+          <table class="table table-striped border overflow-auto" style="text-align:center;">
+            <thead>
+              <tr>
+                <th>Si no</th>
+                <th>Product name</th>
+                <th>Product Color</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Count</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let key of keys; let i=index" scope="row">
+              <tr *ngFor="let key of keys; let i=index">
                 <td>{{i+1}}</td>
                 <td>{{key['productName']}}</td>
                 <td>{{key['productColor']}}</td>
@@ -27,7 +32,7 @@
                 <td>{{key['price']|price}}</td>
                 <td>x{{key['count']}}</td>
               </tr>
-              <tr scope="row">
+              <tr *ngIf="!(keys.length==0)">
                 <td></td>
                 <td></td>
                 <td></td>
