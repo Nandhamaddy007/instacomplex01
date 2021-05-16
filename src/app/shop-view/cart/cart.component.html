@@ -7,19 +7,19 @@
       <h3 style="padding:1rem">Cart</h3>
       <div class="container">
         <div>
-          <table class="table table-striped border" style="text-align:center">
-            <thead>
-              <tr>
-                <th>Si no</th>
-                <th>Product name</th>
-                <th>Product Color</th>
-                <th>Size</th>
-                <th>Price</th>
-                <th>Count</th>
+          <table class="table table-striped border" style="text-align:center;padding-right:1rem">
+            <thead class='thead-light'>
+              <tr scope="row">
+                <th scope="col">Si no</th>
+                <th scope="col">Product name</th>
+                <th scope="col">Product Color</th>
+                <th scope="col">Size</th>
+                <th scope="col">Price</th>
+                <th scope="col">Count</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let key of keys; let i=index">
+              <tr *ngFor="let key of keys; let i=index" scope="row">
                 <td>{{i+1}}</td>
                 <td>{{key['productName']}}</td>
                 <td>{{key['productColor']}}</td>
@@ -27,17 +27,17 @@
                 <td>{{key['price']|price}}</td>
                 <td>x{{key['count']}}</td>
               </tr>
-              <tr colspan="3">
+              <tr scope="row">
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                  <h3>Total</h3>
+                  <h5>Total</h5>
                 </td>
                 <td>
                 </td>
                 <td>
-                  <h3>RS.{{total}}</h3>
+                  <h5>RS.{{total}}</h5>
                 </td>
               </tr>
             </tbody>
