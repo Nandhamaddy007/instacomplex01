@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl" (click)="f()" style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;">Cart</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl" (click)="f()" style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;">Cart <i class="fa fa-shopping-cart"></i></button>
 
 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
   aria-hidden="true">
@@ -7,7 +7,7 @@
       <h3>Cart</h3>
       <div class="container">
         <div>
-          <table class="table table-striped" style="text-align:center">
+          <table class="table table-striped border" style="text-align:center">
             <thead>
               <tr>
                 <th>Si no</th>
@@ -43,6 +43,8 @@
             </tbody>
           </table>
           <h3 *ngIf="keys.length==0">The cart is empty</h3>
+          <div class="btn btn-primary">Place Order <span style="font-size:10px">&#10146;</span>
+          </div>
         </div>
       </div>
 
