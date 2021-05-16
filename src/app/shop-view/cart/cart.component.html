@@ -7,7 +7,7 @@
       <h3>Cart</h3>
       <div class="container">
         <div>
-          <table class="table table-striped">
+          <table class="table table-striped" style="text-align:center">
             <thead>
               <tr>
                 <th>Si no</th>
@@ -26,6 +26,19 @@
                 <td>{{key['price']|price:'size'}}</td>
                 <td>{{key['price']|price}}</td>
                 <td>x{{key['count']}}</td>
+              </tr>
+              <tr colspan="3">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <h3>Total</h3>
+                </td>
+                <td>
+                </td>
+                <td>
+                  <h3>RS.{{total}}</h3>
+                </td>
               </tr>
             </tbody>
           </table>

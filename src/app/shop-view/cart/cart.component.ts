@@ -7,16 +7,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
   keys = [];
+  total = 0;
   @Input() cartValue: any;
   constructor() {}
   f() {
-    this.keys=[]
+    this.keys = [];
+    this.total = 0;
     console.log(Object.values(this.cartValue));
     let temp = Object.values(this.cartValue);
     for (let lvl1 of temp) {
-      console.log(Object.values(lvl1));
+      //console.log(Object.values(lvl1));
       for (let lvl2 of Object.values(lvl1)) {
-        console.log(lvl2);
+        let t = +lvl2.price.split('-')[1].replace('Rs.', '');
+        t = lvl2.count * t;
+        this.total += t;
         this.keys.push(lvl2);
       }
     }
