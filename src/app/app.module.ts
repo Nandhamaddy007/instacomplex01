@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ShopViewComponent } from './shop-view/shop-view.component';
 import { PricePipe } from './shop-view/price.pipe';
 import { CartComponent } from './shop-view/cart/cart.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { CartComponent } from './shop-view/cart/cart.component';
     AddShopAndProductsFormComponent,
     ShopViewComponent,
     PricePipe,
-    CartComponent
+    CartComponent,
+    AdminDashboardComponent
   ],
   bootstrap: [AppComponent],
   providers: [BackendTalkerService]
