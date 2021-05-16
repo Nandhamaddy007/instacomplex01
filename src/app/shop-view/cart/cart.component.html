@@ -11,7 +11,7 @@
         </button>
       <h3 style="padding-left:1rem">Cart</h3>
       <div class="container">
-        <div class='table-responsive'>
+        <div class='table-responsive-sm'>
           <table class="table table-striped border overflow-auto" style="text-align:center;">
             <thead>
               <tr>
@@ -32,17 +32,21 @@
                 <td>{{key['price']|price}}</td>
                 <td>x{{key['count']}}</td>
               </tr>
-              <tr *ngIf="!(keys.length==0)">
-                <td></td>
-                <td></td>
-                <td></td>
+              <tr *ngIf="!(keys.length==0)" style="position: -webkit-sticky; position: sticky;">
                 <td>
                   <h5>Total</h5>
                 </td>
                 <td>
+                  <h5>RS.{{total}}</h5>
+                </td>
+                <td></td>
+                <td>
+
                 </td>
                 <td>
-                  <h5>RS.{{total}}</h5>
+                </td>
+                <td>
+
                 </td>
               </tr>
             </tbody>
