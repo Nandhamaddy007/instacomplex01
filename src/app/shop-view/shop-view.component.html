@@ -7,11 +7,13 @@
       <br/>
       <div>
         <div class="card">
-          <img
-
+          <div [ngClass]="{'outline':Cart[i]}">
+            <img
+          class="card-img-top"
           src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
-          alt="Card image cap" [ngClass]="{'outline':Cart[i],'card-img-top':true}"
+          alt="Card image cap"
         />
+          </div>
           <div class="card-body">
             <h5 class="card-title">{{product['productName']}}</h5>
 
