@@ -47,8 +47,12 @@ export class ShopViewComponent implements OnInit {
       this.Cart[i][size].count = value;
     }
   }
-  removeProduct(i) {
-    delete this.Cart[i];
-    console.log(this.Cart);
+  removeProduct(i, price) {
+    //console.log(price);
+    let c = confirm(
+      'Are you sure want to remove?? It is just ' + price.split('-')[1]
+    );
+    if (c) delete this.Cart[i];
+    //console.log(this.Cart);
   }
 }

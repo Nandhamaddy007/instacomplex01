@@ -27,7 +27,7 @@
               <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart <i class="fas fa-cart-plus" style="font-size:1.5rem"></i></button>
 
               <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
-              <span class="btn btn-danger" style="margin-top:1rem;" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i)">Remove <i class="far fa-trash-alt"></i></span>
+              <span class="btn btn-danger" style="margin-top:1rem;" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i,price.value)">Remove <i class="far fa-trash-alt"></i></span>
             </div>
           </div>
         </div>
