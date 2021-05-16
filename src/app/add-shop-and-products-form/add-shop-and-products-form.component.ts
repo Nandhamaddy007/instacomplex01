@@ -24,12 +24,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     private service: BackendTalkerService,
     private route: ActivatedRoute
   ) {}
-  upload(files: any) {
-    //uploading files through service
-    this.service
-      .uploader(files)
-      .subscribe(data => console.log(data), error => console.log(error));
-  }
+
   ClientForm: FormGroup;
   ProductDetails: FormArray;
   ProductVariance: FormArray;
@@ -38,7 +33,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (id) {
       this.service.GetShop(id).subscribe(
         data1 => {
-          console.log(data1);
+          //console.log(data1);
           let data = this.service.decryptData(data1.body);
 
           var PDs = this.fillProductDetails(data['ProductDetails']);
@@ -74,7 +69,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       });
       this.formLoaded = true;
 
-      console.log(this.ClientForm.value);
+      //console.log(this.ClientForm.value);
     }
   }
   fillProductDetails(products: any): FormArray {
@@ -83,10 +78,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       list.push(
         this.formBuilder.group({
           productName: [products[product]['productName'], Validators.required],
-          productDescription: [
-            products[product]['productDescription'],
-            Validators.required
-          ],
+
           productColor: [
             products[product]['productColor'],
             Validators.required
@@ -124,7 +116,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
   createProduct(): FormGroup {
     return this.formBuilder.group({
       productName: ['', Validators.required],
-      productDescription: ['', Validators.required],
       productColor: ['', Validators.required],
       ProductVariance: this.formBuilder.array([this.createProductVariance()])
     });

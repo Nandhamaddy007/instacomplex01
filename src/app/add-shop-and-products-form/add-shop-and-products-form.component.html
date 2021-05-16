@@ -54,10 +54,7 @@
             <label>Product Name</label>:
             <input formControlName="productName" class="formControl" type="text">
           </div>
-          <div class="formGroup">
-            <label>Product Description</label>:
-            <input formControlName="productDescription" class="formControl" type="text">
-          </div>
+         
           <div class="formGroup">
             <input  (change)="fileChange($event,i)" type="file" class='btn btn-dark' placeholder="File">
             <button *ngIf="i>0" style="margin-left:20px" class='btn btn-danger' (click)="RemoveProduct(i)">
