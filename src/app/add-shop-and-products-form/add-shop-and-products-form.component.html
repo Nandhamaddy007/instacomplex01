@@ -1,48 +1,48 @@
 <div>
-  <div *ngIf="formLoaded">
-    <form [formGroup]="ClientForm" class="jumbotron">
+  <div *ngIf="formLoaded" class="container">
+    <form [formGroup]="ClientForm">
 
       <div class="row">
         <div class="col-md-4">
           <label>Shop Name</label>:
-          <input formControlName="shopName" class="formControl" type="text">
+          <input formControlName="shopName" class="form-control" type="text">
         </div>
         <div class="col-md-4">
           <label>Shop Owner</label>:
-          <input formControlName="shopOwner" class="formControl" type="text">
+          <input formControlName="shopOwner" class="form-control" type="text">
         </div>
         <div class="col-md-4">
           <label>Shop Owner Mobile</label>:
-          <input formControlName="shopOwnerMobile" class="formControl" type="number">
+          <input formControlName="shopOwnerMobile" class="form-control" type="number">
         </div>
       </div>
       <div class="row">
         <div class="col-md-3">
           <label>Shop Owner Email</label>:
-          <input formControlName="shopOwnerEmail" class="formControl" type="text">
+          <input formControlName="shopOwnerEmail" class="form-control" type="text">
         </div>
 
         <div class="col-md-3">
           <label>Shop Owner Instagram ID</label>:
-          <input formControlName="shopOwnerInstaId" class="formControl" type="text">
+          <input formControlName="shopOwnerInstaId" class="form-control" type="text">
         </div>
         <div class="col-md-3">
           <label>Shop Owner GPAY ID</label>:
-          <input formControlName="shopOwnerGpay" class="formControl" type="text">
+          <input formControlName="shopOwnerGpay" class="form-control" type="text">
         </div>
         <div class="col-md-3">
           <label>Shop Owner PAYTM ID</label>:
-          <input formControlName="shopOwnerPaytm" class="formControl" type="text">
+          <input formControlName="shopOwnerPaytm" class="form-control" type="text">
         </div>
       </div>
       <div class="row">
         <div class="col-md-9">
           <label>Shop Owner Address</label>:
-          <textarea foromControlName="shopOwnerAddress" class="formControl"> </textarea>
+          <textarea foromControlName="shopOwnerAddress" class="form-control"> </textarea>
         </div>
         <div class="col-md-3">
           <label>Shop LOGO</label>:
-          <input formControlName="shopLogo" class="formControl" name="uploadfile" type="file">
+          <input formControlName="shopLogo" class="form-control" name="uploadfile" type="file">
         </div>
       </div>
       <div class="btn btn-success" (click)="addProduct()">Add an Item +</div>
@@ -52,18 +52,18 @@
         <div [formGroupName]="i">
           <div class="formGroup">
             <label>Product Name</label>:
-            <input formControlName="productName" class="formControl" type="text">
+            <input formControlName="productName" class="form-control" type="text">
           </div>
-         
+
           <div class="formGroup">
-            <input  (change)="fileChange($event,i)" type="file" class='btn btn-dark' placeholder="File">
+            <input  (change)="fileChange($event,i)" type="file" class='form-control' placeholder="File">
             <button *ngIf="i>0" style="margin-left:20px" class='btn btn-danger' (click)="RemoveProduct(i)">
                  Remove
                 </button>
           </div>
           <div class="formGroup">
             <label>Product Color</label>:
-            <input formControlName="productColor" class="formControl" type="text">
+            <input formControlName="productColor" class="form-control" type="text">
           </div>
           <div class="btn btn-primary" (click)="addProductVariance(i)">Add Variance +</div>
           <div formArrayName="ProductVariance"
@@ -72,15 +72,15 @@
               <div class="btn btn-danger" *ngIf='j>0' (click)="RemoveVariance(i,j)">Remove Variance</div>
               <div class="formGroup">
                 <label>Price</label>:
-                <input formControlName="productPrice" class="formControl" type="text">
+                <input formControlName="productPrice" class="form-control" type="text">
               </div>
               <div class="formGroup">
                 <label>Availability</label>:
-                <input formControlName="productAvailability" class="formControl" type="text">
+                <input formControlName="productAvailability" class="form-control" type="text">
               </div>
               <div class="formGroup">
                 <label>Size</label>:
-                <input formControlName="productSize" class="formControl" type="text">
+                <input formControlName="productSize" class="form-control" type="text">
               </div>
             </div>
           </div>
