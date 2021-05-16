@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CartComponent implements OnInit {
   keys = [];
   total = 0;
+  orderId = '';
+  orderCount = 1;
   @Input() cartValue: any;
   constructor() {}
   f() {
@@ -24,7 +26,20 @@ export class CartComponent implements OnInit {
         this.keys.push(lvl2);
       }
     }
-    console.log(this.keys);
+    //console.log(this.keys);
   }
+  placeOrder() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
+    //console.log(this.orderId);
+  }
+  copyInputMessage(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+  }
+
   ngOnInit() {}
 }

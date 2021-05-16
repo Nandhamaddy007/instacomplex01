@@ -43,9 +43,15 @@
             </tbody>
           </table>
           <h3 *ngIf="keys.length==0">The cart is empty</h3>
-          <div class="btn btn-primary" style="margin-bottom:2rem">Place Order
-            <span style="font-size:10px">&#10146;</span>
+          <div class="btn btn-primary" *ngIf="keys.length>0 && orderId==''" style="margin-bottom:2rem"
+            (click)="placeOrder()"> Place
+            Order <i
+            class="fas fa-angle-double-right"></i>
           </div>
+        </div>
+        <div style="padding-bottom:1rem" *ngIf="orderId">
+          <i class="fas fa-clipboard" style="font-size:2rem; text-align:right" (click)=" copyInputMessage(OrderId)" ></i>
+          <textarea class="form-control" style="font-size:2rem;text-align:center;height:3rem;resize:none" readonly #OrderId>{{orderId}}</textarea>
         </div>
       </div>
 
