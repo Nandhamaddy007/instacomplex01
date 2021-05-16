@@ -3,8 +3,8 @@ body {
   width: 100%;
   background: #f7dfee;
 }
-.product-holder {
-  height: 10%;
-  width: 10%;
-  background: blue;
+div.outline {
+  border-style: solid;
+  border-width: 0px 10px 0px 10px;
+  border-color: #00ff00;
 }

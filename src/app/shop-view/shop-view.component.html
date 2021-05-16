@@ -5,28 +5,29 @@
   <div *ngIf="Products" class="row">
     <div *ngFor="let product of Products; let i =index" class="col-sm-3">
       <br/>
-      <div class="card">
-        <img
-          class="card-img-top"
-          src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{product['productName']}}</h5>
+      <div>
+        <div class="card">
+          <img
 
-          <label>Size &nbsp;</label>
-          <select style="width:7rem" name='price' id='price' #price>
+          src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+          alt="Card image cap" [ngClass]="{'outline':Cart[i],'card-img-top':true}"
+        />
+          <div class="card-body">
+            <h5 class="card-title">{{product['productName']}}</h5>
+
+            <label>Size &nbsp;</label>
+            <select style="width:7rem" name='price' id='price' #price>
             <option *ngFor="let variance of product['ProductVariance'];let j=index" value="{{variance['productSize']}} - Rs.{{variance['productPrice']}}" >
               {{variance['productSize']}} - Rs.{{variance['productPrice']}}
             </option>
           </select>
-          <div class="row">
-            <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart</button>
+            <div class="row">
+              <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart</button>
 
-            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
-            <span class="btn btn-danger" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i)">Remove</span>
+              <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
+              <span class="btn btn-danger" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i)">Remove</span>
+            </div>
           </div>
-
         </div>
       </div>
     </div>
