@@ -23,15 +23,18 @@ export class BackendTalkerService {
     //console.log(d);
   }
   CreateShop(data: any): any {
-    let d = this.encryptData(JSON.stringify(data));
+    let d = this.encryptData(data);
     let str = { body: d };
     //console.log(str);
     return this.http.post(this.endpoint + 'CreateShop', str);
   }
   updateShop(data: any, shopName: String): any {
-    let d = this.encryptData(JSON.stringify(data));
+    let d = this.encryptData(data);
     let str = { body: d };
     return this.http.post(this.endpoint + 'updateShop/' + shopName, str);
+  }
+  placeOrder(data: any): any {
+    return this.http.post(this.endpoint + 'AddOrder', data);
   }
   decryptData(data: any) {
     let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');
@@ -41,7 +44,10 @@ export class BackendTalkerService {
   }
 
   encryptData(data: any) {
-    let ciphertext = CryptoJS.AES.encrypt(data, '!@#$%^&*()').toString();
+    let ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(data),
+      '!@#$%^&*()'
+    ).toString();
     //console.log(ciphertext);
     return ciphertext;
   }

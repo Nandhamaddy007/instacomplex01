@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BackendTalkerService } from '../../backend-talker.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,10 @@ export class CartComponent implements OnInit {
   orderCount = 1;
   @Input() cartValue: any;
   userDetails: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: BackendTalkerService
+  ) {}
   ngOnInit(): void {
     this.userDetails = this.formBuilder.group({
       shopperName: ['', Validators.required],
@@ -39,13 +43,14 @@ export class CartComponent implements OnInit {
     //console.log(this.keys);
   }
   placeOrder() {
-    // var today = new Date();
-    // var dd = String(today.getDate()).padStart(2, '0');
-    // var mm = String(today.getMonth() + 1).padStart(2, '0');
-    // this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
-    //console.log(this.orderId);
-    console.log(this.userDetails);
-    console.log(this.userDetails.valid);
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
+    let data = {};
+    this.service.placeOrder(data).subscribe(data => {
+      console.log(data), err => console.log(err);
+    });
   }
   copyInputMessage(inputElement) {
     inputElement.select();
