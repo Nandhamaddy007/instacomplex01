@@ -6,12 +6,13 @@ import { CheckStatusComponent } from './check-status/check-status.component';
 import { ShopViewComponent } from './shop-view/shop-view.component';
 
 const routes: Routes = [
-  { path: 'AddShop/:shopName', component: AddShopAndProductsFormComponent },
+  { path: 'UpdateShop/:shopName', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopName/admin', component: AdminDashboardComponent },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopName', component: ShopViewComponent },
+  { path: 'complex', component: ShopViewComponent },
   { path: 'checkStatus', component: CheckStatusComponent },
-  { path: '**', redirectTo: 'AddShop' }
+  { path: '**', redirectTo: 'complex' }
 ];
 
 @NgModule({

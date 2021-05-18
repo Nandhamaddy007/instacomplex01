@@ -15,18 +15,22 @@ export class ShopViewComponent implements OnInit {
   ) {}
   Products: Array<Object>;
   Cart;
-  shopName;
+  shopName='';
   ngOnInit() {
     this.shopName = this.route.snapshot.params.shopName;
+    console.log(this.shopName);
+    if(this.shopName){
     this.service.GetShop(this.shopName).subscribe(
       data1 => {
         console.log(data1);
-        let data = this.service.decryptData(data1.body);        
+        let data = this.service.decryptData(data1.body);
         this.Products = data.ProductDetails;
         this.Cart = {};
       },
       err => {}
+      
     );
+    }
   }
   AddProductToCart(product, i, price) {
     //this.Cart[i].ProdID=product.ProdID

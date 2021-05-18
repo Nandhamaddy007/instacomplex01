@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BackendTalkerService } from '../backend-talker.service';
 
@@ -22,7 +22,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ClientForm: FormGroup;
@@ -36,35 +37,47 @@ export class AddShopAndProductsFormComponent implements OnInit {
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
-
-          var PDs = this.fillProductDetails(data['ProductDetails']);
-          //console.log(data);
-          this.ClientForm = this.formBuilder.group({
-            shopName: [data['shopName'], Validators.required],
-            shopOwner: [data['shopOwner'], Validators.required],
-            shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
-            shopOwnerEmail: [data['shopOwnerEmail'], Validators.required],
-            shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
-            shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
-            shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
-            shopOwnerPaytm: [data['shopOwnerPaytm'], Validators.required],
-            shopLogo: ['', Validators.required],
-            ProductDetails: PDs
-          });
-          this.formLoaded = true;
+          console.log(data);
+          if (data != null) {
+            var PDs = this.fillProductDetails(data['ProductDetails']);
+            //console.log(data);
+            this.ClientForm = this.formBuilder.group({
+              shopName: [data['shopName'], Validators.required],
+              shopOwner: [data['shopOwner'], Validators.required],
+              shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
+              shopOwnerEmail: [data['shopOwnerEmail'], Validators.required],
+              shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
+              shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
+              shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
+              shopOwnerPaytm: [data['shopOwnerPaytm'], Validators.required],
+              shopLogo: ['', Validators.required],
+              ProductDetails: PDs
+            });
+            this.formLoaded = true;
+          } else {
+            let ans = confirm(
+              'Dear admin check your shop name please...\n Wanna create one?'
+            );
+            
+            if (ans) {
+              this.router.navigate(['/AddShop']);
+            }else{
+              
+            }
+          }
         },
         err => console.log(err)
       );
     } else {
       this.ClientForm = this.formBuilder.group({
-        shopName: ['Akstores', Validators.required],
-        shopOwner: ['Arun kumar', Validators.required],
-        shopOwnerMobile: ['9876543123', Validators.required],
-        shopOwnerEmail: ['aK@GMAIL.Com', Validators.required],
-        shopOwnerAddress: ['Chennai', Validators.required],
-        shopOwnerInstaId: ['Akstores@insta', Validators.required],
-        shopOwnerGpay: ['123456', Validators.required],
-        shopOwnerPaytm: ['9877654', Validators.required],
+        shopName: ['', Validators.required],
+        shopOwner: ['', Validators.required],
+        shopOwnerMobile: ['', Validators.required],
+        shopOwnerEmail: ['', Validators.required],
+        shopOwnerAddress: ['', Validators.required],
+        shopOwnerInstaId: ['', Validators.required],
+        shopOwnerGpay: ['', Validators.required],
+        shopOwnerPaytm: ['', Validators.required],
         shopLogo: ['', Validators.required],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
