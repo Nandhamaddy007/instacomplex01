@@ -46,7 +46,8 @@ export class ShopViewComponent implements OnInit {
       productName: product.productName,
       price: price,
       count: 1,
-      productColor: product.productColor
+      productColor: product.productColor,
+      shopName: this.shopName
     };
     this.Cart[i][price] = temp;
     console.log(this.Cart);

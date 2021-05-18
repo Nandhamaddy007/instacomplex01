@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +12,16 @@ export class CartComponent implements OnInit {
   orderId = '';
   orderCount = 1;
   @Input() cartValue: any;
-  constructor() {}
+  userDetails: FormGroup;
+  constructor(private formBuilder: FormBuilder) {}
+  ngOnInit(): void {
+    this.userDetails = this.formBuilder.group({
+      shopperName: ['', Validators.required],
+      shopperMobile: ['', [Validators.required, Validators.max(100000000000)]],
+      shopperMail: ['', [Validators.required, Validators.email]],
+      shopperAddress: ['', Validators.required]
+    });
+  }
   f() {
     this.keys = [];
     this.total = 0;
@@ -29,17 +39,17 @@ export class CartComponent implements OnInit {
     //console.log(this.keys);
   }
   placeOrder() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
+    // var today = new Date();
+    // var dd = String(today.getDate()).padStart(2, '0');
+    // var mm = String(today.getMonth() + 1).padStart(2, '0');
+    // this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
     //console.log(this.orderId);
+    console.log(this.userDetails);
+    console.log(this.userDetails.valid);
   }
   copyInputMessage(inputElement) {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
   }
-
-  ngOnInit() {}
 }

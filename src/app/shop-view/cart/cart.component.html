@@ -51,12 +51,30 @@
               </tr>
             </tbody>
           </table>
+          <form [formGroup]="userDetails" class="container">
+            <div class='form-group'>
+              <label for="userName">Name</label>
+              <input type="text" class="form-control" id="userName" formControlName="shopperName"/>
+            </div>
+            <div class='form-group'>
+              <label for="userMobile">Mobile number</label>
+              <input type="text" class="form-control" id="userMobile" formControlName="shopperMobile"/>
+            </div>
+            <div class='form-group'>
+              <label for="userEmail">Email id</label>
+              <input type="text" class="form-control" id="userEmail" formControlName="shopperMail"/>
+            </div>
+            <div class='form-group'>
+              <label for="userAddress">Address</label>
+              <textarea type="text" class="form-control" id="userAddress" rows="3" cols="40" style="resize:none" formControlName="shopperAddress"></textarea>
+            </div>
+          </form>
           <h3 *ngIf="keys.length==0">The cart is empty</h3>
-          <div class="btn btn-primary" *ngIf="keys.length>0 && orderId==''" style="margin-bottom:2rem"
+          <button class="btn btn-primary" *ngIf="keys.length>0 && orderId==''" [disabled]="!userDetails.valid" style="margin-bottom:2rem"
             (click)="placeOrder()"> Place
             Order <i
             class="fas fa-angle-double-right"></i>
-          </div>
+          </button>
         </div>
         <div style="padding-bottom:1rem" *ngIf="orderId">
           <i class="fas fa-clipboard" style="font-size:2rem; text-align:right" (click)=" copyInputMessage(OrderId)" ></i>
