@@ -58,11 +58,10 @@ export class AddShopAndProductsFormComponent implements OnInit {
             let ans = confirm(
               'Dear admin check your shop name please...\n Wanna create one?'
             );
-            
+
             if (ans) {
               this.router.navigate(['/AddShop']);
-            }else{
-              
+            } else {
             }
           }
         },
@@ -212,8 +211,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
       .subscribe(res => console.log(res), err => console.log(err));
   }
   CreateShop() {
-    this.service
-      .CreateShop(this.ClientForm.value)
-      .subscribe(res => console.log(res), err => console.log(err));
+    this.service.CreateShop(this.ClientForm.value).subscribe(
+      res => {
+        console.log(res);
+        alert(res.body);
+        this.router.navigate(['complex/' + res.shopName]);
+      },
+      err => console.log(err)
+    );
   }
 }
