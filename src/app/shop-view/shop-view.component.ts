@@ -19,6 +19,7 @@ export class ShopViewComponent implements OnInit {
   shopName = '';
   ngOnInit() {
     this.shopName = this.route.snapshot.params.shopName;
+    //console.log(this.shopName);
     if (this.shopName) {
       this.service.GetShop(this.shopName).subscribe(
         data1 => {
