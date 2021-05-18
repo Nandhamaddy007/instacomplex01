@@ -20,7 +20,8 @@ export class ShopViewComponent implements OnInit {
     this.shopName = this.route.snapshot.params.shopName;
     this.service.GetShop(this.shopName).subscribe(
       data1 => {
-        let data = this.service.decryptData(data1.body);
+        console.log(data1);
+        let data = this.service.decryptData(data1.body);        
         this.Products = data.ProductDetails;
         this.Cart = {};
       },

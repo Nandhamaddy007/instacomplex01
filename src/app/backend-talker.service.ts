@@ -28,6 +28,11 @@ export class BackendTalkerService {
     //console.log(str);
     return this.http.post(this.endpoint + 'CreateShop', str);
   }
+  updateShop(data: any, shopName: String): any {
+    let d = this.encryptData(JSON.stringify(data));
+    let str = { body: d };
+    return this.http.post(this.endpoint + 'updateShop/' + shopName, str);
+  }
   decryptData(data: any) {
     let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');
     let key = bytes.toString(CryptoJS.enc.Utf8);

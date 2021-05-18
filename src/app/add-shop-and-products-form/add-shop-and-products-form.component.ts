@@ -28,10 +28,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ClientForm: FormGroup;
   ProductDetails: FormArray;
   ProductVariance: FormArray;
+  shopName = '';
   ngOnInit(): void {
-    let id = this.route.snapshot.params.shopName;
-    if (id) {
-      this.service.GetShop(id).subscribe(
+    this.shopName = this.route.snapshot.params.shopName;
+    if (this.shopName) {
+      this.service.GetShop(this.shopName).subscribe(
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
@@ -56,7 +57,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       );
     } else {
       this.ClientForm = this.formBuilder.group({
-        shopName: ['Ak stores', Validators.required],
+        shopName: ['Akstores', Validators.required],
         shopOwner: ['Arun kumar', Validators.required],
         shopOwnerMobile: ['9876543123', Validators.required],
         shopOwnerEmail: ['aK@GMAIL.Com', Validators.required],
@@ -191,6 +192,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  updateShop() {
+    this.service
+      .updateShop(this.ClientForm.value, this.shopName)
+      .subscribe(res => console.log(res), err => console.log(err));
   }
   CreateShop() {
     this.service
