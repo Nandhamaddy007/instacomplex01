@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { BackendTalkerService } from '../backend-talker.service';
 
@@ -11,25 +11,29 @@ import { BackendTalkerService } from '../backend-talker.service';
 export class ShopViewComponent implements OnInit {
   constructor(
     private service: BackendTalkerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   Products: Array<Object>;
   Cart;
-  shopName='';
+  shopName = '';
   ngOnInit() {
     this.shopName = this.route.snapshot.params.shopName;
-    console.log(this.shopName);
-    if(this.shopName){
-    this.service.GetShop(this.shopName).subscribe(
-      data1 => {
-        console.log(data1);
-        let data = this.service.decryptData(data1.body);
-        this.Products = data.ProductDetails;
-        this.Cart = {};
-      },
-      err => {}
-      
-    );
+    if (this.shopName) {
+      this.service.GetShop(this.shopName).subscribe(
+        data1 => {
+          //console.log(data1);
+          let data = this.service.decryptData(data1.body);
+          //console.log(data);
+          if (data != null) {
+            this.Products = data.ProductDetails;
+            this.Cart = {};
+          } else {
+            this.router.navigate(['complex']);
+          }
+        },
+        err => {}
+      );
     }
   }
   AddProductToCart(product, i, price) {
