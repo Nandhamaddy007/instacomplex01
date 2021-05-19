@@ -22,7 +22,10 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.userDetails = this.formBuilder.group({
       shopperName: ['', Validators.required],
-      shopperMobile: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
+      shopperMobile: [
+        '',
+        [Validators.required, Validators.pattern('[0-9]{10}')]
+      ],
       shopperMail: ['', [Validators.required, Validators.email]],
       shopperAddress: ['', Validators.required]
     });
