@@ -5,7 +5,7 @@
     <div *ngFor="let product of Products; let i =index" class="col-sm-3">
       <br/>
       <div>
-        <div class="card">
+        <div class="card animate__animated animate__tada">
           <div [ngClass]="{'outline':Cart[i]}">
             <img
           class="card-img-top"
@@ -37,7 +37,24 @@
     </div>
 
   </div>
-  <div *ngIf="shopName==undefined">
+  <div *ngIf="shopName==undefined && allShops">
     <h1>Main complex</h1>
+    <div class="row">
+      <div *ngFor="let shop of allShops" class="col-sm-3">
+        <a routerLink="{{shop.shopName}}" routerLinkActive="active">
+          <div class="card animate__animated animate__tada">
+            <img
+          src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+          class="card-img-top" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">{{shop['shopName']}}</h4>
+              <h6 class="card-title">{{shop['shopOwner']}}</h6>
+              <h6 class="card-title">{{shop['shopOwnerMobile']}}</h6>
+              <h6 class="card-title">{{shop['shopOwnerAddress']}}</h6>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </div>

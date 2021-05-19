@@ -8,3 +8,11 @@ div.outline {
   border-width: 0px 5px 0px 5px;
   border-color: #00ff00;
 }
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+a:hover {
+  text-decoration: inherit;
+  color: inherit;
+}

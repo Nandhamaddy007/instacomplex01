@@ -18,6 +18,7 @@ export class ShopViewComponent implements OnInit {
   Cart;
   currOrder = '';
   shopName = '';
+  allShops;
   ngOnInit() {
     this.shopName = this.route.snapshot.params.shopName;
     //console.log(this.shopName);
@@ -36,6 +37,11 @@ export class ShopViewComponent implements OnInit {
         },
         err => {}
       );
+    } else {
+      this.service.getAllShops().subscribe(data => {
+        this.allShops = this.service.decryptData(data.body);
+        console.log(this.allShops);
+      });
     }
   }
   AddProductToCart(product, i, price) {

@@ -39,8 +39,12 @@ export class BackendTalkerService {
     return this.http.post(this.endpoint + 'AddOrder', str);
   }
   getOrderCount(): any {
-    return this.http.get('https://proe8.sse.codesandbox.io/getOrderCount');
+    return this.http.get(this.endpoint + 'getOrderCount');
   }
+  getAllShops(): any {
+    return this.http.get(this.endpoint + 'getShops');
+  }
+
   decryptData(data: any) {
     let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');
     let key = bytes.toString(CryptoJS.enc.Utf8);
