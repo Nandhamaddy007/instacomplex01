@@ -16,6 +16,7 @@ export class ShopViewComponent implements OnInit {
   ) {}
   Products: Array<Object>;
   Cart;
+  currOrder = '';
   shopName = '';
   ngOnInit() {
     this.shopName = this.route.snapshot.params.shopName;
@@ -65,5 +66,9 @@ export class ShopViewComponent implements OnInit {
     );
     if (c) delete this.Cart[i];
     //console.log(this.Cart);
+  }
+  fromCart(Oid: string) {
+    this.Cart = {};
+    this.currOrder = Oid;
   }
 }

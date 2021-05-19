@@ -1,5 +1,5 @@
 <h2 style="position:absolute;top:0.5rem;left:30rem;"><i class='fab fa-instagram'></i> {{shopName}}</h2>
-<app-cart *ngIf="Products" [cartValue]='Cart'></app-cart>
+<app-cart *ngIf="Products" [cartValue]='Cart' (cartToView)="fromCart($event)"></app-cart>
 <div class="container">
   <div *ngIf="Products" class="row">
     <div *ngFor="let product of Products; let i =index" class="col-sm-3">

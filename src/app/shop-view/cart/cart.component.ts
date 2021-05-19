@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendTalkerService } from '../../backend-talker.service';
 
@@ -11,6 +11,8 @@ export class CartComponent implements OnInit {
   keys = [];
   total = 0;
   orderId = '';
+  prevOrder = '';
+  @Output() cartToView = new EventEmitter<string>();
   @Input() cartValue: any;
   userDetails: FormGroup;
   constructor(
@@ -28,6 +30,7 @@ export class CartComponent implements OnInit {
   f() {
     this.keys = [];
     this.total = 0;
+    this.orderId = '';
     console.log(Object.values(this.cartValue));
     let temp = Object.values(this.cartValue);
     for (let lvl1 of temp) {
@@ -55,8 +58,10 @@ export class CartComponent implements OnInit {
         data['shopName'];
         this.service.placeOrder(data).subscribe(
           data => {
-            /console.log(data);
+            //console.log(data);
             alert(data['msg']);
+            this.userDetails.reset();
+            this.cartToView.emit(this.orderId);
           },
           err => console.log(err)
         );
