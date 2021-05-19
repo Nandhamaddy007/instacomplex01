@@ -11,7 +11,6 @@ export class CartComponent implements OnInit {
   keys = [];
   total = 0;
   orderId = '';
-  orderCount = 1;
   @Input() cartValue: any;
   userDetails: FormGroup;
   constructor(
@@ -44,16 +43,26 @@ export class CartComponent implements OnInit {
   }
   placeOrder() {
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
-    let data = {};
-    data['orderId'] = this.orderId;
-    data['products'] = this.keys;
-    data['CustDetails'] = this.userDetails.value;
-    this.service.placeOrder(data).subscribe(data => {
-      console.log(data), err => console.log(err);
-    });
+    this.service.getOrderCount().subscribe(
+      data1 => {
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        this.orderId = 'INC' + dd + mm + 'O' + data1['cnt'];
+        let data = {};
+        data['orderId'] = this.orderId;
+        data['products'] = this.keys;
+        data['custDetails'] = this.userDetails.value;
+        data['shopName'];
+        this.service.placeOrder(data).subscribe(
+          data => {
+            /console.log(data);
+            alert(data['msg']);
+          },
+          err => console.log(err)
+        );
+      },
+      err => console.log(err)
+    );
   }
   copyInputMessage(inputElement) {
     inputElement.select();
