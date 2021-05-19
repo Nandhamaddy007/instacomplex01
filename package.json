@@ -18,6 +18,7 @@
     "bootstrap": "^5.0.0",
     "crypto-js": "^4.0.0",
     "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
     "poppers.js": "^1.16.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.1.0",
