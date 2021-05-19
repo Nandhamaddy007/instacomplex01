@@ -59,7 +59,7 @@
             </div>
             <div class='form-group'>
               <label for="userMobile">Mobile number</label>
-              <input type="text" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperMobile.errors &&userDetails.controls.shopperMobile.touched}" id="userMobile" formControlName="shopperMobile"/>
+              <input type="tel" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperMobile.errors &&userDetails.controls.shopperMobile.touched}" id="userMobile" formControlName="shopperMobile"/>
               <span class='text-danger' *ngIf="userDetails.controls.shopperMobile.errors &&userDetails.controls.shopperMobile.touched">Please enter your contact number so that we can contact you during delivery</span>
             </div>
             <div class='form-group'>

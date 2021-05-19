@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.userDetails = this.formBuilder.group({
       shopperName: ['', Validators.required],
-      shopperMobile: ['', [Validators.required, Validators.max(100000000000)]],
+      shopperMobile: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
       shopperMail: ['', [Validators.required, Validators.email]],
       shopperAddress: ['', Validators.required]
     });
@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
     this.keys = [];
     this.total = 0;
     this.orderId = '';
-    console.log(Object.values(this.cartValue));
+    //console.log(Object.values(this.cartValue));
     let temp = Object.values(this.cartValue);
     for (let lvl1 of temp) {
       //console.log(Object.values(lvl1));
