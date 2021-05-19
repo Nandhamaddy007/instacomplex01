@@ -48,6 +48,9 @@ export class CartComponent implements OnInit {
     var mm = String(today.getMonth() + 1).padStart(2, '0');
     this.orderId = 'INC' + dd + mm + 'O' + this.orderCount;
     let data = {};
+    data['orderId'] = this.orderId;
+    data['products'] = this.keys;
+    data['CustDetails'] = this.userDetails.value;
     this.service.placeOrder(data).subscribe(data => {
       console.log(data), err => console.log(err);
     });
