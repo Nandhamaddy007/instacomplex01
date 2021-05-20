@@ -1,8 +1,9 @@
-<table class="table mt-5">
+<table class="table m-3">
   <thead class='table-primary'>
     <tr>
       <th>Order Id</th>
       <th>Products</th>
+      <th>Total</th>
       <th>shopper name</th>
       <th>shopper contact</th>
       <th>shopper Mail</th>
@@ -20,6 +21,7 @@
           {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}
         </div>
       </td>
+      <td>Rs.{{order['total']}}</td>
       <td>{{order['custDetails']['shopperName']}}</td>
       <td>{{order['custDetails']['shopperMobile']}}</td>
       <td>{{order['custDetails']['shopperMail']}}</td>
