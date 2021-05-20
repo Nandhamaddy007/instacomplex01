@@ -7,7 +7,7 @@ import { ShopViewComponent } from './shop-view/shop-view.component';
 
 const routes: Routes = [
   { path: 'UpdateShop/:shopName', component: AddShopAndProductsFormComponent },
-  { path: 'complex/:shopName/admin', component: AdminDashboardComponent },
+  { path: 'admin/:shopName', component: AdminDashboardComponent },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopName', component: ShopViewComponent },
   { path: 'complex', component: ShopViewComponent },
