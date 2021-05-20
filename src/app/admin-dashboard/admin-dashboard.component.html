@@ -1,4 +1,4 @@
-<table class="table m-3">
+<table class="table m-3 overflow-auto">
   <thead class='table-primary'>
     <tr>
       <th>Order Id</th>
@@ -16,25 +16,28 @@
     <tr *ngFor=" let order of orders; let i = index">
       <td>{{order['orderId']}}</td>
       <td>
-        <div *ngFor="let product of order.products">
-          {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}
-        </div>
-      </td>
-      <td>Rs.{{order['total']}}</td>
-      <td>{{order['custDetails']['shopperName']}}</td>
-      <td>{{order['custDetails']['shopperMobile']}}</td>
-      <td>{{order['custDetails']['shopperMail']}}</td>
-      <td>{{order['custDetails']['shopperAddress']}}</td>
-      <td>
-        <select [(ngModel)]="status">
+    <tr *ngFor="let product of order.products">
+      {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}
+    </tr>
+    </td>
+    <td>Rs.{{order['total']}}</td>
+    <td>{{order['custDetails']['shopperName']}}</td>
+    <td>{{order['custDetails']['shopperMobile']}}</td>
+    <td>{{order['custDetails']['shopperMail']}}</td>
+    <td>{{order['custDetails']['shopperAddress']}}</td>
+    <td>
+      <select [(ngModel)]="status[i]">
           <option>Pending</option>
           <option>Confirmed</option>
           <option>Shipped</option>
         </select>
-        <br/>
-        <button class="btn btn-success mt-2" (click)="updateStatus(i)">Update</button>
-      </td>
-      <div> </div>
+      <br/>
+      <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2' placeholder="Shipment Id"/>
+      <small clss="form-control" *ngIf="status=='Shipped'">Please enter the shipment id for this order</small>
+      <br/>
+      <button class="btn btn-success" (click)="updateStatus(i)">Update</button>
+    </td>
+    <div> </div>
     </tr>
 
   </tbody>
