@@ -37,7 +37,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
-          console.log(data);
+          //console.log(data);
           if (data != null) {
             var PDs = this.fillProductDetails(data['ProductDetails']);
             //console.log(data);
@@ -62,6 +62,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             if (ans) {
               this.router.navigate(['/AddShop']);
             } else {
+              this.router.navigate(['/complex']);
             }
           }
         },

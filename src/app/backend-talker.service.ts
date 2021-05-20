@@ -44,6 +44,9 @@ export class BackendTalkerService {
   getAllShops(): any {
     return this.http.get(this.endpoint + 'getShops');
   }
+  getOrdersByShop(shopName): any {
+    return this.http.get(this.endpoint + 'getOrders' + shopName);
+  }
 
   decryptData(data: any) {
     let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');

@@ -34,10 +34,13 @@ export class CartComponent implements OnInit {
     this.keys = [];
     this.total = 0;
     this.orderId = '';
-    //console.log(Object.values(this.cartValue));
+    console.log(this.cartValue);
     let temp = Object.values(this.cartValue);
     for (let lvl1 of temp) {
       //console.log(Object.values(lvl1));
+      if (typeof lvl1 === 'string') {
+        continue;
+      }
       for (let lvl2 of Object.values(lvl1)) {
         let t = +lvl2.price.split('-')[1].replace('Rs.', '');
         t = lvl2.count * t;
@@ -58,12 +61,13 @@ export class CartComponent implements OnInit {
         data['orderId'] = this.orderId;
         data['products'] = this.keys;
         data['custDetails'] = this.userDetails.value;
-        data['shopName'];
+        data['shopName'] = this.cartValue.shopName;
         this.service.placeOrder(data).subscribe(
           data => {
             //console.log(data);
-            alert(data['msg']);
-            this.userDetails.reset();
+            // alert(data['msg']);
+            // this.userDetails.reset();
+            // this.keys = [];
             this.cartToView.emit(this.orderId);
           },
           err => console.log(err)
