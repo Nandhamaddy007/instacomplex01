@@ -13,8 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor=" let order of orders" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-      aria-controls="collapseOne">
+    <tr *ngFor=" let order of orders">
       <td>{{order['orderId']}}</td>
       <td>
         <div *ngFor="let product of order.products">
