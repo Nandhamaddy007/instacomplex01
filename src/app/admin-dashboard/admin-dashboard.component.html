@@ -1,11 +1,13 @@
-<table class="table table-hover">
+<table class="table mt-5">
   <thead class='table-primary'>
     <tr>
       <th>Order Id</th>
       <th>Products</th>
       <th>shopper name</th>
       <th>shopper contact</th>
+      <th>shopper Mail</th>
       <th>shopper Address</th>
+
       <th>status</th>
     </tr>
   </thead>
@@ -22,6 +24,16 @@
       <td>{{order['custDetails']['shopperMobile']}}</td>
       <td>{{order['custDetails']['shopperMail']}}</td>
       <td>{{order['custDetails']['shopperAddress']}}</td>
+      <td>
+        <select>
+          <option>Pending</option>
+          <option>Confirmed</option>
+          <option>Shipped</option>
+        </select>
+        <br/>
+        <button class="btn btn-success mt-2">Update</button>
+      </td>
+      <div> </div>
     </tr>
 
   </tbody>

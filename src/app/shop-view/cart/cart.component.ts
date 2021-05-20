@@ -62,12 +62,13 @@ export class CartComponent implements OnInit {
         data['products'] = this.keys;
         data['custDetails'] = this.userDetails.value;
         data['shopName'] = this.cartValue.shopName;
+        data['total'] = this.total;
         this.service.placeOrder(data).subscribe(
           data => {
             //console.log(data);
-            // alert(data['msg']);
-            // this.userDetails.reset();
-            // this.keys = [];
+            alert(data['msg']);
+            this.userDetails.reset();
+            this.keys = [];
             this.cartToView.emit(this.orderId);
           },
           err => console.log(err)
