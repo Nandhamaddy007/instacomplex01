@@ -3,7 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environment';
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from '@angular/fire/storage';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -22,7 +29,9 @@ import { CheckStatusComponent } from './check-status/check-status.component';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud')
   ],
   declarations: [
     AppComponent,
@@ -35,6 +44,6 @@ import { CheckStatusComponent } from './check-status/check-status.component';
     CheckStatusComponent
   ],
   bootstrap: [AppComponent],
-  providers: [BackendTalkerService]
+  providers: [BackendTalkerService, NgxImageCompressService]
 })
 export class AppModule {}

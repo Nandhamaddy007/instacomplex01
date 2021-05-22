@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from '@angular/fire/storage';
 import {
   FormBuilder,
   FormArray,
@@ -7,8 +13,10 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { BackendTalkerService } from '../backend-talker.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
@@ -16,14 +24,17 @@ import { BackendTalkerService } from '../backend-talker.service';
   styleUrls: ['./add-shop-and-products-form.component.css']
 })
 export class AddShopAndProductsFormComponent implements OnInit {
-  file = new FormControl('');
-  file_data: any = [];
   formLoaded = false;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  downloadURL: Observable<string>;
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private afStorage: AngularFireStorage,
+    private compressor: NgxImageCompressService
   ) {}
 
   ClientForm: FormGroup;
@@ -156,32 +167,29 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //console.log(f)
     //console.log(f['controls'][0].get('ProductVariance'))
   }
-  fileChange(event, i) {
-    const fileList: FileList = event.target.files;
-    //check whether file is selected or not
-    if (fileList.length > 0) {
-      const file = fileList[0];
-      //get file information such as name, size and type
-      console.log('finfo', file.name, file.size, file.type, i);
-      //max file size is 4 mb
-      if (file.size / 1048576 <= 4) {
-        let formData = new FormData();
-        //let info={id:2,name:'raja'}
-        formData.append('file', file, file.name);
-        formData.append('date', new Date().toISOString());
-        formData.append('pid', i);
-        formData.append('shopName', 'AKStores');
-        //formData.append('info',JSON.stringify(info))
-        this.file_data[i] = formData;
-        console.log(this.file_data);
-      } else {
-        //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
-      }
-    }
+  fileChange(event) {
+    // let filename=this.ClientForm.value.shopOwnerInstaId
+    let filename = 'Logo' + Date.now();
+    this.ref = this.afStorage.ref(filename);
+    this.task = this.ref.put(event.target.files[0]);
+    this.task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.ref.getDownloadURL().subscribe(url => {
+            console.log(url);
+            this.ClientForm.value.shopLogo = url;
+          });
+        })
+      )
+      .subscribe(url => {
+        //console.log(url);
+      });
+    console.log('file uploaded');
   }
   RemoveProduct(i) {
-    this.file_data.splice(i, 1);
-    console.log(this.file_data);
+    // this.file_data.splice(i, 1);
+    // console.log(this.file_data);
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
     this.ClientForm.get('ProductDetails')['controls'].splice(i, 1);
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
@@ -196,16 +204,16 @@ export class AddShopAndProductsFormComponent implements OnInit {
       )['controls']
     );
   }
-  uploadFile() {
-    this.service.uploader(this.file_data).subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
+  // uploadFile() {
+  //   this.service.uploader(this.file_data).subscribe(
+  //     res => {
+  //       console.log(res);
+  //     },
+  //     err => {
+  //       console.log(err);
+  //     }
+  //   );
+  // }
   updateShop() {
     this.service
       .updateShop(this.ClientForm.value, this.shopName)
