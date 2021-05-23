@@ -41,6 +41,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ProductDetails: FormArray;
   ProductVariance: FormArray;
   shopName = '';
+  
+
   ngOnInit(): void {
     this.shopName = this.route.snapshot.params.shopName;
     if (this.shopName) {

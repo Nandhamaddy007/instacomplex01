@@ -44,6 +44,6 @@ import { CheckStatusComponent } from './check-status/check-status.component';
     CheckStatusComponent
   ],
   bootstrap: [AppComponent],
-  providers: [BackendTalkerService, NgxImageCompressService]
+  providers: [BackendTalkerService]
 })
 export class AppModule {}
