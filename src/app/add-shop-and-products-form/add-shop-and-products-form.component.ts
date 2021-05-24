@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
 import {
   AngularFireStorage,
@@ -13,7 +14,6 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxImageCompressService } from 'ngx-image-compress';
 
 import { BackendTalkerService } from '../backend-talker.service';
 import { finalize } from 'rxjs/operators';
@@ -28,20 +28,20 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   downloadURL: Observable<string>;
+
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
     private route: ActivatedRoute,
     private router: Router,
     private afStorage: AngularFireStorage,
-    private compressor: NgxImageCompressService
+    private imageCompress: NgxImageCompressService
   ) {}
 
   ClientForm: FormGroup;
   ProductDetails: FormArray;
   ProductVariance: FormArray;
   shopName = '';
-  
 
   ngOnInit(): void {
     this.shopName = this.route.snapshot.params.shopName;
@@ -169,26 +169,93 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //console.log(f)
     //console.log(f['controls'][0].get('ProductVariance'))
   }
+  file: any;
+  localUrl: any;
+  localCompressedURl: any;
+  sizeOfOriginalImage: number;
+  sizeOFCompressedImage: number;
   fileChange(event) {
-    // let filename=this.ClientForm.value.shopOwnerInstaId
-    let filename = 'Logo' + Date.now();
-    this.ref = this.afStorage.ref(filename);
-    this.task = this.ref.put(event.target.files[0]);
-    this.task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.ref.getDownloadURL().subscribe(url => {
-            console.log(url);
-            this.ClientForm.value.shopLogo = url;
-          });
-        })
-      )
-      .subscribe(url => {
-        //console.log(url);
-      });
-    console.log('file uploaded');
+    this.file = event.target.files[0];
+    let fileName = this.file['name'];
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        this.compressFile(this.localUrl, fileName);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    //console.log(this.localUrl);
+
+    // console.log(newImg);
+    // this.ref = this.afStorage.ref(filename);
+    // this.task = this.ref.put(newImg);
+    // this.task
+    //   .snapshotChanges()
+    //   .pipe(
+    //     finalize(() => {
+    //       this.ref.getDownloadURL().subscribe(url => {
+    //         console.log(url);
+    //         this.ClientForm.value.shopLogo = url;
+    //       });
+    //     })
+    //   )
+    //   .subscribe(url => {
+    //     //console.log(url);
+    //   });
+    // console.log('file uploaded');
   }
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string;
+  compressFile(image, fileName) {
+    var orientation = -1;
+    this.sizeOfOriginalImage =
+      this.imageCompress.byteCount(image) / (1024 * 1024);
+    console.warn('Size in bytes is now:', this.sizeOfOriginalImage);
+    this.imageCompress.compressFile(image, orientation, 50, 50).then(result => {
+      this.imgResultAfterCompress = result;
+      this.localCompressedURl = result;
+      this.sizeOFCompressedImage =
+        this.imageCompress.byteCount(result) / (1024 * 1024);
+      console.warn(
+        'Size in bytes after compression:',
+        this.sizeOFCompressedImage
+      );
+      // create file from byte
+      const imageName = fileName;
+      // call method that creates a blob from dataUri
+     const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+      //imageFile created below is the new compressed file which can be send to API in form data
+      const imageFile = new File([imageBlob], imageName, { type: 'image/jpeg' });
+      this.ref = this.afStorage.ref(imageName);
+      this.task = this.ref.put(imageFile);
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              console.log(url);
+              this.ClientForm.value.shopLogo = url;
+            });
+          })
+        )
+        .subscribe(url => {
+          //console.log(url);
+        });
+    });
+  }
+    dataURItoBlob(dataURI) {
+const byteString = window.atob(dataURI);
+const arrayBuffer = new ArrayBuffer(byteString.length);
+const int8Array = new Uint8Array(arrayBuffer);
+for (let i = 0; i < byteString.length; i++) {
+int8Array[i] = byteString.charCodeAt(i);
+}
+const blob = new Blob([int8Array], { type: 'image/jpeg' });
+return blob;
+}
+  
   RemoveProduct(i) {
     // this.file_data.splice(i, 1);
     // console.log(this.file_data);
