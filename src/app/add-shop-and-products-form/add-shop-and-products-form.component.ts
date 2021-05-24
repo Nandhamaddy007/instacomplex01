@@ -177,6 +177,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   fileChange(event) {
     this.file = event.target.files[0];
     let fileName = this.file['name'];
+    //console.log(this.file);
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (event: any) => {
@@ -185,26 +186,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-
-    //console.log(this.localUrl);
-
-    // console.log(newImg);
-    // this.ref = this.afStorage.ref(filename);
-    // this.task = this.ref.put(newImg);
-    // this.task
-    //   .snapshotChanges()
-    //   .pipe(
-    //     finalize(() => {
-    //       this.ref.getDownloadURL().subscribe(url => {
-    //         console.log(url);
-    //         this.ClientForm.value.shopLogo = url;
-    //       });
-    //     })
-    //   )
-    //   .subscribe(url => {
-    //     //console.log(url);
-    //   });
-    // console.log('file uploaded');
   }
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
@@ -225,9 +206,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
       // create file from byte
       const imageName = fileName;
       // call method that creates a blob from dataUri
-     const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+      const imageBlob = this.dataURItoBlob(
+        this.imgResultAfterCompress.split(',')[1]
+      );
       //imageFile created below is the new compressed file which can be send to API in form data
-      const imageFile = new File([imageBlob], imageName, { type: 'image/jpeg' });
+      const imageFile = new File([imageBlob], imageName, {
+        type: 'image/jpeg'
+      });
       this.ref = this.afStorage.ref(imageName);
       this.task = this.ref.put(imageFile);
       this.task
@@ -245,17 +230,17 @@ export class AddShopAndProductsFormComponent implements OnInit {
         });
     });
   }
-    dataURItoBlob(dataURI) {
-const byteString = window.atob(dataURI);
-const arrayBuffer = new ArrayBuffer(byteString.length);
-const int8Array = new Uint8Array(arrayBuffer);
-for (let i = 0; i < byteString.length; i++) {
-int8Array[i] = byteString.charCodeAt(i);
-}
-const blob = new Blob([int8Array], { type: 'image/jpeg' });
-return blob;
-}
-  
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
+  }
+
   RemoveProduct(i) {
     // this.file_data.splice(i, 1);
     // console.log(this.file_data);

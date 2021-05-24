@@ -22,6 +22,7 @@ import { PricePipe } from './shop-view/price.pipe';
 import { CartComponent } from './shop-view/cart/cart.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CheckStatusComponent } from './check-status/check-status.component';
+import { ImageProcessingService } from './image-processing.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,6 @@ import { CheckStatusComponent } from './check-status/check-status.component';
     CheckStatusComponent
   ],
   bootstrap: [AppComponent],
-  providers: [BackendTalkerService,NgxImageCompressService]
+  providers: [BackendTalkerService,NgxImageCompressService, ImageProcessingService]
 })
 export class AppModule {}
