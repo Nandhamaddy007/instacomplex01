@@ -76,11 +76,7 @@
             accept=".png,.jpg"
           />
 
-          <img
-            *ngIf="localUrl"
-            [src]="localUrl"
-            alt="shop logo displayed here"
-          />
+
           <img
             *ngIf="ClientForm.value.shopLogo"
             [src]="ClientForm.value.shopLogo"
