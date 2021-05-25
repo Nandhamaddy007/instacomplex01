@@ -74,7 +74,7 @@
             name="uploadfile"
             type="file"
             accept=".png,.jpg"
-          />          
+          />
 
           <img
             *ngIf="ClientForm.value.shopLogo"
@@ -82,8 +82,10 @@
             alt="shop logo displayed here"
           />
           <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
+            <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+              [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
       </div>
       <div class="btn btn-success" style="margin:1rem" (click)="addProduct()">
@@ -103,13 +105,21 @@
           </div>
 
           <div class="formGroup">
-            <input type="file" class="form-control" placeholder="File" />
+            <input type="file" class="form-control"(change)="fileChange($event,i)"
+            type="file"
+            accept=".png,.jpg" />
+            <img
+            *ngIf="Product['productSrc']"
+            [src]="Product['productSrc']"
+            alt="shop logo displayed here"
+          />
             <button
               *ngIf="i>0"
               style="margin-top:0.5rem"
               class="btn btn-danger"
               (click)="RemoveProduct(i)"
             >
+
               Remove
             </button>
           </div>

@@ -27,18 +27,6 @@ export class ImageProcessingService {
       };
     });
   }
-  uploadToCloud(image, imgName): any {
-    this.ref = this.afStorage.ref(imgName);
-    this.task = this.ref.put(image);
-    // return this.ref.getDownloadURL();
-    Observable.crete(observer => {
-      observer.next(this.task);
-      observer.complete();
-    });
-  }
-  uploadProgress() {
-    return this.task.percentageChanges();
-  }
   compressor(image, imgName, imgType) {
     return Observable.create(observer => {
       let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);

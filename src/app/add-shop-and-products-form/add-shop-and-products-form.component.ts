@@ -7,8 +7,9 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/dist/types';
-import { operators } from 'rxjs';
+// import { Observable } from 'rxjs/dist/types';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ImageProcessingService } from '../image-processing.service';
 import { BackendTalkerService } from '../backend-talker.service';
@@ -17,7 +18,6 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from '@angular/fire/storage';
-import { finalize } from 'rxjs/dist/types/operators';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
@@ -143,6 +143,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
     return this.formBuilder.group({
       productName: ['', Validators.required],
       productColor: ['', Validators.required],
+      productId: [''],
+      productSrc: ['', Validators.required],
       ProductVariance: this.formBuilder.array([this.createProductVariance()])
     });
   }
@@ -171,34 +173,58 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   downloadURL: Observable<string>;
-  fileChange(event: any, i?: Number) {
+  fileChange(event: any, i?: any) {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
       let fileName =
-        this.ClientForm.value.shopOwnerInstaId + (i ? '@Prod' : '@Logo');
+        this.ClientForm.value.shopOwnerInstaId + (i + 1 ? '@Prod' : '@Logo');
+      console.log(fileName, i);
       let type = file.type;
       let size = file.size;
       if (size / 1024 < 159) {
         this.ref = this.afStorage.ref(fileName);
-        this.task = this.afStorage.upload('products/', file);
+        this.task = this.afStorage.upload(fileName, file);
         this.uploadProgress = this.task.percentageChanges();
-        this.task.snapshotChanges().pipe(
-          finalize(() => {
-            this.ref.getDownloadURL().subscribe(url => {
-              console.log(url);
-            });
-          })
-        );
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                console.log(url);
+                if (i + 1) {
+                  this.ClientForm.controls.ProductDetails['controls'][i][
+                    'productSrc'
+                  ] = url;
+                  console.log(this.ClientForm.value);
+                }
+              });
+            })
+          )
+          .subscribe(url => {
+            if (typeof url == 'string') {
+              if (i + 1) {
+                this.ClientForm.controls.ProductDetails['controls'][i][
+                  'productSrc'
+                ] = url;
+                console.log(this.ClientForm.value);
+              }
+            }
+          });
       } else {
         this.imgService.imageToUrl(file).subscribe(result => {
           this.imgService
             .compressor(result, fileName, type)
             .subscribe(compressed => {
-              this.imgService
-                .uploadToCloud(compressed, fileName)
-                .subscribe(url => {
-                  this.ClientForm.value.shopLogo = url;
-                });
+              this.ref = this.afStorage.ref(fileName);
+              this.task = this.afStorage.upload(fileName, compressed);
+              this.uploadProgress = this.task.percentageChanges();
+              this.task.snapshotChanges().pipe(
+                finalize(() => {
+                  this.ref.getDownloadURL().subscribe(url => {
+                    console.log(url);
+                  });
+                })
+              );
             });
         });
       }
