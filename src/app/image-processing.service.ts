@@ -22,13 +22,25 @@ export class ImageProcessingService {
   localCompressedURl: any;
   sizeOfOriginalImage: number;
   sizeOFCompressedImage: number;
-  fileToFirebase(img, imgName, imgType, size) {
+  compressFile(img, imgName, imgType, size) {
     var reader = new FileReader();
     reader.onload = (event: any) => {
       let Url = event.target.result;
-      this.compressFile(Url, imgName, imgType);
+      let XYQ = this.setSize(size / 1024);
+      //console.log(XYQ);
+      this.imageCompress.compressFile(Url, -1, XYQ[0], XYQ[1]).then(result => {
+        //console.log(result);
+        const imageBlob = this.dataURItoBlob(result.split(',')[1]);
+        this.file = new File([imageBlob], imgName, {
+          type: imgType
+        });
+        console.log(this.file);
+        // return this.compressor(Url, imgName, imgType);
+      });
     };
-    reader.readAsDataURL(img);
+    console.log(reader.readAsDataURL(img));
+    //console.log(this.file);
+    return this.file;
   }
   uploadToCloud(image, imgName) {
     this.ref = this.afStorage.ref(imgName);
@@ -38,26 +50,15 @@ export class ImageProcessingService {
 
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
-  compressFile(image, imgName, imgType) {
+  compressor(image, imgName, imgType) {
     var orientation = -1;
+    var imageFile;
     this.sizeOfOriginalImage = this.imageCompress.byteCount(image) / 1024;
     console.warn('Size in bytes is now:', this.sizeOfOriginalImage);
     if (this.sizeOfOriginalImage > 150) {
       let XY = 90,
         quality = 90;
-      if (this.sizeOfOriginalImage > 1100 && this.sizeOfOriginalImage < 2200) {
-        XY = 70;
-        quality = 50;
-      } else if (
-        this.sizeOfOriginalImage > 2200 &&
-        this.sizeOfOriginalImage < 3300
-      ) {
-        XY = 60;
-        quality = 40;
-      } else if (this.sizeOfOriginalImage >= 3300) {
-        XY = 40;
-        quality = 30;
-      }
+
       this.imageCompress
         .compressFile(image, orientation, XY, quality)
         .then(result => {
@@ -73,11 +74,30 @@ export class ImageProcessingService {
             this.imgResultAfterCompress.split(',')[1]
           );
 
-          const imageFile = new File([imageBlob], imgName, {
+          imageFile = new File([imageBlob], imgName, {
             type: imgType
           });
         });
+      return imageFile;
     }
+  }
+  setSize(size) {
+    let s = [];
+    if (size > 1100 && size < 2200) {
+      s[0] = 70;
+      s[1] = 50;
+    } else if (size > 2200 && size < 3300) {
+      s[0] = 60;
+      s[1] = 40;
+    } else if (size >= 3300) {
+      s[0] = 40;
+      s[1] = 30;
+    } else {
+      s[0] = 90;
+      s[1] = 90;
+    }
+
+    return s;
   }
   dataURItoBlob(dataURI) {
     const byteString = window.atob(dataURI);

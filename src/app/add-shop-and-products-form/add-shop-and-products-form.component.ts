@@ -171,17 +171,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
       let file = event.target.files[0];
       let fileName =
         this.ClientForm.value.shopOwnerInstaId + (i ? '@Prod' : '@Logo');
-      console.log(fileName);
+      //console.log(fileName);
       // console.log(file);
       let type = file.type;
       let size = file.size;
-      if((size/1024)<159){        
-      this.imgService.uploadToCloud(file, fileName).subscribe(url => {
-        this.ClientForm.value.shopLogo = url;
-      });
-      }else{
+      // if((size/1024)<159){
+      // this.imgService.uploadToCloud(file, fileName).subscribe(url => {
+      //   this.ClientForm.value.shopLogo = url;
+      // });
+      // }else{
 
-      }
+      // }
+      console.log(this.imgService.compressFile(file, fileName, type, size));
+
       // var reader = new FileReader();
       // reader.onload = (event: any) => {
       //   this.localUrl = event.target.result;
