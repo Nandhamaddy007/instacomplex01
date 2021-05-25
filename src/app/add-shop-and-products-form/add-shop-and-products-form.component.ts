@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
-import {
-  AngularFireStorage,
-  AngularFireStorageReference,
-  AngularFireUploadTask
-} from '@angular/fire/storage';
 import {
   FormBuilder,
   FormArray,
@@ -14,9 +8,8 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ImageProcessingService } from '../image-processing.service';
 import { BackendTalkerService } from '../backend-talker.service';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
@@ -25,17 +18,16 @@ import { finalize } from 'rxjs/operators';
 })
 export class AddShopAndProductsFormComponent implements OnInit {
   formLoaded = false;
-  ref: AngularFireStorageReference;
-  task: AngularFireUploadTask;
-  downloadURL: Observable<string>;
+  // ref: AngularFireStorageReference;
+  // task: AngularFireUploadTask;
+  // downloadURL: Observable<string>;
 
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
     private route: ActivatedRoute,
     private router: Router,
-    private afStorage: AngularFireStorage,
-    private imageCompress: NgxImageCompressService
+    private imgService: ImageProcessingService
   ) {}
 
   ClientForm: FormGroup;
@@ -88,7 +80,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         shopOwnerMobile: ['', Validators.required],
         shopOwnerEmail: ['', Validators.required],
         shopOwnerAddress: ['', Validators.required],
-        shopOwnerInstaId: ['', Validators.required],
+        shopOwnerInstaId: ['AkStores', Validators.required],
         shopOwnerGpay: ['', Validators.required],
         shopOwnerPaytm: ['', Validators.required],
         shopLogo: ['', Validators.required],
@@ -174,71 +166,28 @@ export class AddShopAndProductsFormComponent implements OnInit {
   localCompressedURl: any;
   sizeOfOriginalImage: number;
   sizeOFCompressedImage: number;
-  fileChange(event) {
-    this.file = event.target.files[0];
-    let fileName = this.file['name'];
-    //console.log(this.file);
+  fileChange(event: any, i?: Number) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
-        this.compressFile(this.localUrl, fileName);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
-  imgResultBeforeCompress: string;
-  imgResultAfterCompress: string;
-  compressFile(image, fileName) {
-    var orientation = -1;
-    this.sizeOfOriginalImage =
-      this.imageCompress.byteCount(image) / (1024 * 1024);
-    console.warn('Size in bytes is now:', this.sizeOfOriginalImage);
-    this.imageCompress.compressFile(image, orientation, 50, 50).then(result => {
-      this.imgResultAfterCompress = result;
-      this.localCompressedURl = result;
-      this.sizeOFCompressedImage =
-        this.imageCompress.byteCount(result) / (1024 * 1024);
-      console.warn(
-        'Size in bytes after compression:',
-        this.sizeOFCompressedImage
-      );
-      // create file from byte
-      const imageName = fileName;
-      // call method that creates a blob from dataUri
-      const imageBlob = this.dataURItoBlob(
-        this.imgResultAfterCompress.split(',')[1]
-      );
-      //imageFile created below is the new compressed file which can be send to API in form data
-      const imageFile = new File([imageBlob], imageName, {
-        type: 'image/jpeg'
+      let file = event.target.files[0];
+      let fileName =
+        this.ClientForm.value.shopOwnerInstaId + (i ? '@Prod' : '@Logo');
+      console.log(fileName);
+      // console.log(file);
+      let type = file.type;
+      let size = file.size;
+      if((size/1024)<159){        
+      this.imgService.uploadToCloud(file, fileName).subscribe(url => {
+        this.ClientForm.value.shopLogo = url;
       });
-      this.ref = this.afStorage.ref(imageName);
-      this.task = this.ref.put(imageFile);
-      this.task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.ref.getDownloadURL().subscribe(url => {
-              console.log(url);
-              this.ClientForm.value.shopLogo = url;
-            });
-          })
-        )
-        .subscribe(url => {
-          //console.log(url);
-        });
-    });
-  }
-  dataURItoBlob(dataURI) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
+      }else{
+
+      }
+      // var reader = new FileReader();
+      // reader.onload = (event: any) => {
+      //   this.localUrl = event.target.result;
+      //this.compressFile(this.localUrl, fileName);
     }
-    const blob = new Blob([int8Array], { type: 'image/jpeg' });
-    return blob;
+    // reader.readAsDataURL(event.target.files[0]);
   }
 
   RemoveProduct(i) {
