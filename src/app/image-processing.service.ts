@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NgxImageCompressService } from 'ngx-image-compress';
-import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {
   AngularFireStorage,
@@ -17,69 +16,41 @@ export class ImageProcessingService {
     private afStorage: AngularFireStorage,
     private imageCompress: NgxImageCompressService
   ) {}
-  file: any;
-  localUrl: any;
-  localCompressedURl: any;
-  sizeOfOriginalImage: number;
-  sizeOFCompressedImage: number;
-  compressFile(img, imgName, imgType, size) {
-    var reader = new FileReader();
-    reader.onload = (event: any) => {
-      let Url = event.target.result;
-      let XYQ = this.setSize(size / 1024);
-      //console.log(XYQ);
-      this.imageCompress.compressFile(Url, -1, XYQ[0], XYQ[1]).then(result => {
-        //console.log(result);
-        const imageBlob = this.dataURItoBlob(result.split(',')[1]);
-        this.file = new File([imageBlob], imgName, {
-          type: imgType
-        });
-        console.log(this.file);
-        // return this.compressor(Url, imgName, imgType);
-      });
-    };
-    console.log(reader.readAsDataURL(img));
-    //console.log(this.file);
-    return this.file;
+
+  imageToUrl(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return Observable.create(observer => {
+      reader.onloadend = () => {
+        observer.next(reader.result);
+        observer.complete();
+      };
+    });
   }
-  uploadToCloud(image, imgName) {
+  uploadToCloud(image, imgName): any {
     this.ref = this.afStorage.ref(imgName);
     this.task = this.ref.put(image);
-    return this.ref.getDownloadURL();
+    // return this.ref.getDownloadURL();
+    Observable.crete(observer => {
+      observer.next(this.task);
+      observer.complete();
+    });
   }
-
-  imgResultBeforeCompress: string;
-  imgResultAfterCompress: string;
+  uploadProgress() {
+    return this.task.percentageChanges();
+  }
   compressor(image, imgName, imgType) {
-    var orientation = -1;
-    var imageFile;
-    this.sizeOfOriginalImage = this.imageCompress.byteCount(image) / 1024;
-    console.warn('Size in bytes is now:', this.sizeOfOriginalImage);
-    if (this.sizeOfOriginalImage > 150) {
-      let XY = 90,
-        quality = 90;
-
+    return Observable.create(observer => {
+      let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);
       this.imageCompress
-        .compressFile(image, orientation, XY, quality)
+        .compressFile(image, -1, XYQ[0], XYQ[1])
         .then(result => {
-          this.imgResultAfterCompress = result;
-          //this.localCompressedURl = result;
-          // this.sizeOFCompressedImage =
-          //   this.imageCompress.byteCount(result) / 1024;
-          console.warn(
-            'Size in bytes after compression:',
-            this.imageCompress.byteCount(result) / 1024
-          );
-          const imageBlob = this.dataURItoBlob(
-            this.imgResultAfterCompress.split(',')[1]
-          );
-
-          imageFile = new File([imageBlob], imgName, {
-            type: imgType
-          });
+          const imageBlob = this.dataURItoBlob(result.split(',')[1]);
+          let imageFile = new File([imageBlob], imgName, { type: imgType });
+          observer.next(imageFile);
+          observer.complete();
         });
-      return imageFile;
-    }
+    });
   }
   setSize(size) {
     let s = [];

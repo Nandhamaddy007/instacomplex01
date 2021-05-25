@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import {
   FormBuilder,
   FormArray,
@@ -8,8 +7,17 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/dist/types';
+import { operators } from 'rxjs';
+
 import { ImageProcessingService } from '../image-processing.service';
 import { BackendTalkerService } from '../backend-talker.service';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from '@angular/fire/storage';
+import { finalize } from 'rxjs/dist/types/operators';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
@@ -18,16 +26,15 @@ import { BackendTalkerService } from '../backend-talker.service';
 })
 export class AddShopAndProductsFormComponent implements OnInit {
   formLoaded = false;
-  // ref: AngularFireStorageReference;
-  // task: AngularFireUploadTask;
-  // downloadURL: Observable<string>;
 
+  uploadProgress: Observable<number>;
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
     private route: ActivatedRoute,
     private router: Router,
-    private imgService: ImageProcessingService
+    private imgService: ImageProcessingService,
+    private afStorage: AngularFireStorage
   ) {}
 
   ClientForm: FormGroup;
@@ -161,35 +168,41 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //console.log(f)
     //console.log(f['controls'][0].get('ProductVariance'))
   }
-  file: any;
-  localUrl: any;
-  localCompressedURl: any;
-  sizeOfOriginalImage: number;
-  sizeOFCompressedImage: number;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  downloadURL: Observable<string>;
   fileChange(event: any, i?: Number) {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
       let fileName =
         this.ClientForm.value.shopOwnerInstaId + (i ? '@Prod' : '@Logo');
-      //console.log(fileName);
-      // console.log(file);
       let type = file.type;
       let size = file.size;
-      // if((size/1024)<159){
-      // this.imgService.uploadToCloud(file, fileName).subscribe(url => {
-      //   this.ClientForm.value.shopLogo = url;
-      // });
-      // }else{
-
-      // }
-      console.log(this.imgService.compressFile(file, fileName, type, size));
-
-      // var reader = new FileReader();
-      // reader.onload = (event: any) => {
-      //   this.localUrl = event.target.result;
-      //this.compressFile(this.localUrl, fileName);
+      if (size / 1024 < 159) {
+        this.ref = this.afStorage.ref(fileName);
+        this.task = this.afStorage.upload('products/', file);
+        this.uploadProgress = this.task.percentageChanges();
+        this.task.snapshotChanges().pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              console.log(url);
+            });
+          })
+        );
+      } else {
+        this.imgService.imageToUrl(file).subscribe(result => {
+          this.imgService
+            .compressor(result, fileName, type)
+            .subscribe(compressed => {
+              this.imgService
+                .uploadToCloud(compressed, fileName)
+                .subscribe(url => {
+                  this.ClientForm.value.shopLogo = url;
+                });
+            });
+        });
+      }
     }
-    // reader.readAsDataURL(event.target.files[0]);
   }
 
   RemoveProduct(i) {
@@ -209,16 +222,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
       )['controls']
     );
   }
-  // uploadFile() {
-  //   this.service.uploader(this.file_data).subscribe(
-  //     res => {
-  //       console.log(res);
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
   updateShop() {
     this.service
       .updateShop(this.ClientForm.value, this.shopName)
