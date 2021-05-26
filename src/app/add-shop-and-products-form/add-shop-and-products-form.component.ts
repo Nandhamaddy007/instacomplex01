@@ -179,7 +179,9 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (i == 'Logo') {
       this.afStorage.storage
         .refFromURL(this.ClientForm.value.shopLogo)
-        .delete();
+        .delete()
+       
+      this.ClientForm.controls.shopLogo.setValue('');
     }
   }
   fileChange(event: any, i?: any) {
@@ -209,11 +211,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
                   this.ClientForm.controls.ProductDetails['controls'][i][
                     'productSrc'
                   ] = url;
-                  console.log(this.ClientForm.value);
+                  // console.log(this.ClientForm.value);
                 } else {
                   console.log(url);
-                  this.ClientForm.controls.shopLogo = url;
-                  console.log(this.ClientForm.controls.shopLogo);
+                  this.ClientForm.controls.shopLogo.setValue(url);
+                  // console.log(this.ClientForm.controls.shopLogo);
+                  // console.log(this.ClientForm.value);
                 }
               });
             })
@@ -255,7 +258,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
                         ] = url;
                         console.log(this.ClientForm.value);
                       } else {
-                        this.ClientForm.controls.shopLogo = url;
+                        this.ClientForm.controls.shopLogo.setValue(url);
                       }
                     });
                   })

@@ -75,13 +75,20 @@
             type="file"
             accept=".png,.jpg"
           />
+          <button
+            class="btn btn-sm btn-danger"
+            *ngIf="ClientForm.value['shopLogo']"
+            (click)="deleteImage('Logo')"
+          >
+            Delete
+          </button>
           <img
-            *ngIf="ClientForm.value.shopLogo"
+            *ngIf="ClientForm.value['shopLogo']"
             [src]="ClientForm.value.shopLogo"
             alt="shop logo displayed here"
           />
 
-          <div class="progress">
+          <div class="progress" *ngIf="!ClientForm.value['shopLogo']">
             <div
               class="progress-bar progress-bar-striped bg-primary"
               role="progressbar"
