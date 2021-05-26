@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Observable } from 'rxjs/dist/types';
-import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ImageProcessingService } from '../image-processing.service';
@@ -18,6 +17,7 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from '@angular/fire/storage';
+import { Observable } from 'rxjs/dist/types';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
@@ -27,7 +27,8 @@ import {
 export class AddShopAndProductsFormComponent implements OnInit {
   formLoaded = false;
 
-  uploadProgress: Observable<number>;
+  uploadProgressLogo: Observable<number>;
+  uploadProgressProducts: Observable<number>[];
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
@@ -172,7 +173,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  downloadURL: Observable<string>;
   fileChange(event: any, i?: any) {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
@@ -184,7 +184,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
       if (size / 1024 < 159) {
         this.ref = this.afStorage.ref(fileName);
         this.task = this.afStorage.upload(fileName, file);
-        this.uploadProgress = this.task.percentageChanges();
+        if (i + 1) {
+          this.uploadProgressProducts[i] = this.task.percentageChanges();
+        } else {
+          this.uploadProgressLogo = this.task.percentageChanges();
+        }
+
         this.task
           .snapshotChanges()
           .pipe(
@@ -196,6 +201,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
                     'productSrc'
                   ] = url;
                   console.log(this.ClientForm.value);
+                } else {
+                  this.ClientForm.controls.shopLogo = url;
                 }
               });
             })
@@ -217,14 +224,29 @@ export class AddShopAndProductsFormComponent implements OnInit {
             .subscribe(compressed => {
               this.ref = this.afStorage.ref(fileName);
               this.task = this.afStorage.upload(fileName, compressed);
-              this.uploadProgress = this.task.percentageChanges();
-              this.task.snapshotChanges().pipe(
-                finalize(() => {
-                  this.ref.getDownloadURL().subscribe(url => {
-                    console.log(url);
-                  });
-                })
-              );
+              if (i + 1) {
+                this.uploadProgressProducts[i] = this.task.percentageChanges();
+              } else {
+                this.uploadProgressLogo = this.task.percentageChanges();
+              }
+              this.task
+                .snapshotChanges()
+                .pipe(
+                  finalize(() => {
+                    this.ref.getDownloadURL().subscribe(url => {
+                      console.log(url);
+                      if (i + 1) {
+                        this.ClientForm.controls.ProductDetails['controls'][i][
+                          'productSrc'
+                        ] = url;
+                        console.log(this.ClientForm.value);
+                      } else {
+                        this.ClientForm.controls.shopLogo = url;
+                      }
+                    });
+                  })
+                )
+                .subscribe(res => {});
             });
         });
       }

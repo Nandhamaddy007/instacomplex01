@@ -83,7 +83,7 @@
           />
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
-              [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)"
+              [style.width]="(uploadProgressLogo | async) + '%'" [attr.aria-valuenow]="(uploadProgressLogo | async)"
               aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
@@ -113,6 +113,11 @@
             [src]="Product['productSrc']"
             alt="shop logo displayed here"
           />
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+                [style.width]="(uploadProgressProducts[i] | async) + '%'"
+                [attr.aria-valuenow]="(uploadProgressProducts[i] | async)" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             <button
               *ngIf="i>0"
               style="margin-top:0.5rem"
