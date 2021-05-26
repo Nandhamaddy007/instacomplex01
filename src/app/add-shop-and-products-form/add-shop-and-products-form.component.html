@@ -121,20 +121,20 @@
             <input
               type="file"
               class="form-control"
-              (change)="fileChange($event,i)"
+              (change)="addProductImage($event,i)"
               type="file"
               accept=".png,.jpg"
             />
             <img
-              *ngIf="Product['productSrc']"
-              [src]="Product['productSrc']"
-              alt="shop logo displayed here"
+              *ngIf="dummyProducts[i]['src']"
+              [src]="dummyProducts[i]['src']"
+              alt="Product image displayed here"
             />
-            <div class="progress">
+            <!-- <div class="progress">
               <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
                 *ngIf="uploadProgressProducts[i]" [style.width]="(uploadProgressProducts[i] | async) + '%'"
                 [attr.aria-valuenow]="(uploadProgressProducts[i] | async)" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            </div> -->
             <button
               *ngIf="i>0"
               style="margin-top:0.5rem"

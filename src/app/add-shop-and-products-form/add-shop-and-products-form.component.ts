@@ -178,7 +178,21 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   dummyLogo = {};
-  dummyProducts = [];
+  dummyProducts = {};
+  addProductImage(event, i) {
+    if (event.target.files && event.target.files[0]) {
+      this.dummyProducts[i]['file'] = event.target.files[0];
+      this.dummyProducts[i]['type'] = this.dummyProducts[i]['file'].type;
+      let reader = new FileReader();
+      reader.onloadend = event => {
+        this.dummyProducts[i]['src'] = event.target.result;
+      };
+      reader.readAsDataURL(this.dummyProducts[i]['file']);
+    }
+  }
+  deleteProductImage(i) {
+    this.dummyProducts[i]={};
+  }
   addLogo(event) {
     if (event.target.files && event.target.files[0]) {
       this.dummyLogo['file'] = event.target.files[0];
@@ -192,13 +206,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   deleteLogo() {
     this.dummyLogo = {};
-    if(this.ClientForm.value.shopUrl!=''){
-      this.afStorage.storage.refFromURL(this.ClientForm.value.shopLogo).delete().then(()=>{
-this.ClientForm.controls.shopUrl.setValue('');
-      })
-      
+    if (this.ClientForm.value.shopLogo != '') {
+      this.afStorage.storage
+        .refFromURL(this.ClientForm.value.shopLogo)
+        .delete()
+        .then(() => {
+          this.ClientForm.controls.shopUrl.setValue('');
+        });
     }
-    
   }
   deleteImage(i) {
     if (i == 'Logo') {
