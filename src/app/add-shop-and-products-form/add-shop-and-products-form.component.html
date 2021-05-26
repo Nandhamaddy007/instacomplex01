@@ -69,25 +69,26 @@
         <div class="col-md-3">
           <label>Shop LOGO</label>:
           <input
-            (change)="fileChange($event)"
+            (change)="addLogo($event)"
             class="outline"
             name="uploadfile"
             type="file"
             accept=".png,.jpg"
           />
+
           <button
-            class="btn btn-sm btn-danger"
-            *ngIf="ClientForm.value['shopLogo']"
-            (click)="deleteImage('Logo')"
+            class="btn btn-sm btn-outline-danger"
+            *ngIf="dummyLogo['src']"
+            (click)="deleteLogo()"
           >
             Delete
           </button>
           <img
-            *ngIf="ClientForm.value['shopLogo']"
-            [src]="ClientForm.value.shopLogo"
+            *ngIf="dummyLogo['src']"
+            [src]="dummyLogo['src']"
             alt="shop logo displayed here"
           />
-
+          <!-- 
           <div class="progress" *ngIf="!ClientForm.value['shopLogo']">
             <div
               class="progress-bar progress-bar-striped bg-primary"
@@ -97,18 +98,14 @@
               aria-valuemin="0"
               aria-valuemax="100"
             ></div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="btn btn-success" style="margin:1rem" (click)="addProduct()">
         Add an Item +
       </div>
-      <div
-        id="product"
-        formArrayName="ProductDetails"
-        class="container"
-        *ngFor="let Product of ClientForm.get('ProductDetails')['controls']; let i=index;"
-      >
+      <div id="product" formArrayName="ProductDetails" class="container"
+        *ngFor="let Product of ClientForm.get('ProductDetails')['controls']; let i=index;">
         <h4>Product: {{i+1}}</h4>
         <div [formGroupName]="i">
           <div class="formGroup" style="margin-bottom:0.5rem">
@@ -134,15 +131,9 @@
               alt="shop logo displayed here"
             />
             <div class="progress">
-              <div
-                class="progress-bar progress-bar-striped bg-primary"
-                role="progressbar"
-                *ngIf="uploadProgressProducts[i]"
-                [style.width]="(uploadProgressProducts[i] | async) + '%'"
-                [attr.aria-valuenow]="(uploadProgressProducts[i] | async)"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
+              <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+                *ngIf="uploadProgressProducts[i]" [style.width]="(uploadProgressProducts[i] | async) + '%'"
+                [attr.aria-valuenow]="(uploadProgressProducts[i] | async)" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <button
               *ngIf="i>0"
@@ -161,24 +152,13 @@
               type="text"
             />
           </div>
-          <div
-            class="btn btn-primary"
-            style="margin-top:0.5rem"
-            (click)="addProductVariance(i)"
-          >
+          <div class="btn btn-primary" style="margin-top:0.5rem" (click)="addProductVariance(i)">
             Add Variance +
           </div>
-          <div
-            formArrayName="ProductVariance"
-            *ngFor="let Variance of Product.get('ProductVariance')['controls']; let j=index;"
-          >
+          <div formArrayName="ProductVariance"
+            *ngFor="let Variance of Product.get('ProductVariance')['controls']; let j=index;">
             <div [formGroupName]="j">
-              <div
-                class="btn btn-danger"
-                *ngIf="j>0"
-                style="margin-top:0.5rem"
-                (click)="RemoveVariance(i,j)"
-              >
+              <div class="btn btn-danger" *ngIf="j>0" style="margin-top:0.5rem" (click)="RemoveVariance(i,j)">
                 Remove Variance
               </div>
               <div class="formGroup">

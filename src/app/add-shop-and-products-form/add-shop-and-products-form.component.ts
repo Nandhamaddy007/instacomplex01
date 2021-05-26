@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Observable } from 'rxjs/dist/types';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -36,7 +37,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private imgService: ImageProcessingService,
-    private afStorage: AngularFireStorage
+    private afStorage: AngularFireStorage,
+    private imageProcess: NgxImageCompressService
   ) {}
 
   ClientForm: FormGroup;
@@ -175,12 +177,35 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
+  dummyLogo = {};
+  dummyProducts = [];
+  addLogo(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.dummyLogo['file'] = event.target.files[0];
+      this.dummyLogo['type'] = this.dummyLogo['file'].type;
+      let reader = new FileReader();
+      reader.onloadend = event => {
+        this.dummyLogo['src'] = event.target.result;
+      };
+      reader.readAsDataURL(this.dummyLogo['file']);
+    }
+  }
+  deleteLogo() {
+    this.dummyLogo = {};
+    if(this.ClientForm.value.shopUrl!=''){
+      this.afStorage.storage.refFromURL(this.ClientForm.value.shopLogo).delete().then(()=>{
+this.ClientForm.controls.shopUrl.setValue('');
+      })
+      
+    }
+    
+  }
   deleteImage(i) {
     if (i == 'Logo') {
       this.afStorage.storage
         .refFromURL(this.ClientForm.value.shopLogo)
-        .delete()
-       
+        .delete();
+
       this.ClientForm.controls.shopLogo.setValue('');
     }
   }
