@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Observable } from 'rxjs/dist/types';
+import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ImageProcessingService } from '../image-processing.service';
@@ -17,7 +18,7 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from '@angular/fire/storage';
-import { Observable } from 'rxjs/dist/types';
+// import { Observable } from 'rxjs/dist/types';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
