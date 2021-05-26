@@ -29,7 +29,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   formLoaded = false;
 
   uploadProgressLogo: Observable<number>;
-  uploadProgressProducts: Observable<number>[];
+  uploadProgressProducts: Observable<number>[] = new Array();
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService,
@@ -142,6 +142,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
 
   createProduct(): FormGroup {
+    this.uploadProgressProducts.push();
     return this.formBuilder.group({
       productName: ['', Validators.required],
       productColor: ['', Validators.required],
@@ -174,11 +175,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
+  deleteImage(i) {
+    if (i == 'Logo') {
+      this.afStorage.storage
+        .refFromURL(this.ClientForm.value.shopLogo)
+        .delete();
+    }
+  }
   fileChange(event: any, i?: any) {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
       let fileName =
-        this.ClientForm.value.shopOwnerInstaId + (i + 1 ? '@Prod' : '@Logo');
+        this.ClientForm.value.shopOwnerInstaId +
+        (i + 1 ? '@Prod' + (i + 1) : '@Logo');
       console.log(fileName, i);
       let type = file.type;
       let size = file.size;
@@ -196,27 +205,31 @@ export class AddShopAndProductsFormComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.ref.getDownloadURL().subscribe(url => {
-                console.log(url);
                 if (i + 1) {
                   this.ClientForm.controls.ProductDetails['controls'][i][
                     'productSrc'
                   ] = url;
                   console.log(this.ClientForm.value);
                 } else {
+                  console.log(url);
                   this.ClientForm.controls.shopLogo = url;
+                  console.log(this.ClientForm.controls.shopLogo);
                 }
               });
             })
           )
           .subscribe(url => {
-            if (typeof url == 'string') {
-              if (i + 1) {
-                this.ClientForm.controls.ProductDetails['controls'][i][
-                  'productSrc'
-                ] = url;
-                console.log(this.ClientForm.value);
-              }
-            }
+            // if (typeof url == 'string') {
+            //   if (i + 1) {
+            //     this.ClientForm.controls.ProductDetails['controls'][i][
+            //       'productSrc'
+            //     ] = url;
+            //     console.log(this.ClientForm.value);
+            //   } else {
+            //     console.log(url);
+            //     this.ClientForm.controls.shopLogo = url;
+            //   }
+            // }
           });
       } else {
         this.imgService.imageToUrl(file).subscribe(result => {
