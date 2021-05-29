@@ -37,20 +37,21 @@ export class ImageProcessingService {
                 // console.log(url);
                 response.push(url);
                 // observer.next(url);
-                //console.log(url);
+                console.log(url);
 
-                if (+i == products.length - 1) {
-                  //console.log(url);
+                if (+i === products.length - 1) {
+                  console.log(products.length - 1);
                   observer.next(response);
                   observer.complete();
                 }
               });
             })
           )
-          .subscribe();
+          .subscribe()
+          
       }
-      observer.next(response);
-      observer.complete();
+      // observer.next(response);
+      // observer.complete();
 
       // console.log(response);
       // observer.next(response);

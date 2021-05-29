@@ -356,7 +356,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
           console.log(err);
         },
         () => {
-          this.ClientForm.value;
+          console.log(this.ClientForm.value);
           console.log('another');
         }
       );
