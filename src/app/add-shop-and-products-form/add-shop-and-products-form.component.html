@@ -78,7 +78,7 @@
 
           <button
             class="btn btn-sm btn-outline-danger"
-            *ngIf="dummyLogo['src']"
+            *ngIf=""
             (click)="deleteLogo()"
           >
             Delete
@@ -126,10 +126,14 @@
               accept=".png,.jpg"
             />
             <img
-              *ngIf="dummyProducts[i]['src']"
-              [src]="dummyProducts[i]['src']"
+              *ngIf="ClientForm.get('ProductDetails')
+          ['controls'][i].get('productSrc').value"
+              [src]="ClientForm.get('ProductDetails')
+          ['controls'][i].get('productSrc').value"
               alt="Product image displayed here"
             />
+            <button class="btn btn-outline-danger"  *ngIf="ClientForm.get('ProductDetails')
+          ['controls'][i].get('productSrc').value" (click)="deleteProductImage(i)">Delete image</button>
             <!-- <div class="progress">
               <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
                 *ngIf="uploadProgressProducts[i]" [style.width]="(uploadProgressProducts[i] | async) + '%'"

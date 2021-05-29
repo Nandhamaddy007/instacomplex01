@@ -6,6 +6,8 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from '@angular/fire/storage';
+// import { finalize } from 'rxjs/dist/types/operators';
+import { finalize } from 'rxjs/operators';
 
 @Injectable()
 export class ImageProcessingService {
@@ -17,6 +19,34 @@ export class ImageProcessingService {
     private imageCompress: NgxImageCompressService
   ) {}
 
+  uploadToCloud(product, folder, i) {
+    let response = [];
+    return Observable.create(observer => {
+      let imageBlob = this.dataURItoBlob(product);
+      let imageFile = new File([imageBlob], 'temp', {
+        type: product.split(';')[0].split(':')[1]
+      });
+      this.ref = this.afStorage.ref(folder + '/Product' + i);
+      this.task = this.ref.put(imageFile);
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              console.log(url);
+              observer.next(url);
+            });
+          })
+        )
+        .subscribe();
+
+      // console.log(response);
+      // observer.next(response);
+      // observer.complete(() => {
+      //   console.log(response);
+      // });
+    });
+  }
   imageToUrl(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -59,7 +89,8 @@ export class ImageProcessingService {
     return s;
   }
   dataURItoBlob(dataURI) {
-    const byteString = window.atob(dataURI);
+    // console.log(dataURI);
+    const byteString = window.atob(dataURI.split(',')[1]);
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
     for (let i = 0; i < byteString.length; i++) {

@@ -181,17 +181,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
   dummyProducts = {};
   addProductImage(event, i) {
     if (event.target.files && event.target.files[0]) {
-      this.dummyProducts[i]['file'] = event.target.files[0];
-      this.dummyProducts[i]['type'] = this.dummyProducts[i]['file'].type;
       let reader = new FileReader();
-      reader.onloadend = event => {
-        this.dummyProducts[i]['src'] = event.target.result;
+      reader.onload = event => {
+        this.ClientForm.get('ProductDetails')
+          ['controls'][i].get('productSrc')
+          .setValue(event.target.result);
       };
-      reader.readAsDataURL(this.dummyProducts[i]['file']);
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
   deleteProductImage(i) {
-    this.dummyProducts[i]={};
+    this.ClientForm.get('ProductDetails')
+      ['controls'][i].get('productSrc')
+      .setValue('');
   }
   addLogo(event) {
     if (event.target.files && event.target.files[0]) {
@@ -333,13 +335,29 @@ export class AddShopAndProductsFormComponent implements OnInit {
       .subscribe(res => console.log(res), err => console.log(err));
   }
   CreateShop() {
-    this.service.CreateShop(this.ClientForm.value).subscribe(
-      res => {
-        console.log(res);
-        alert(res.body);
-        this.router.navigate(['complex/' + res.shopName]);
-      },
-      err => console.log(err)
-    );
+    this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
+    console.log();
+    for (let i in this.ProductDetails.value) {
+      if (this.ProductDetails.value[i]['productSrc'] != '') {
+        this.imgService
+          .uploadToCloud(
+            this.ProductDetails.value[i]['productSrc'],
+            this.ClientForm.value.shopOwnerInstaId,
+            i
+          )
+          .subscribe(src => {
+            console.log(src);
+            this.ClientForm.get('ProductDetails');
+          });
+      }
+    }
+    // this.service.CreateShop(this.ClientForm.value).subscribe(
+    //   res => {
+    //     console.log(res);
+    //     alert(res.body);
+    //     this.router.navigate(['complex/' + res.shopName]);
+    //   },
+    //   err => console.log(err)
+    // );
   }
 }
