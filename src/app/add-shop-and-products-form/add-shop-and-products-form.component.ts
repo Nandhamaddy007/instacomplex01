@@ -336,21 +336,31 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   CreateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
-    console.log();
-    for (let i in this.ProductDetails.value) {
-      if (this.ProductDetails.value[i]['productSrc'] != '') {
-        this.imgService
-          .uploadToCloud(
-            this.ProductDetails.value[i]['productSrc'],
-            this.ClientForm.value.shopOwnerInstaId,
-            i
-          )
-          .subscribe(src => {
-            console.log(src);
-            this.ClientForm.get('ProductDetails');
+    this.imgService
+      .uploadToCloud(
+        this.ProductDetails.value,
+        this.ClientForm.value.shopOwnerInstaId
+      )
+      .subscribe(
+        urls => {
+          console.log(urls);
+          urls.forEach((url, j) => {
+            console.log(url);
+            console.log();
+            this.ClientForm.get('ProductDetails')
+              ['controls'][j].get('productSrc')
+              .setValue(url);
           });
-      }
-    }
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          this.ClientForm.value;
+          console.log('another');
+        }
+      );
+
     // this.service.CreateShop(this.ClientForm.value).subscribe(
     //   res => {
     //     console.log(res);
@@ -359,5 +369,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //   },
     //   err => console.log(err)
     // );
+  }
+  see() {
+    this.ClientForm.get('ProductDetails')
+      ['controls'][0].get('productId')
+      .setValue('Hello');
+    console.log(
+      this.ClientForm.get('ProductDetails')['controls'][0].get('productSrc')
+        .value
+    );
   }
 }

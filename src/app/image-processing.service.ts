@@ -19,26 +19,38 @@ export class ImageProcessingService {
     private imageCompress: NgxImageCompressService
   ) {}
 
-  uploadToCloud(product, folder, i) {
+  uploadToCloud(products, folder) {
     let response = [];
-    return Observable.create(observer => {
-      let imageBlob = this.dataURItoBlob(product);
-      let imageFile = new File([imageBlob], 'temp', {
-        type: product.split(';')[0].split(':')[1]
-      });
-      this.ref = this.afStorage.ref(folder + '/Product' + i);
-      this.task = this.ref.put(imageFile);
-      this.task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.ref.getDownloadURL().subscribe(url => {
-              console.log(url);
-              observer.next(url);
-            });
-          })
-        )
-        .subscribe();
+    const up = Observable.create(observer => {
+      for (let i in products) {
+        let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+        let imageFile = new File([imageBlob], 'temp', {
+          type: products[i]['productSrc'].split(';')[0].split(':')[1]
+        });
+        this.ref = this.afStorage.ref(folder + '/Product' + i);
+        this.task = this.ref.put(imageFile);
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                // console.log(url);
+                response.push(url);
+                // observer.next(url);
+                //console.log(url);
+
+                if (+i == products.length - 1) {
+                  //console.log(url);
+                  observer.next(response);
+                  observer.complete();
+                }
+              });
+            })
+          )
+          .subscribe();
+      }
+      observer.next(response);
+      observer.complete();
 
       // console.log(response);
       // observer.next(response);
@@ -46,6 +58,7 @@ export class ImageProcessingService {
       //   console.log(response);
       // });
     });
+    return up;
   }
   imageToUrl(file) {
     const reader = new FileReader();

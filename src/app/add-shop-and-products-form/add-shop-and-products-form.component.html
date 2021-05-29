@@ -104,6 +104,7 @@
       <div class="btn btn-success" style="margin:1rem" (click)="addProduct()">
         Add an Item +
       </div>
+      <button (click)="see()">Click</button>
       <div id="product" formArrayName="ProductDetails" class="container"
         *ngFor="let Product of ClientForm.get('ProductDetails')['controls']; let i=index;">
         <h4>Product: {{i+1}}</h4>
