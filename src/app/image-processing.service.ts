@@ -18,7 +18,19 @@ export class ImageProcessingService {
     private afStorage: AngularFireStorage,
     private imageCompress: NgxImageCompressService
   ) {}
-
+  UpdateImages(products, folder) {
+    return Observable.create(observer => {
+      let response = {};
+      for (let i in products) {
+        console.log(i);
+        response[i] = 'vlidatet' + i;
+        if (i == Object.keys(products)[Object.keys(products).length - 1]) {
+          observer.next(response);
+          observer.complete();
+        }
+      }
+    });
+  }
   uploadToCloud(products, folder) {
     let response = [];
     const up = Observable.create(observer => {
@@ -26,6 +38,11 @@ export class ImageProcessingService {
         let link: String = products[i]['productSrc'];
         if (link.startsWith('https://firebasestorage.googleapis.com')) {
           response.push(products[i]['productSrc']);
+          if (+i === products.length - 1) {
+            console.log(products.length - 1);
+            observer.next(response);
+            observer.complete();
+          }
         } else {
           let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
           let imageFile = new File([imageBlob], 'temp', {

@@ -179,7 +179,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   dummyLogo = {};
-  dummyProducts = {};
   addProductImage(event, i) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -187,6 +186,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc')
           .setValue(event.target.result);
+        this.dummyProducts[i] = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -330,32 +330,31 @@ export class AddShopAndProductsFormComponent implements OnInit {
       )['controls']
     );
   }
+  dummyProducts = {};
   updateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
+    console.log(this.dummyProducts);
     this.imgService
-      .uploadToCloud(
-        this.ProductDetails.value,
-        this.ClientForm.value.shopOwnerInstaId
-      )
+      .UpdateImages(this.dummyProducts, this.ClientForm.value.shopOwnerInstaId)
       .subscribe(
         urls => {
           console.log(urls);
-          urls.forEach((url, j) => {
-            console.log(url);
-            console.log();
-            this.ClientForm.get('ProductDetails')
-              ['controls'][j].get('productSrc')
-              .setValue(url);
-          });
+          // urls.forEach((url, j) => {
+          //   console.log(url);
+          //   console.log();
+          //   this.ClientForm.get('ProductDetails')
+          //     ['controls'][j].get('productSrc')
+          //     .setValue(url);
+          // });
         },
         err => {
           console.log(err);
         },
         () => {
-          // console.log(this.ClientForm.value);
-          this.service
-            .updateShop(this.ClientForm.value, this.shopName)
-            .subscribe(res => console.log(res), err => console.log(err));
+          console.log(this.ClientForm.value);
+          // this.service
+          //   .updateShop(this.ClientForm.value, this.shopName)
+          //   .subscribe(res => console.log(res), err => console.log(err));
         }
       );
   }
