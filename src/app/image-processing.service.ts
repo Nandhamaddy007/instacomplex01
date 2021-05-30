@@ -18,15 +18,34 @@ export class ImageProcessingService {
     private afStorage: AngularFireStorage,
     private imageCompress: NgxImageCompressService
   ) {}
-  UpdateImages(products, folder) {
+  deleteImages(src) {
+    return Observable.create(observer => {
+      if (Object.keys(src).length == 0) {
+        observer.next('deleted');
+      }
+      for (let i in src) {
+        console.log('delete', src[i], src);
+        this.afStorage.storage.refFromURL(src[i]).delete;
+        if (i == Object.keys(src)[Object.keys(src).length - 1]) {
+          observer.next('deleted');
+          observer.complete();
+        }
+      }
+    });
+  }
+  UpdateImages(products, folder, details) {
     return Observable.create(observer => {
       let response = {};
+      if (Object.keys(products).length == 0) {
+        observer.next('updated');
+      }
+
       for (let i in products) {
         let imageBlob = this.dataURItoBlob(products[i]);
         let imageFile = new File([imageBlob], 'temp', {
           type: products[i].split(';')[0].split(':')[1]
         });
-        this.ref = this.afStorage.ref(folder + '/Product' + i);
+        this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
         this.task = this.ref.put(imageFile);
         this.task
           .snapshotChanges()
@@ -56,41 +75,31 @@ export class ImageProcessingService {
     let response = [];
     const up = Observable.create(observer => {
       for (let i in products) {
-        let link: String = products[i]['productSrc'];
-        if (link.startsWith('https://firebasestorage.googleapis.com')) {
-          response.push(products[i]['productSrc']);
-          if (+i === products.length - 1) {
-            console.log(products.length - 1);
-            observer.next(response);
-            observer.complete();
-          }
-        } else {
-          let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
-          let imageFile = new File([imageBlob], 'temp', {
-            type: products[i]['productSrc'].split(';')[0].split(':')[1]
-          });
-          this.ref = this.afStorage.ref(folder + '/Product' + i);
-          this.task = this.ref.put(imageFile);
-          this.task
-            .snapshotChanges()
-            .pipe(
-              finalize(() => {
-                this.ref.getDownloadURL().subscribe(url => {
-                  // console.log(url);
-                  response.push(url);
-                  // observer.next(url);
-                  console.log(url);
+        let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+        let imageFile = new File([imageBlob], 'temp', {
+          type: products[i]['productSrc'].split(';')[0].split(':')[1]
+        });
+        this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
+        this.task = this.ref.put(imageFile);
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                // console.log(url);
+                response.push(url);
+                // observer.next(url);
+                console.log(url);
 
-                  if (+i === products.length - 1) {
-                    console.log(products.length - 1);
-                    observer.next(response);
-                    observer.complete();
-                  }
-                });
-              })
-            )
-            .subscribe();
-        }
+                if (+i === products.length - 1) {
+                  console.log(products.length - 1);
+                  observer.next(response);
+                  observer.complete();
+                }
+              });
+            })
+          )
+          .subscribe();
       }
       // observer.next(response);
       // observer.complete();
