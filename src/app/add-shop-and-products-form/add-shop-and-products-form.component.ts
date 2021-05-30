@@ -183,6 +183,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = event => {
+        if (this.deletedProducts[i] == undefined) {
+          this.deletedProducts[i] = this.ClientForm.value.ProductDetails[
+            i
+          ].productSrc;
+        }
+        // console.log(this.deletedProducts[i]);
         this.ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc')
           .setValue(event.target.result);
@@ -192,9 +198,27 @@ export class AddShopAndProductsFormComponent implements OnInit {
     }
   }
   deleteProductImage(i) {
-    this.ClientForm.get('ProductDetails')
-      ['controls'][i].get('productSrc')
-      .setValue('');
+    // this.ClientForm.get('ProductDetails')
+    //   ['controls'][i].get('productSrc')
+    //   .setValue('');
+    if (this.deletedProducts[i] == undefined) {
+      this.deletedProducts[i] = this.ClientForm.value.ProductDetails[
+        i
+      ].productSrc;
+      this.ClientForm.get('ProductDetails')
+        ['controls'][i].get('productSrc')
+        .setValue('');
+      this.dummyProducts[i] = '';
+      //console.log(this.deletedProducts[i]);
+      // console.log('if part');
+    } else {
+      // console.log('ELse part');
+      // console.log(this.deletedProducts[i])
+      this.ClientForm.get('ProductDetails')
+        ['controls'][i].get('productSrc')
+        .setValue('');
+      this.dummyProducts = '';
+    }
   }
   addLogo(event) {
     if (event.target.files && event.target.files[0]) {
@@ -331,6 +355,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     );
   }
   dummyProducts = {};
+  deletedProducts = {};
   updateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
     console.log(this.dummyProducts);

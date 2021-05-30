@@ -22,12 +22,33 @@ export class ImageProcessingService {
     return Observable.create(observer => {
       let response = {};
       for (let i in products) {
-        console.log(i);
-        response[i] = 'vlidatet' + i;
-        if (i == Object.keys(products)[Object.keys(products).length - 1]) {
-          observer.next(response);
-          observer.complete();
-        }
+        let imageBlob = this.dataURItoBlob(products[i]);
+        let imageFile = new File([imageBlob], 'temp', {
+          type: products[i].split(';')[0].split(':')[1]
+        });
+        this.ref = this.afStorage.ref(folder + '/Product' + i);
+        this.task = this.ref.put(imageFile);
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                // console.log(url);
+                response[i] = url;
+                // observer.next(url);
+                console.log(url);
+
+                if (
+                  i == Object.keys(products)[Object.keys(products).length - 1]
+                ) {
+                  console.log(products.length - 1);
+                  observer.next(response);
+                  observer.complete();
+                }
+              });
+            })
+          )
+          .subscribe();
       }
     });
   }
