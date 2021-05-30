@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 })
 export class BackendTalkerService {
   constructor(private http: HttpClient) {}
-  endpoint = 'https://kmk43.sse.codesandbox.io/';
+  endpoint = 'https://w9oc5.sse.codesandbox.io/';
   uploader(files: any): any {
     //console.log('DIR', __dirname);
 

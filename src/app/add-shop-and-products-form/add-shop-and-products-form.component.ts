@@ -70,6 +70,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               ProductDetails: PDs
             });
             this.formLoaded = true;
+            console.log(this.ClientForm.value);
           } else {
             let ans = confirm(
               'Dear admin check your shop name please...\n Wanna create one?'
@@ -99,7 +100,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       });
       this.formLoaded = true;
 
-      //console.log(this.ClientForm.value);
+      // console.log(this.ClientForm.value);
     }
   }
   fillProductDetails(products: any): FormArray {
@@ -108,7 +109,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       list.push(
         this.formBuilder.group({
           productName: [products[product]['productName'], Validators.required],
-
+          productSrc: [products[product]['productSrc'], Validators.required],
           productColor: [
             products[product]['productColor'],
             Validators.required
@@ -330,9 +331,33 @@ export class AddShopAndProductsFormComponent implements OnInit {
     );
   }
   updateShop() {
-    this.service
-      .updateShop(this.ClientForm.value, this.shopName)
-      .subscribe(res => console.log(res), err => console.log(err));
+    this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
+    this.imgService
+      .uploadToCloud(
+        this.ProductDetails.value,
+        this.ClientForm.value.shopOwnerInstaId
+      )
+      .subscribe(
+        urls => {
+          console.log(urls);
+          urls.forEach((url, j) => {
+            console.log(url);
+            console.log();
+            this.ClientForm.get('ProductDetails')
+              ['controls'][j].get('productSrc')
+              .setValue(url);
+          });
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          // console.log(this.ClientForm.value);
+          this.service
+            .updateShop(this.ClientForm.value, this.shopName)
+            .subscribe(res => console.log(res), err => console.log(err));
+        }
+      );
   }
   CreateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
@@ -356,8 +381,16 @@ export class AddShopAndProductsFormComponent implements OnInit {
           console.log(err);
         },
         () => {
-          console.log(this.ClientForm.value);
+          // console.log(this.ClientForm.value);
           console.log('another');
+          this.service.CreateShop(this.ClientForm.value).subscribe(
+            res => {
+              console.log(res);
+              alert(res.body);
+              this.router.navigate(['complex/' + res.shopName]);
+            },
+            err => console.log(err)
+          );
         }
       );
 
@@ -371,9 +404,9 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // );
   }
   see() {
-    this.ClientForm.get('ProductDetails')
-      ['controls'][0].get('productId')
-      .setValue('Hello');
+    // this.ClientForm.get('ProductDetails')
+    //   ['controls'][0].get('productId')
+    //   .setValue('Hello');
     console.log(
       this.ClientForm.get('ProductDetails')['controls'][0].get('productSrc')
         .value
