@@ -111,6 +111,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.formBuilder.group({
           productName: [products[product]['productName'], Validators.required],
           productSrc: [products[product]['productSrc'], Validators.required],
+          productId: [products[product]['productId']],
           productColor: [
             products[product]['productColor'],
             Validators.required
