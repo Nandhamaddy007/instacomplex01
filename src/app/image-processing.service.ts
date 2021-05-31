@@ -36,6 +36,7 @@ export class ImageProcessingService {
   UpdateImages(products, folder, details) {
     return Observable.create(observer => {
       let response = {};
+      console.log(products);
       if (Object.keys(products).length == 0) {
         observer.next('updated');
       }

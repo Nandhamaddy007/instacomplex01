@@ -186,13 +186,15 @@ export class AddShopAndProductsFormComponent implements OnInit {
       let reader = new FileReader();
       reader.onload = event => {
         if (
-          this.deletedProducts[i] == undefined &&
+          this.deletedProducts[
+            this.ClientForm.value.ProductDetails[i].productId
+          ] == undefined &&
           this.shopName != undefined &&
           this.ClientForm.value.ProductDetails[i].productSrc != ''
         ) {
-          this.deletedProducts[i] = this.ClientForm.value.ProductDetails[
-            i
-          ].productSrc;
+          this.deletedProducts[
+            this.ClientForm.value.ProductDetails[i].productId
+          ] = this.ClientForm.value.ProductDetails[i].productSrc;
         }
         // console.log('if part outside');
         // console.log(this.deletedProducts[i]);
@@ -208,7 +210,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // this.ClientForm.get('ProductDetails')
     //   ['controls'][i].get('productSrc')
     //   .setValue('');
-    if (this.deletedProducts[i] == undefined && this.shopName != undefined) {
+    if (
+      this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
+        undefined &&
+      this.shopName != undefined
+    ) {
       this.deletedProducts[
         this.ClientForm.value.ProductDetails[i].productId
       ] = this.ClientForm.value.ProductDetails[i].productSrc;
@@ -264,10 +270,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // this.file_data.splice(i, 1);
     // console.log(this.file_data);
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
-    if (this.deletedProducts[i] == undefined && this.shopName != undefined) {
-      this.deletedProducts[i] = this.ClientForm.value.ProductDetails[
-        i
-      ].productSrc;
+    if (
+      this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
+        undefined &&
+      this.shopName != undefined
+    ) {
+      this.deletedProducts[
+        this.ClientForm.value.ProductDetails[i].productId
+      ] = this.ClientForm.value.ProductDetails[i].productSrc;
     }
     this.ClientForm.get('ProductDetails')['controls'].splice(i, 1);
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
