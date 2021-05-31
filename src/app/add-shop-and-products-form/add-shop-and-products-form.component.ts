@@ -208,9 +208,9 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //   ['controls'][i].get('productSrc')
     //   .setValue('');
     if (this.deletedProducts[i] == undefined && this.shopName != undefined) {
-      this.deletedProducts[i] = this.ClientForm.value.ProductDetails[
-        i
-      ].productSrc;
+      this.deletedProducts[
+        this.ClientForm.value.ProductDetails[i].productId
+      ] = this.ClientForm.value.ProductDetails[i].productSrc;
       // console.log(this.deletedProducts[i]);
       this.ClientForm.get('ProductDetails')
         ['controls'][i].get('productSrc')
