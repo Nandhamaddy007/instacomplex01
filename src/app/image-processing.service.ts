@@ -46,7 +46,7 @@ export class ImageProcessingService {
         let imageFile = new File([imageBlob], 'temp', {
           type: products[i].split(';')[0].split(':')[1]
         });
-        this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
+        this.ref = this.afStorage.ref(folder + '/' + i);
         this.task = this.ref.put(imageFile);
         this.task
           .snapshotChanges()

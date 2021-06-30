@@ -201,7 +201,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc')
           .setValue(event.target.result);
-        this.dummyProducts[i] = event.target.result;
+        this.dummyProducts[this.ClientForm.value.ProductDetails[i].productId] = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
