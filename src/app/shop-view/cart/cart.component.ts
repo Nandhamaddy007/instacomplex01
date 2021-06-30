@@ -61,7 +61,7 @@ export class CartComponent implements OnInit {
         data['orderId'] = this.orderId;
         data['products'] = this.keys;
         data['custDetails'] = this.userDetails.value;
-        data['shopName'] = this.cartValue.shopName;
+        data['shopOwnerInstaId'] = this.cartValue.shopOwnerInstaId;
         data['total'] = this.total;
         data['status'] = 'Pending';
         this.service.placeOrder(data).subscribe(

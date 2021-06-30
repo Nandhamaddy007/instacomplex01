@@ -1,4 +1,4 @@
-<h2 style="position:absolute;top:0.5rem;left:30rem;"><i class='fab fa-instagram'></i> {{shopName}}</h2>
+<h2 style="position:absolute;top:0.5rem;left:30rem;"><i class='fab fa-instagram'></i> {{shopOwnerInstaId}}</h2>
 <app-cart *ngIf="Products" [cartValue]='Cart' (cartToView)="fromCart($event)"></app-cart>
 <div class="container">
   <div *ngIf="Products" class="row">
@@ -37,11 +37,11 @@
     </div>
 
   </div>
-  <div *ngIf="shopName==undefined && allShops">
+  <div *ngIf="shopOwnerInstaId==undefined && allShops">
     <h1>Main complex</h1>
     <div class="row">
       <div *ngFor="let shop of allShops" class="col-sm-3">
-        <a routerLink="{{shop.shopName}}" routerLinkActive="active">
+        <a routerLink="{{shop.shopOwnerInstaId}}" routerLinkActive="active">
           <div class="card animate__animated animate__tada">
             <img
           src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"

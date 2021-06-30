@@ -88,15 +88,15 @@ export class AddShopAndProductsFormComponent implements OnInit {
       );
     } else {
       this.ClientForm = this.formBuilder.group({
-        shopName: ['', Validators.required],
-        shopOwner: ['', Validators.required],
-        shopOwnerMobile: ['', Validators.required],
-        shopOwnerEmail: ['', Validators.required],
-        shopOwnerAddress: ['', Validators.required],
-        shopOwnerInstaId: ['', Validators.required],
-        shopOwnerGpay: ['', Validators.required],
-        shopOwnerPaytm: ['', Validators.required],
-        shopLogo: ['', Validators.required],
+        shopName: ['Sample', Validators.required],
+        shopOwner: ['Tester', Validators.required],
+        shopOwnerMobile: ['123456789', Validators.required],
+        shopOwnerEmail: ['Sample@smpl.com', Validators.required],
+        shopOwnerAddress: ['Chennai', Validators.required],
+        shopOwnerInstaId: ['SampleInsta', Validators.required],
+        shopOwnerGpay: ['123456789', Validators.required],
+        shopOwnerPaytm: ['123456789', Validators.required],
+        shopLogo: ['123456789', Validators.required],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
       this.formLoaded = true;
@@ -353,7 +353,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             res => {
               console.log(res);
               alert(res.body);
-              this.router.navigate(['complex/' + res.shopName]);
+              this.router.navigate(['complex/' + res.shopOwnerInstaId]);
             },
             err => console.log(err)
           );

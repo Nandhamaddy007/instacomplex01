@@ -104,6 +104,11 @@ export class ImageProcessingService {
               })
             )
             .subscribe();
+        } else {
+          if (+i === products.length - 1) {
+            console.log(products.length - 1);
+            observer.complete();
+          }
         }
       }
     });

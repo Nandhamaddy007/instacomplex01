@@ -17,13 +17,13 @@ export class ShopViewComponent implements OnInit {
   Products: Array<Object>;
   Cart;
   currOrder = '';
-  shopName = '';
+  shopOwnerInstaId = '';
   allShops;
   ngOnInit() {
-    this.shopName = this.route.snapshot.params.shopName;
+    this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     //console.log(this.shopName);
-    if (this.shopName) {
-      this.service.GetShop(this.shopName).subscribe(
+    if (this.shopOwnerInstaId) {
+      this.service.GetShop(this.shopOwnerInstaId).subscribe(
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
@@ -48,7 +48,7 @@ export class ShopViewComponent implements OnInit {
     //this.Cart[i].ProdID=product.ProdID
     if (!this.Cart[i]) {
       this.Cart[i] = {};
-      this.Cart['shopName'] = this.shopName;
+      this.Cart['shopName'] = this.shopOwnerInstaId;
     }
     var temp = {
       productName: product.productName,
