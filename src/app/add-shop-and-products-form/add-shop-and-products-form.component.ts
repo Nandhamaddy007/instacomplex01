@@ -201,7 +201,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc')
           .setValue(event.target.result);
-        this.dummyProducts[this.ClientForm.value.ProductDetails[i].productId] = event.target.result;
+        this.dummyProducts[this.ClientForm.value.ProductDetails[i].productId] =
+          event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -231,7 +232,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       this.ClientForm.get('ProductDetails')
         ['controls'][i].get('productSrc')
         .setValue('');
-      this.dummyProducts = '';
+      this.dummyProducts[i] = '';
     }
   }
   addLogo(event) {
@@ -302,11 +303,10 @@ export class AddShopAndProductsFormComponent implements OnInit {
         .UpdateImages(
           this.dummyProducts,
           this.ClientForm.value.shopOwnerInstaId
-         
         )
         .subscribe(
           urls => {
-            console.log(urls);
+            console.log("updateshop: ",urls);
             for (let url in urls) {
               this.ClientForm.get('ProductDetails')
                 ['controls'][url].get('productSrc')
@@ -320,7 +320,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
             console.log(this.ClientForm.value);
             this.service
               .updateShop(this.ClientForm.value, this.shopOwnerInstaId)
-              .subscribe(res => console.log(res), err => console.log(err));
+              .subscribe(
+                res => {
+                  console.log(res);
+                  alert(res.body);
+                  this.router.navigate(['complex/' + res.shopOwnerInstaId]);
+                },
+                err => console.log(err)
+              );
           }
         );
     });
@@ -370,9 +377,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // );
   }
   see() {
-    // this.ClientForm.get('ProductDetails')
-    //   ['controls'][0].get('productId')
-    //   .setValue('Hello');
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
     console.log(this.ProductDetails.value);
     console.log(this.deletedProducts);
