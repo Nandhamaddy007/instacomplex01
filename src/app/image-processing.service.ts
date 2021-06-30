@@ -18,6 +18,7 @@ export class ImageProcessingService {
     private afStorage: AngularFireStorage,
     private imageCompress: NgxImageCompressService
   ) {}
+  links = [];
   deleteImages(src) {
     return Observable.create(observer => {
       if (Object.keys(src).length == 0) {
@@ -33,7 +34,7 @@ export class ImageProcessingService {
       }
     });
   }
-  UpdateImages(products, folder, details) {
+  UpdateImages(products, folder) {
     return Observable.create(observer => {
       let response = {};
       console.log(products);
@@ -73,46 +74,9 @@ export class ImageProcessingService {
     });
   }
   uploadToCloud(products, folder) {
-    let response = [];
-    const up = Observable.create(observer => {
-      for (let i in products) {
-        if (products[i]['productSrc'] != '') {
-          let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
-          let imageFile = new File([imageBlob], 'temp', {
-            type: products[i]['productSrc'].split(';')[0].split(':')[1]
-          });
-          this.ref = this.afStorage.ref(
-            folder + '/' + products[i]['productId']
-          );
-          this.task = this.ref.put(imageFile);
-          this.task
-            .snapshotChanges()
-            .pipe(
-              finalize(() => {
-                this.ref.getDownloadURL().subscribe(url => {
-                  // console.log(url);
-                  response.push(url);
-                  // observer.next(url);
-                  console.log(url);
-
-                  if (+i === products.length - 1) {
-                    console.log(products.length - 1);
-                    observer.next(response);
-                    observer.complete();
-                  }
-                });
-              })
-            )
-            .subscribe();
-        } else {
-          if (+i === products.length - 1) {
-            console.log(products.length - 1);
-            observer.complete();
-          }
-        }
-      }
+    return Observable.create(observer => {
+      this.uploader(products, folder, 0, observer);
     });
-    return up;
   }
   imageToUrl(file) {
     const reader = new FileReader();
@@ -155,6 +119,34 @@ export class ImageProcessingService {
 
     return s;
   }
+
+  uploader(products, folder, i, observer) {
+    if (i == products.length) {
+      observer.next(this.links);
+      observer.complete();
+    }
+    if (products[i]['productSrc'] != '') {
+      let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+      let imageFile = new File([imageBlob], 'temp', {
+        type: products[i]['productSrc'].split(';')[0].split(':')[1]
+      });
+      this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
+      this.task = this.ref.put(imageFile);
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              this.links.push(url);
+              console.log(url);
+              this.uploader(products, folder, ++i, observer);
+            });
+          })
+        )
+        .subscribe();
+    }
+  }
+
   dataURItoBlob(dataURI) {
     // console.log(dataURI);
     const byteString = window.atob(dataURI.split(',')[1]);

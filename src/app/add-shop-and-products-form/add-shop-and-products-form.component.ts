@@ -301,8 +301,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
       this.imgService
         .UpdateImages(
           this.dummyProducts,
-          this.ClientForm.value.shopOwnerInstaId,
-          this.ProductDetails
+          this.ClientForm.value.shopOwnerInstaId
+         
         )
         .subscribe(
           urls => {
