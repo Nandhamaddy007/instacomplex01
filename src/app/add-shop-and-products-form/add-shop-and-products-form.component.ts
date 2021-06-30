@@ -44,13 +44,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ClientForm: FormGroup;
   ProductDetails: FormArray;
   ProductVariance: FormArray;
-  shopName = '';
+  shopOwnerInstaId = '';
 
   ngOnInit(): void {
-    this.shopName = this.route.snapshot.params.shopName;
+    this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     // console.log(this.shopName);
-    if (this.shopName) {
-      this.service.GetShop(this.shopName).subscribe(
+    if (this.shopOwnerInstaId) {
+      this.service.GetShop(this.shopOwnerInstaId).subscribe(
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
@@ -74,7 +74,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             console.log(this.ClientForm.value);
           } else {
             let ans = confirm(
-              'Dear admin check your shop name please...\n Wanna create one?'
+              'Dear admin check your shop Instagram Id please...\n Wanna create one?'
             );
 
             if (ans) {
@@ -93,7 +93,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         shopOwnerMobile: ['', Validators.required],
         shopOwnerEmail: ['', Validators.required],
         shopOwnerAddress: ['', Validators.required],
-        shopOwnerInstaId: ['AkStores', Validators.required],
+        shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
         shopOwnerPaytm: ['', Validators.required],
         shopLogo: ['', Validators.required],
@@ -160,7 +160,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   createProductVariance(): FormGroup {
     return this.formBuilder.group({
       productPrice: ['', Validators.required],
-      productAvailability: [false, Validators.required],
+      productAvailability: [0, Validators.required],
       productSize: ['', Validators.required]
     });
   }
@@ -189,7 +189,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
           this.deletedProducts[
             this.ClientForm.value.ProductDetails[i].productId
           ] == undefined &&
-          this.shopName != undefined &&
+          this.shopOwnerInstaId != undefined &&
           this.ClientForm.value.ProductDetails[i].productSrc != ''
         ) {
           this.deletedProducts[
@@ -213,7 +213,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (
       this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
         undefined &&
-      this.shopName != undefined
+      this.shopOwnerInstaId != undefined
     ) {
       this.deletedProducts[
         this.ClientForm.value.ProductDetails[i].productId
@@ -273,7 +273,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     if (
       this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
         undefined &&
-      this.shopName != undefined
+      this.shopOwnerInstaId != undefined
     ) {
       this.deletedProducts[
         this.ClientForm.value.ProductDetails[i].productId
@@ -319,7 +319,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
           () => {
             console.log(this.ClientForm.value);
             this.service
-              .updateShop(this.ClientForm.value, this.shopName)
+              .updateShop(this.ClientForm.value, this.shopOwnerInstaId)
               .subscribe(res => console.log(res), err => console.log(err));
           }
         );

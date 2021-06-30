@@ -57,14 +57,9 @@
       <div class="row">
         <div class="col-md-9">
           <label>Shop Owner Address</label>:
-          <textarea
-            foromControlName="shopOwnerAddress"
-            rows="3"
-            cols="40"
-            style="resize:none"
-            class="form-control"
-          >
-          </textarea>
+          <input formControlName="shopOwnerAddress"
+         class="form-control"
+         type="text" />
         </div>
         <div class="col-md-3">
           <label>Shop LOGO</label>:
@@ -196,10 +191,10 @@
       </div>
     </form>
   </div>
-  <div class="btn btn-success" *ngIf="!shopName" (click)="CreateShop()">
+  <div class="btn btn-success" *ngIf="!shopOwnerInstaId" (click)="CreateShop()">
     Submit
   </div>
-  <div class="btn btn-primary" *ngIf="shopName" (click)="updateShop()">
+  <div class="btn btn-primary" *ngIf="shopOwnerInstaId" (click)="updateShop()">
     Submit
   </div>
 </div>

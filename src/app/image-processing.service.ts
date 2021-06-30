@@ -101,15 +101,7 @@ export class ImageProcessingService {
             })
           )
           .subscribe();
-      }
-      // observer.next(response);
-      // observer.complete();
-
-      // console.log(response);
-      // observer.next(response);
-      // observer.complete(() => {
-      //   console.log(response);
-      // });
+      }      
     });
     return up;
   }

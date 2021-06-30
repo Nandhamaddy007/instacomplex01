@@ -8,16 +8,6 @@ import * as CryptoJS from 'crypto-js';
 export class BackendTalkerService {
   constructor(private http: HttpClient) {}
   endpoint = 'https://w9oc5.sse.codesandbox.io/';
-  uploader(files: any): any {
-    //console.log('DIR', __dirname);
-
-    // const formData: FormData = new FormData();
-    // console.log(files)
-    // let fileToUpload:File =files[0]
-    // formData.append('Image', fileToUpload, fileToUpload.name);
-    // return this.http.post(endpoint, formData)
-    return this.http.post(this.endpoint, files);
-  }
   GetShop(id: any): any {
     return this.http.get(this.endpoint + 'GetShop/' + id);
     //console.log(d);
@@ -28,10 +18,10 @@ export class BackendTalkerService {
     //console.log(str);
     return this.http.post(this.endpoint + 'CreateShop', str);
   }
-  updateShop(data: any, shopName: String): any {
+  updateShop(data: any, id: String): any {
     let d = this.encryptData(data);
     let str = { body: d };
-    return this.http.post(this.endpoint + 'updateShop/' + shopName, str);
+    return this.http.post(this.endpoint + 'updateShop/' + id, str);
   }
   placeOrder(data: any): any {
     console.log(data);
@@ -44,8 +34,8 @@ export class BackendTalkerService {
   getAllShops(): any {
     return this.http.get(this.endpoint + 'getShops');
   }
-  getOrdersByShop(shopName): any {
-    return this.http.get(this.endpoint + 'getOrders/' + shopName);
+  getOrdersByShop(id): any {
+    return this.http.get(this.endpoint + 'getOrders/' + id);
   }
   updateOrderById(data): any {
     let d = this.encryptData(data);
