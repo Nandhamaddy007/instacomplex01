@@ -76,32 +76,36 @@ export class ImageProcessingService {
     let response = [];
     const up = Observable.create(observer => {
       for (let i in products) {
-        let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
-        let imageFile = new File([imageBlob], 'temp', {
-          type: products[i]['productSrc'].split(';')[0].split(':')[1]
-        });
-        this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
-        this.task = this.ref.put(imageFile);
-        this.task
-          .snapshotChanges()
-          .pipe(
-            finalize(() => {
-              this.ref.getDownloadURL().subscribe(url => {
-                // console.log(url);
-                response.push(url);
-                // observer.next(url);
-                console.log(url);
+        if (products[i]['productSrc'] != '') {
+          let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+          let imageFile = new File([imageBlob], 'temp', {
+            type: products[i]['productSrc'].split(';')[0].split(':')[1]
+          });
+          this.ref = this.afStorage.ref(
+            folder + '/' + products[i]['productId']
+          );
+          this.task = this.ref.put(imageFile);
+          this.task
+            .snapshotChanges()
+            .pipe(
+              finalize(() => {
+                this.ref.getDownloadURL().subscribe(url => {
+                  // console.log(url);
+                  response.push(url);
+                  // observer.next(url);
+                  console.log(url);
 
-                if (+i === products.length - 1) {
-                  console.log(products.length - 1);
-                  observer.next(response);
-                  observer.complete();
-                }
-              });
-            })
-          )
-          .subscribe();
-      }      
+                  if (+i === products.length - 1) {
+                    console.log(products.length - 1);
+                    observer.next(response);
+                    observer.complete();
+                  }
+                });
+              })
+            )
+            .subscribe();
+        }
+      }
     });
     return up;
   }
