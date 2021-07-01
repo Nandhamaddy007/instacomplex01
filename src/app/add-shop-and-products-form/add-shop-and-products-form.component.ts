@@ -221,21 +221,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
       this.deletedProducts[
         this.ClientForm.value.ProductDetails[i].productId
       ] = this.ClientForm.value.ProductDetails[i].productSrc;
-      // console.log(this.deletedProducts[i]);
-      this.ClientForm.get('ProductDetails')
-        ['controls'][i].get('productSrc')
-        .setValue('');
-      if (this.dummyProducts[i] != undefined) this.dummyProducts[i] = '';
-      //console.log(this.deletedProducts[i]);
-      // console.log('if part');
-    } else {
-      // console.log('ELse part');
-      // console.log(this.deletedProducts[i])
-      this.ClientForm.get('ProductDetails')
-        ['controls'][i].get('productSrc')
-        .setValue('');
-      this.dummyProducts[i] = '';
     }
+    this.ClientForm.get('ProductDetails')
+      ['controls'][i].get('productSrc')
+      .setValue('');
+    delete this.dummyProducts[
+      this.ClientForm.value.ProductDetails[i].productId
+    ];
   }
   addLogo(event) {
     if (event.target.files && event.target.files[0]) {
@@ -257,15 +249,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
         .then(() => {
           this.ClientForm.controls.shopUrl.setValue('');
         });
-    }
-  }
-  deleteImage(i) {
-    if (i == 'Logo') {
-      this.afStorage.storage
-        .refFromURL(this.ClientForm.value.shopLogo)
-        .delete();
-
-      this.ClientForm.controls.shopLogo.setValue('');
     }
   }
 
