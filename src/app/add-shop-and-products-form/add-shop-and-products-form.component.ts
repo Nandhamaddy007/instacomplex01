@@ -190,7 +190,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             this.ClientForm.value.ProductDetails[i].productId
           ] == undefined &&
           this.shopOwnerInstaId != undefined &&
-          this.ClientForm.value.ProductDetails[i].productSrc != ''
+          this.ClientForm.value.ProductDetails[i].productSrc != '' && this.ClientForm.value.ProductDetails[i].productSrc != undefined
         ) {
           this.deletedProducts[
             this.ClientForm.value.ProductDetails[i].productId
@@ -201,8 +201,9 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc')
           .setValue(event.target.result);
-        this.dummyProducts[this.ClientForm.value.ProductDetails[i].productId] =
-          event.target.result;
+        this.dummyProducts[
+          this.ClientForm.value.ProductDetails[i].productId
+        ] = { data: event.target.result, index: i };
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -306,12 +307,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
         )
         .subscribe(
           urls => {
-            console.log("updateshop: ",urls);
-            for (let url in urls) {
+            console.log('updateshop: ', urls);
+            Object.entries(urls).forEach(([key, value]) => {
               this.ClientForm.get('ProductDetails')
-                ['controls'][url].get('productSrc')
-                .setValue(urls[url]);
-            }
+                ['controls'][value['index']].get('productSrc')
+                .setValue(value['data']);
+            });
           },
           err => {
             console.log(err);

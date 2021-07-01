@@ -36,6 +36,7 @@ export class ImageProcessingService {
     });
   }
   UpdateImages(products, folder) {
+    console.log(Object.keys(products), Object.values(products));
     return Observable.create(observer => {
       if (Object.keys(products).length == 0) {
         observer.next('updated');
@@ -55,9 +56,9 @@ export class ImageProcessingService {
       observer.next(this.linksObj);
       observer.complete();
     }
-    let imageBlob = this.dataURItoBlob(values[i]);
+    let imageBlob = this.dataURItoBlob(values[i].data);
     let imageFile = new File([imageBlob], keys[i], {
-      type: values[i].split(';')[0].split(':')[1]
+      type: values[i].data.split(';')[0].split(':')[1]
     });
     this.ref = this.afStorage.ref(folder + '/' + keys[i]);
     this.task = this.ref.put(imageFile);
@@ -66,7 +67,7 @@ export class ImageProcessingService {
       .pipe(
         finalize(() => {
           this.ref.getDownloadURL().subscribe(url => {
-            this.linksObj[keys[i]] = url;
+            this.linksObj[keys[i]] = { data: url, index: values[i].index };
             console.log(this.linksObj[keys[i]]);
             this.updater(keys, values, folder, observer, ++i);
           });
