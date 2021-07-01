@@ -81,6 +81,32 @@ export class ImageProcessingService {
       this.uploader(products, folder, 0, observer);
     });
   }
+  uploader(products, folder, i, observer) {
+    if (i == products.length) {
+      observer.next(this.links);
+      observer.complete();
+    }
+    if (products[i]['productSrc'] != '') {
+      let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+      let imageFile = new File([imageBlob], products[i]['productId'], {
+        type: products[i]['productSrc'].split(';')[0].split(':')[1]
+      });
+      this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
+      this.task = this.ref.put(imageFile);
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              this.links.push(url);
+              console.log(url);
+              this.uploader(products, folder, ++i, observer);
+            });
+          })
+        )
+        .subscribe();
+    }
+  }
   imageToUrl(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -121,33 +147,6 @@ export class ImageProcessingService {
     }
 
     return s;
-  }
-
-  uploader(products, folder, i, observer) {
-    if (i == products.length) {
-      observer.next(this.links);
-      observer.complete();
-    }
-    if (products[i]['productSrc'] != '') {
-      let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
-      let imageFile = new File([imageBlob], products[i]['productId'], {
-        type: products[i]['productSrc'].split(';')[0].split(':')[1]
-      });
-      this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
-      this.task = this.ref.put(imageFile);
-      this.task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.ref.getDownloadURL().subscribe(url => {
-              this.links.push(url);
-              console.log(url);
-              this.uploader(products, folder, ++i, observer);
-            });
-          })
-        )
-        .subscribe();
-    }
   }
 
   dataURItoBlob(dataURI) {
