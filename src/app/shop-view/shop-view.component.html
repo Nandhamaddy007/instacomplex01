@@ -2,6 +2,7 @@
 <app-cart *ngIf="Products" [cartValue]='Cart' (cartToView)="fromCart($event)"></app-cart>
 <div class="container">
   <div *ngIf="Products" class="row">
+    <input class="btn btn-outline-primary" value="update"/>
     <div *ngFor="let product of Products; let i =index" class="col-sm-3">
       <br/>
       <div>

@@ -190,7 +190,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
             this.ClientForm.value.ProductDetails[i].productId
           ] == undefined &&
           this.shopOwnerInstaId != undefined &&
-          this.ClientForm.value.ProductDetails[i].productSrc != '' && this.ClientForm.value.ProductDetails[i].productSrc != undefined
+          this.ClientForm.value.ProductDetails[i].productSrc != '' &&
+          this.ClientForm.value.ProductDetails[i].productSrc != undefined
         ) {
           this.deletedProducts[
             this.ClientForm.value.ProductDetails[i].productId
@@ -282,6 +283,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
       ] = this.ClientForm.value.ProductDetails[i].productSrc;
     }
     this.ClientForm.get('ProductDetails')['controls'].splice(i, 1);
+    this.ClientForm.get('ProductDetails')['value'].splice(i, 1);
+    console.log(this.ClientForm.get('ProductDetails')['value']);
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
   }
   RemoveVariance(i, j) {
@@ -325,7 +328,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
                 res => {
                   console.log(res);
                   alert(res.body);
-                  this.router.navigate(['complex/' + res.shopOwnerInstaId]);
+                  this.router.navigate(['complex/' + this.shopOwnerInstaId]);
                 },
                 err => console.log(err)
               );
