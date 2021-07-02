@@ -19,6 +19,9 @@ export class ShopViewComponent implements OnInit {
   currOrder = '';
   shopOwnerInstaId = '';
   allShops;
+  nav() {
+    this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
+  }
   ngOnInit() {
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     //console.log(this.shopName);

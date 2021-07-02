@@ -12,6 +12,7 @@ export class AdminDashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private service: BackendTalkerService
   ) {}
+  //INC0207O4
   shopName;
   orders;
   status;
@@ -19,7 +20,8 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit() {
     this.status = [];
     this.shipmentId = [];
-    this.shopName = this.route.snapshot.params.shopName;
+    this.shopName = this.route.snapshot.params.shopOwnerInstaId;
+    console.log(this.shopName);
     this.service.getOrdersByShop(this.shopName).subscribe(
       data => {
         this.orders = this.service.decryptData(data.body);

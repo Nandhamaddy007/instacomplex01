@@ -25,9 +25,8 @@ export class ImageProcessingService {
       if (Logo['deleted'] != undefined) {
         this.afStorage.storage.refFromURL(folder + Logo['deleted']).delete;
       }
-      if (Logo['src'] != '') {
+      if (Logo['src'] != '' && Logo['src'] != undefined) {
         this.ref = this.afStorage.ref(folder + '/' + Logo['name']);
-        console.log();
         let imageBlob = this.dataURItoBlob(Logo['src']);
         let imageFile = new File([imageBlob], Logo['name'], {
           type: Logo['src'].split(';')[0].split(':')[1]
@@ -43,7 +42,7 @@ export class ImageProcessingService {
             })
           )
           .subscribe();
-      }
+      }observer.next("Same")
     });
   }
   deleteImages(src, folder) {

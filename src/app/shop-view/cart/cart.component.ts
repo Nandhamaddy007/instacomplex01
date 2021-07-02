@@ -66,7 +66,7 @@ export class CartComponent implements OnInit {
         data['status'] = 'Pending';
         this.service.placeOrder(data).subscribe(
           data => {
-            //console.log(data);
+            console.log(data);
             alert(data['msg']);
             this.userDetails.reset();
             this.keys = [];

@@ -160,7 +160,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   createProductVariance(): FormGroup {
     return this.formBuilder.group({
       productPrice: ['', Validators.required],
-      productAvailability: [0, Validators.required],
+      productAvailability: ['', Validators.required],
       productSize: ['', Validators.required]
     });
   }
@@ -295,7 +295,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     this.imgService
       .LogoManipulation(this.dummyLogo, this.ClientForm.value.shopOwnerInstaId)
       .subscribe(res => {
-        this.ClientForm.controls.shopLogo.setValue(res);
+        if (res != 'Same') this.ClientForm.controls.shopLogo.setValue(res);
         this.imgService
           .deleteImages(
             this.deletedProducts,
