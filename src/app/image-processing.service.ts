@@ -110,7 +110,7 @@ export class ImageProcessingService {
           .subscribe();
       });
     }
-  }-
+  }
   compressor(image) {
     return Observable.create(observer => {
       let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);
