@@ -265,9 +265,10 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.ClientForm.value.ProductDetails[i].productId
       ] = this.ClientForm.value.ProductDetails[i].productSrc;
     }
+    this.deleteProductImage(i);
     this.ClientForm.get('ProductDetails')['controls'].splice(i, 1);
     this.ClientForm.get('ProductDetails')['value'].splice(i, 1);
-    console.log(this.ClientForm.get('ProductDetails')['value']);
+
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
   }
   RemoveVariance(i, j) {
@@ -368,90 +369,5 @@ export class AddShopAndProductsFormComponent implements OnInit {
     console.log(this.ProductDetails.value);
     console.log(this.deletedProducts);
     console.log(this.dummyProducts);
-  }
-  fileChange(event: any, i?: any) {
-    if (event.target.files && event.target.files[0]) {
-      let file = event.target.files[0];
-      let fileName =
-        this.ClientForm.value.shopOwnerInstaId +
-        (i + 1 ? '@Prod' + (i + 1) : '@Logo');
-      console.log(fileName, i);
-      let type = file.type;
-      let size = file.size;
-      if (size / 1024 < 159) {
-        this.ref = this.afStorage.ref(fileName);
-        this.task = this.afStorage.upload(fileName, file);
-        if (i + 1) {
-          this.uploadProgressProducts[i] = this.task.percentageChanges();
-        } else {
-          this.uploadProgressLogo = this.task.percentageChanges();
-        }
-
-        this.task
-          .snapshotChanges()
-          .pipe(
-            finalize(() => {
-              this.ref.getDownloadURL().subscribe(url => {
-                if (i + 1) {
-                  this.ClientForm.controls.ProductDetails['controls'][i][
-                    'productSrc'
-                  ] = url;
-                  // console.log(this.ClientForm.value);
-                } else {
-                  console.log(url);
-                  this.ClientForm.controls.shopLogo.setValue(url);
-                  // console.log(this.ClientForm.controls.shopLogo);
-                  // console.log(this.ClientForm.value);
-                }
-              });
-            })
-          )
-          .subscribe(url => {
-            // if (typeof url == 'string') {
-            //   if (i + 1) {
-            //     this.ClientForm.controls.ProductDetails['controls'][i][
-            //       'productSrc'
-            //     ] = url;
-            //     console.log(this.ClientForm.value);
-            //   } else {
-            //     console.log(url);
-            //     this.ClientForm.controls.shopLogo = url;
-            //   }
-            // }
-          });
-      } else {
-        this.imgService.imageToUrl(file).subscribe(result => {
-          this.imgService
-            .compressor(result, fileName, type)
-            .subscribe(compressed => {
-              this.ref = this.afStorage.ref(fileName);
-              this.task = this.afStorage.upload(fileName, compressed);
-              if (i + 1) {
-                this.uploadProgressProducts[i] = this.task.percentageChanges();
-              } else {
-                this.uploadProgressLogo = this.task.percentageChanges();
-              }
-              this.task
-                .snapshotChanges()
-                .pipe(
-                  finalize(() => {
-                    this.ref.getDownloadURL().subscribe(url => {
-                      console.log(url);
-                      if (i + 1) {
-                        this.ClientForm.controls.ProductDetails['controls'][i][
-                          'productSrc'
-                        ] = url;
-                        console.log(this.ClientForm.value);
-                      } else {
-                        this.ClientForm.controls.shopLogo.setValue(url);
-                      }
-                    });
-                  })
-                )
-                .subscribe(res => {});
-            });
-        });
-      }
-    }
   }
 }

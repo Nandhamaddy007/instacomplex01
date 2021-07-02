@@ -56,24 +56,26 @@ export class ImageProcessingService {
       observer.next(this.linksObj);
       observer.complete();
     }
-    let imageBlob = this.dataURItoBlob(values[i].data);
-    let imageFile = new File([imageBlob], keys[i], {
-      type: values[i].data.split(';')[0].split(':')[1]
+    this.compressor(values[i].data).subscribe(result => {
+      let imageBlob = this.dataURItoBlob(result);
+      let imageFile = new File([imageBlob], keys[i], {
+        type: values[i].data.split(';')[0].split(':')[1]
+      });
+      this.ref = this.afStorage.ref(folder + '/' + keys[i]);
+      this.task = this.ref.put(imageFile);
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.ref.getDownloadURL().subscribe(url => {
+              this.linksObj[keys[i]] = { data: url, index: values[i].index };
+              console.log(this.linksObj[keys[i]]);
+              this.updater(keys, values, folder, observer, ++i);
+            });
+          })
+        )
+        .subscribe();
     });
-    this.ref = this.afStorage.ref(folder + '/' + keys[i]);
-    this.task = this.ref.put(imageFile);
-    this.task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.ref.getDownloadURL().subscribe(url => {
-            this.linksObj[keys[i]] = { data: url, index: values[i].index };
-            console.log(this.linksObj[keys[i]]);
-            this.updater(keys, values, folder, observer, ++i);
-          });
-        })
-      )
-      .subscribe();
   }
 
   uploadToCloud(products, folder) {
@@ -87,45 +89,37 @@ export class ImageProcessingService {
       observer.complete();
     }
     if (products[i]['productSrc'] != '') {
-      let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
-      let imageFile = new File([imageBlob], products[i]['productId'], {
-        type: products[i]['productSrc'].split(';')[0].split(':')[1]
+      this.compressor(products[i]['productSrc']).subscribe(data => {
+        let imageBlob = this.dataURItoBlob(products[i]['productSrc']);
+        let imageFile = new File([imageBlob], data, {
+          type: products[i]['productSrc'].split(';')[0].split(':')[1]
+        });
+        this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
+        this.task = this.ref.put(imageFile);
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                this.links.push(url);
+                console.log(url);
+                this.uploader(products, folder, ++i, observer);
+              });
+            })
+          )
+          .subscribe();
       });
-      this.ref = this.afStorage.ref(folder + '/' + products[i]['productId']);
-      this.task = this.ref.put(imageFile);
-      this.task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.ref.getDownloadURL().subscribe(url => {
-              this.links.push(url);
-              console.log(url);
-              this.uploader(products, folder, ++i, observer);
-            });
-          })
-        )
-        .subscribe();
     }
-  }
-  imageToUrl(file) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    return Observable.create(observer => {
-      reader.onloadend = () => {
-        observer.next(reader.result);
-        observer.complete();
-      };
-    });
-  }
-  compressor(image, imgName, imgType) {
+  }-
+  compressor(image) {
     return Observable.create(observer => {
       let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);
       this.imageCompress
         .compressFile(image, -1, XYQ[0], XYQ[1])
         .then(result => {
-          const imageBlob = this.dataURItoBlob(result.split(',')[1]);
-          let imageFile = new File([imageBlob], imgName, { type: imgType });
-          observer.next(imageFile);
+          // const imageBlob = this.dataURItoBlob(result.split(',')[1]);
+          // let imageFile = new File([imageBlob], imgName, { type: imgType });
+          observer.next(result);
           observer.complete();
         });
     });
