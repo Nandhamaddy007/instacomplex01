@@ -51,7 +51,7 @@ export class ShopViewComponent implements OnInit {
     //this.Cart[i].ProdID=product.ProdID
     if (!this.Cart[i]) {
       this.Cart[i] = {};
-      this.Cart['shopName'] = this.shopOwnerInstaId;
+      this.Cart['shopOwnerInstaId'] = this.shopOwnerInstaId;
     }
     var temp = {
       productName: product.productName,
