@@ -20,14 +20,39 @@ export class ImageProcessingService {
   ) {}
   links = [];
   linksObj = {};
-  deleteImages(src) {
+  LogoManipulation(Logo, folder) {
+    Observable.create(observer => {
+      if (Logo['deleted'] != undefined) {
+        this.afStorage.storage.refFromURL(folder + Logo['deleted']).delete;
+      }
+      if (Logo['src'] != '') {
+        this.ref = this.afStorage.ref(folder + '/' + Logo['name']);
+        let imageBlob = this.dataURItoBlob(Logo['src']);
+        let imageFile = new File([imageBlob], 'Logo', {
+          type: Logo['src'].data.split(';')[0].split(':')[1]
+        });
+        this.task = this.ref.put(imageFile);
+        this.task
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.ref.getDownloadURL().subscribe(url => {
+                observer.next(url);
+              });
+            })
+          )
+          .subscribe();
+      }
+    });
+  }
+  deleteImages(src, folder) {
     return Observable.create(observer => {
       if (Object.keys(src).length == 0) {
         observer.next('deleted');
       }
       for (let i in src) {
         console.log('delete', src[i], src);
-        this.afStorage.storage.refFromURL(src[i]).delete;
+        this.afStorage.storage.refFromURL(folder + src[i]).delete;
         if (i == Object.keys(src)[Object.keys(src).length - 1]) {
           observer.next('deleted');
           observer.complete();
@@ -114,11 +139,19 @@ export class ImageProcessingService {
   compressor(image) {
     return Observable.create(observer => {
       let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);
+      console.log(
+        'Before: ',
+        (this.imageCompress.byteCount(image) / (1024))
+      );
       this.imageCompress
         .compressFile(image, -1, XYQ[0], XYQ[1])
         .then(result => {
           // const imageBlob = this.dataURItoBlob(result.split(',')[1]);
           // let imageFile = new File([imageBlob], imgName, { type: imgType });
+          console.log(
+            'After: ',
+            (this.imageCompress.byteCount(result) / (1024))
+          );
           observer.next(result);
           observer.complete();
         });

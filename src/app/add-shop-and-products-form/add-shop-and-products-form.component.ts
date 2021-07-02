@@ -230,25 +230,30 @@ export class AddShopAndProductsFormComponent implements OnInit {
     ];
   }
   addLogo(event) {
+    this.deleteLogo();
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onloadend = event => {
-        this.dummyLogo['src'] = event.target.result;
-        this.dummyLogo['name'] = this.ClientForm.value.shopOwnerInstaId;
+        this.imgService.compressor(event.target.result).subscribe(result => {
+          this.dummyLogo['src'] = result;
+          this.dummyLogo['name'] =
+            this.ClientForm.value.shopOwnerInstaId + '@Logo';
+        });
       };
-      reader.readAsDataURL(this.dummyLogo['file']);
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
   deleteLogo() {
-    this.dummyLogo = {};
-    if (this.ClientForm.value.shopLogo != '') {
-      this.afStorage.storage
-        .refFromURL(this.ClientForm.value.shopLogo)
-        .delete()
-        .then(() => {
-          this.ClientForm.controls.shopUrl.setValue('');
-        });
+    if (
+      this.dummyLogo['deleted'] == undefined &&
+      this.shopOwnerInstaId != undefined &&
+      this.ClientForm.value.shopLogo != ''
+    ) {
+      this.dummyLogo['deleted'] = this.ClientForm.value.shopLogo;
+      this.ClientForm.controls.shopLogo.setValue('');
     }
+    this.dummyLogo['src'] = '';
+    this.dummyLogo['name'] = '';
   }
 
   RemoveProduct(i) {
@@ -285,42 +290,48 @@ export class AddShopAndProductsFormComponent implements OnInit {
   updateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
     console.log(this.dummyProducts);
-    this.imgService.deleteImages(this.deletedProducts).subscribe(res => {
-      this.imgService
-        .UpdateImages(
-          this.dummyProducts,
-          this.ClientForm.value.shopOwnerInstaId
-        )
-        .subscribe(
-          urls => {
-            console.log('updateshop: ', urls);
-            Object.entries(urls).forEach(([key, value]) => {
-              this.ClientForm.get('ProductDetails')
-                ['controls'][value['index']].get('productSrc')
-                .setValue(value['data']);
-            });
-          },
-          err => {
-            console.log(err);
-          },
-          () => {
-            console.log(this.ClientForm.value);
-            this.service
-              .updateShop(this.ClientForm.value, this.shopOwnerInstaId)
-              .subscribe(
-                res => {
-                  console.log(res);
-                  alert(res.body);
-                  this.router.navigate(['complex/' + this.shopOwnerInstaId]);
-                },
-                err => console.log(err)
-              );
-          }
-        );
-    });
+    this.imgService
+      .deleteImages(
+        this.deletedProducts,
+        this.ClientForm.value.shopOwnerInstaId + '/'
+      )
+      .subscribe(res => {
+        this.imgService
+          .UpdateImages(
+            this.dummyProducts,
+            this.ClientForm.value.shopOwnerInstaId
+          )
+          .subscribe(
+            urls => {
+              console.log('updateshop: ', urls);
+              Object.entries(urls).forEach(([key, value]) => {
+                this.ClientForm.get('ProductDetails')
+                  ['controls'][value['index']].get('productSrc')
+                  .setValue(value['data']);
+              });
+            },
+            err => {
+              console.log(err);
+            },
+            () => {
+              console.log(this.ClientForm.value);
+              this.service
+                .updateShop(this.ClientForm.value, this.shopOwnerInstaId)
+                .subscribe(
+                  res => {
+                    console.log(res);
+                    alert(res.body);
+                    this.router.navigate(['complex/' + this.shopOwnerInstaId]);
+                  },
+                  err => console.log(err)
+                );
+            }
+          );
+      });
   }
   CreateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
+
     this.imgService
       .uploadToCloud(
         this.ProductDetails.value,
@@ -342,7 +353,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         },
         () => {
           // console.log(this.ClientForm.value);
-          console.log('another');
+          //console.log('another');
           this.service.CreateShop(this.ClientForm.value).subscribe(
             res => {
               console.log(res);
@@ -353,20 +364,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
           );
         }
       );
-
-    // this.service.CreateShop(this.ClientForm.value).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     alert(res.body);
-    //     this.router.navigate(['complex/' + res.shopName]);
-    //   },
-    //   err => console.log(err)
-    // );
   }
   see() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
     console.log(this.ProductDetails.value);
     console.log(this.deletedProducts);
     console.log(this.dummyProducts);
+    console.log(this.dummyLogo);
   }
 }

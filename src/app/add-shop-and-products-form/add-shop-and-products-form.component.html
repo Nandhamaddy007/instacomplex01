@@ -73,7 +73,7 @@
 
           <button
             class="btn btn-sm btn-outline-danger"
-            *ngIf=""
+            *ngIf="dummyLogo['src']"
             (click)="deleteLogo()"
           >
             Delete
@@ -82,6 +82,7 @@
             *ngIf="dummyLogo['src']"
             [src]="dummyLogo['src']"
             alt="shop logo displayed here"
+            width="200" height="300"
           />
           <!-- 
           <div class="progress" *ngIf="!ClientForm.value['shopLogo']">
