@@ -231,11 +231,10 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   addLogo(event) {
     if (event.target.files && event.target.files[0]) {
-      this.dummyLogo['file'] = event.target.files[0];
-      this.dummyLogo['type'] = this.dummyLogo['file'].type;
       let reader = new FileReader();
       reader.onloadend = event => {
         this.dummyLogo['src'] = event.target.result;
+        this.dummyLogo['name'] = this.ClientForm.value.shopOwnerInstaId;
       };
       reader.readAsDataURL(this.dummyLogo['file']);
     }
