@@ -21,15 +21,16 @@ export class ImageProcessingService {
   links = [];
   linksObj = {};
   LogoManipulation(Logo, folder) {
-    Observable.create(observer => {
+    return Observable.create(observer => {
       if (Logo['deleted'] != undefined) {
         this.afStorage.storage.refFromURL(folder + Logo['deleted']).delete;
       }
       if (Logo['src'] != '') {
         this.ref = this.afStorage.ref(folder + '/' + Logo['name']);
+        console.log();
         let imageBlob = this.dataURItoBlob(Logo['src']);
-        let imageFile = new File([imageBlob], 'Logo', {
-          type: Logo['src'].data.split(';')[0].split(':')[1]
+        let imageFile = new File([imageBlob], Logo['name'], {
+          type: Logo['src'].split(';')[0].split(':')[1]
         });
         this.task = this.ref.put(imageFile);
         this.task
@@ -139,19 +140,13 @@ export class ImageProcessingService {
   compressor(image) {
     return Observable.create(observer => {
       let XYQ = this.setSize(this.imageCompress.byteCount(image) / 1024);
-      console.log(
-        'Before: ',
-        (this.imageCompress.byteCount(image) / (1024))
-      );
+      console.log('Before: ', this.imageCompress.byteCount(image) / 1024);
       this.imageCompress
         .compressFile(image, -1, XYQ[0], XYQ[1])
         .then(result => {
           // const imageBlob = this.dataURItoBlob(result.split(',')[1]);
           // let imageFile = new File([imageBlob], imgName, { type: imgType });
-          console.log(
-            'After: ',
-            (this.imageCompress.byteCount(result) / (1024))
-          );
+          console.log('After: ', this.imageCompress.byteCount(result) / 1024);
           observer.next(result);
           observer.complete();
         });

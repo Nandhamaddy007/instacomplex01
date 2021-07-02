@@ -128,6 +128,7 @@
               [src]="ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc').value"
               alt="Product image displayed here"
+              width="150" height="500"
             />
             <button class="btn btn-outline-danger"  *ngIf="ClientForm.get('ProductDetails')
           ['controls'][i].get('productSrc').value" (click)="deleteProductImage(i)">Delete image</button>

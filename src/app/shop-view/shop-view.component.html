@@ -46,8 +46,8 @@
         <a routerLink="{{shop.shopOwnerInstaId}}" routerLinkActive="active">
           <div class="card animate__animated animate__tada">
             <img
-          src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
-          class="card-img-top" alt="...">
+          [src]="shop['shopLogo']"
+          class="card-img-top" alt="Shop Logo displayed here" width="100" height="200">
             <div class="card-body">
               <h4 class="card-title">{{shop['shopName']}}</h4>
               <h6 class="card-title">{{shop['shopOwner']}}</h6>
