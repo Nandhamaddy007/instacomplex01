@@ -42,6 +42,9 @@ export class BackendTalkerService {
     let str = { body: d };
     return this.http.patch(this.endpoint + 'updateOrder', str);
   }
+  getOrderStatus(orderId): any {
+    return this.http.get(this.endpoint + 'getStatus/' + orderId);
+  }
 
   decryptData(data: any) {
     let bytes = CryptoJS.AES.decrypt(data, '!@#$%^&*()');

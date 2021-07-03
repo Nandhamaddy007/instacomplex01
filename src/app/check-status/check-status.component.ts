@@ -13,11 +13,8 @@ export class CheckStatusComponent implements OnInit {
     console.log(String(new Date().getFullYear()));
   }
   getOrderStatus() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = String(today.getFullYear());
-    this.service.getOrderCount(`${dd}-${mm}-${yyyy}`).subscribe(res => {
+    //INC0307O2
+    this.service.getOrderStatus(this.orderId).subscribe(res => {
       console.log(res);
     });
   }
