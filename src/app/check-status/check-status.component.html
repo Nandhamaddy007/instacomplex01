@@ -1,4 +1,36 @@
 <div class="container">
   <input type="text" class='form-control' [(ngModel)]="orderId"/>
   <button class="btn btn-primary" (click)="getOrderStatus()">Check Status</button>
+  <h1 *ngIf="orderStatus['msg']">
+    No such order placed, please check your Order ID
+  </h1>
+  <div *ngIf="orderStatus['data']">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <td>{{orderId}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{orderStatus.data.status}}</td>
+        </tr>
+        <tr>
+          <th>Shop Name</th>
+          <td>{{orderStatus.data.shopOwnerInstaId}}</td>
+        </tr>
+        <tr>
+          <th>Grand Total</th>
+          <td>RS.{{orderStatus.data.total}}</td>
+        </tr>
+        <tr>
+          <th>Ordered Date</th>
+          <td>{{orderStatus.data.orderedDate}}</td>
+        </tr>
+
+      </thead>
+
+
+    </table>
+  </div>
 </div>
