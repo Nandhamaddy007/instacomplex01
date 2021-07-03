@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./check-status.component.css']
 })
 export class CheckStatusComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {}
+  orderId;
+  ngOnInit() {}
+  getOrderStatus() {
+    
   }
-
 }
