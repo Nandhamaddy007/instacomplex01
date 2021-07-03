@@ -1,6 +1,7 @@
 <div class="container">
   <input type="text" class='form-control' [(ngModel)]="orderId"/>
-  <button class="btn btn-primary" (click)="getOrderStatus()">Check Status</button>
+  <button class="btn btn-primary" (click)="getOrderStatus()" [disabled]="Loading">Check Status</button>
+  <h2 *ngIf="Loading">Loading...</h2>
   <h1 *ngIf="orderStatus['msg']">
     No such order placed, please check your Order ID
   </h1>
