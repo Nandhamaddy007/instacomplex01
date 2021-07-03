@@ -52,10 +52,15 @@ export class CartComponent implements OnInit {
   }
   placeOrder() {
     var today = new Date();
-    this.service.getOrderCount().subscribe(
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = String(today.getFullYear());
+    var fulldate = `${dd}-${mm}-${yyyy}`;
+    this.service.getOrderCount(fulldate).subscribe(
       data1 => {
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = String(today.getFullYear());
         this.orderId = 'INC' + dd + mm + 'O' + data1['cnt'];
         let data = {};
         data['orderId'] = this.orderId;
@@ -64,6 +69,7 @@ export class CartComponent implements OnInit {
         data['shopOwnerInstaId'] = this.cartValue.shopOwnerInstaId;
         data['total'] = this.total;
         data['status'] = 'Pending';
+        data['orderedDate'] = fulldate;
         this.service.placeOrder(data).subscribe(
           data => {
             console.log(data);

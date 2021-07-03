@@ -28,8 +28,8 @@ export class BackendTalkerService {
     let str = { body: this.encryptData(data) };
     return this.http.post(this.endpoint + 'AddOrder', str);
   }
-  getOrderCount(): any {
-    return this.http.get(this.endpoint + 'getOrderCount');
+  getOrderCount(date): any {
+    return this.http.get(this.endpoint + 'getOrderCount/' + date);
   }
   getAllShops(): any {
     return this.http.get(this.endpoint + 'getShops');

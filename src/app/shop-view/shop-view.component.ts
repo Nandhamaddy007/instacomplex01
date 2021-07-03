@@ -23,6 +23,7 @@ export class ShopViewComponent implements OnInit {
     this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
   }
   ngOnInit() {
+    console.log("Hello")
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     //console.log(this.shopName);
     if (this.shopOwnerInstaId) {
