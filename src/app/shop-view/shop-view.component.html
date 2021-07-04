@@ -1,4 +1,4 @@
-<div class="jumbotron-fluid bg-dark">
+<div class="jumbotron-fluid bg-dark" *ngIf="Products">
 <div class="row p-3">
   <div class=col-sm-1><img src="https://www.edigitalagency.com.au/wp-content/uploads/new-instagram-logo-png-transparent.png" width=70 height=70/> </div>
 <div class="col-sm-7 text-white">
@@ -66,7 +66,7 @@
   <div class="row m-3">
     <h4>Our Recent Family</h4>
     <div *ngFor="let shop of allShops" class="col-sm-3">
-      <a routerLink="{{shop.shopName}}" routerLinkActive="active">
+      <a routerLink="{{shop.shopOwnerInstaId}}" routerLinkActive="active">
         <div class="card m-3">
           <img
         src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
