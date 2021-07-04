@@ -46,7 +46,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ProductVariance: FormArray;
   shopOwnerInstaId = '';
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     // console.log(this.shopName);
     if (this.shopOwnerInstaId) {
@@ -60,7 +60,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
             //console.log(data);
             this.ClientForm = this.formBuilder.group({
               shopName: [data['shopName'], Validators.required],
-              shopOwner: [data['shopOwner'], Validators.required],
+              shopOwner: [data['shopOwner'], 
+              [
+                Validators.required,
+                Validators.maxLength(50),
+                Validators.pattern('^[a-zA-Z ]*$')
+              ]],
               shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
               shopOwnerEmail: [data['shopOwnerEmail'], Validators.required],
               shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
@@ -71,7 +76,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               ProductDetails: PDs
             });
             this.formLoaded = true;
-            console.log(this.ClientForm.value);
+            
           } else {
             let ans = confirm(
               'Dear admin check your shop Instagram Id please...\n Wanna create one?'
@@ -89,7 +94,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
     } else {
       this.ClientForm = this.formBuilder.group({
         shopName: ['', Validators.required],
-        shopOwner: ['', Validators.required],
+        shopOwner: ['',
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]],
         shopOwnerMobile: ['', Validators.required],
         shopOwnerEmail: ['', Validators.required],
         shopOwnerAddress: ['', Validators.required],
@@ -100,7 +110,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
       this.formLoaded = true;
-
+      console.log(this.ClientForm);
       // console.log(this.ClientForm.value);
     }
   }
@@ -385,5 +395,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
     console.log(this.deletedProducts);
     console.log(this.dummyProducts);
     console.log(this.dummyLogo);
+    console.log(this.ClientForm);
   }
 }

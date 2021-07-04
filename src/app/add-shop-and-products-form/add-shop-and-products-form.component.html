@@ -1,5 +1,6 @@
 <div>
   <div *ngIf="formLoaded" class="container">
+    <span class="text-danger" *ngIf="">Error</span>
     <form [formGroup]="ClientForm">
       <div class="row">
         <div class="col-md-4">
