@@ -71,7 +71,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
               shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
               shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
-              shopOwnerPaytm: [data['shopOwnerPaytm'], Validators.required],
+              
               shopLogo: ['', Validators.required],
               ProductDetails: PDs
             });
@@ -105,7 +105,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         shopOwnerAddress: ['', Validators.required],
         shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
-        shopOwnerPaytm: ['', Validators.required],
+        
         shopLogo: ['', Validators.required],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });

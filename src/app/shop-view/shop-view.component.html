@@ -1,62 +1,85 @@
-<h2 style="position:absolute;top:0.5rem;left:30rem;"><i class='fab fa-instagram'></i> {{shopOwnerInstaId}}</h2>
+<div class="jumbotron-fluid bg-dark">
+<div class="row p-3">
+  <div class=col-sm-1><img src="https://www.edigitalagency.com.au/wp-content/uploads/new-instagram-logo-png-transparent.png" width=70 height=70/> </div>
+<div class="col-sm-7 text-white">
+    <h3 class="text-white">{{shopOwnerInstaId}}</h3>
+    <h5 >@instagramid</h5>
+
+</div>
+<div class="col-sm-3 text-white float-right">
+    <button class="btn float-right btn-sm btn-primary m-3 ">Pay</button>
+    
+    <button class="btn float-right btn-sm btn-primary m-3">Contact Seller</button>
+
+
+</div>
+</div>
+</div>
 <app-cart *ngIf="Products" [cartValue]='Cart' (cartToView)="fromCart($event)"></app-cart>
-<div class="container">
-  <div *ngIf="Products" class="row">
-    <input class="btn btn-outline-primary" type="button" value="update" (click)="nav()"/>
-    <div *ngFor="let product of Products; let i =index" class="col-sm-3">
-      <br/>
-      <div>
-        <div class="card animate__animated animate__tada">
-          <div [ngClass]="{'outline':Cart[i]}">
-            <img
-          class="card-img-top"
-          [src]="product['productSrc']"
-          alt="Product"
-          width="100" height="200"
-        />
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{product['productName']}}</h5>
+<div class="">
+<div *ngIf="Products" class="row m-3">
+  <div *ngFor="let product of Products; let i =index" class="col-sm-3">
+    <br/>
+    <div>
+      <div class="card">
+        <div [ngClass]="{'outline':Cart[i]}">
+          <img
+        class="card-img-top"
+        src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+        alt="Card image cap"
+      />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{product['productName']}}</h5>
 
-            <label>Size &nbsp;</label>
-            <select style="width:7rem" name='price' id='price' #price>
-            <option *ngFor="let variance of product['ProductVariance'];let j=index" value="{{variance['productSize']}} - Rs.{{variance['productPrice']}}" >
-              {{variance['productSize']}} - Rs.{{variance['productPrice']}}
-            </option>
-          </select>
-            <div class="row">
-              <button class="btn btn-success col-sm-5" style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart <i class="fas fa-cart-plus" style="font-size:1.5rem"></i></button>
+          <label>Size &nbsp;</label>
+          <select style="width:7rem" name='price' id='price' #price>
+          <option *ngFor="let variance of product['ProductVariance'];let j=index" value="{{variance['productSize']}} - Rs.{{variance['productPrice']}}" >
+            {{variance['productSize']}} - Rs.{{variance['productPrice']}}
+          </option>
+        </select>
+          <div class="row">
+            <button class="btn btn-success btn-sm " style="font-size:0.9rem;" (click)="AddProductToCart(product,i,price.value)" >Add to Cart</button>
 
 
-              <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
+            <input type="number" class="form-control col-sm-5 offset-sm-1" style="width:5rem" *ngIf="Cart[i]" value="1"  id="count" name="count" min="1" #count (change)="changeCount(count.value,i,price.value)">
 
 
-              <span class="btn btn-danger" style="margin-top:1rem;" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i,price.value)">Remove <i class="far fa-trash-alt"></i></span>
-            </div>
+            <span class="btn btn-danger btn-sm" style="margin-top:1rem;" id="remove" name="remove" *ngIf="Cart[i]" (click)="removeProduct(i,price.value)">Remove </span>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-  <div *ngIf="shopOwnerInstaId==undefined && allShops">
-    <h1>Main complex</h1>
-    <div class="row">
-      <div *ngFor="let shop of allShops" class="col-sm-3">
-        <a routerLink="{{shop.shopOwnerInstaId}}" routerLinkActive="active">
-          <div class="card animate__animated animate__tada">
-            <img
-          [src]="shop['shopLogo']"
-          class="card-img-top" alt="Shop Logo displayed here" width="100" height="200">
-            <div class="card-body">
-              <h4 class="card-title">{{shop['shopName']}}</h4>
-              <h6 class="card-title">{{shop['shopOwner']}}</h6>
-              <h6 class="card-title">{{shop['shopOwnerMobile']}}</h6>
-              <h6 class="card-title">{{shop['shopOwnerAddress']}}</h6>
-            </div>
+
+</div>
+<div *ngIf="shopOwnerInstaId==undefined && allShops">
+  <div class="jumbotron jumbotron-fluid p-3 bg-dark text-white">
+<h3 class="display-4">Hello, Instagram Business People!</h3>
+<p class="lead">A Completely Freee Digital solution for your growing Social Media Business. InstaComplex helps to bring you local business into digital arena all at free cost without any percentage to anyone</p>
+<hr class="my-4">
+<p>Create your own shop with Unlimited Products showcased all at 5minutes.</p>
+<p class="lead">
+  <a class="btn btn-primary btn-sm text-white" href="/AddShop" role="button"> Add Shop</a>
+</p>
+</div>
+  <div class="row m-3">
+    <h4>Our Recent Family</h4>
+    <div *ngFor="let shop of allShops" class="col-sm-3">
+      <a routerLink="{{shop.shopName}}" routerLinkActive="active">
+        <div class="card m-3">
+          <img
+        src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+        class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="text-primary">{{shop['shopName']}}</h3>
+            <h6 class="">{{shop['shopOwner']}}</h6>
+            <h6 class="">{{shop['shopOwnerMobile']}}</h6>
+            <h6 class="">{{shop['shopOwnerAddress']}}</h6>
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
   </div>
+</div>
 </div>
