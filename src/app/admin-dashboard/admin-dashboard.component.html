@@ -1,38 +1,34 @@
-<table class="table m-3 overflow-auto">
+<table class="table table-hover table-responsive-xl m-3">
   <thead class='table-primary'>
     <tr>
-      <th>Order Id</th>
-      <th>Products</th>
-      <th>Total</th>
-      <th>shopper name</th>
-      <th>shopper contact</th>
-      <th>shopper Mail</th>
-      <th>shopper Address</th>
+      <th style="width:50%" >Order Details</th>
+      
+      <th style="width:5%">Shopper Contact Details</th>
+      
 
-      <th>status</th>
+      <th style="width:40%"> status</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor=" let order of orders; let i = index">
-      <td>{{order['orderId']}}</td>
-      <td>
-    <tr *ngFor="let product of order.products">
-      {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}
-    </tr>
+      
+      <td >Order ID: <b><i>{{order['orderId']}}</i></b><br>
+    <div *ngFor="let product of order.products"><PRE class="p-0">
+      {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}</PRE >
+    </div>
+    <b>Total Rs.{{order['total']}}</b>
     </td>
-    <td>Rs.{{order['total']}}</td>
-    <td>{{order['custDetails']['shopperName']}}</td>
-    <td>{{order['custDetails']['shopperMobile']}}</td>
-    <td>{{order['custDetails']['shopperMail']}}</td>
-    <td>{{order['custDetails']['shopperAddress']}}</td>
+    
+    <td>{{order['custDetails']['shopperName']}} <br>{{order['custDetails']['shopperMobile']}}<br>{{order['custDetails']['shopperMail']}}<br>{{order['custDetails']['shopperAddress']}}</td>
+    
     <td>
-      <select [(ngModel)]="status[i]">
+      <select class="form-control form-control-sm" [(ngModel)]="status[i]">
           <option>Pending</option>
           <option>Confirmed</option>
           <option>Shipped</option>
         </select>
       <br/>
-      <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2' placeholder="Shipment Id"/>
+      <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2 form-control-sm ' placeholder="Shipment Id" required/>
       <small clss="form-control" *ngIf="status=='Shipped'">Please enter the shipment id for this order</small>
       <br/>
       <button class="btn btn-success" (click)="updateStatus(i)">Update</button>

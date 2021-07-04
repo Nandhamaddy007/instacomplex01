@@ -1,0 +1,12 @@
+@media screen and (max-width: 480px) {
+  table {
+    background-color:white;
+    
+  
+  }
+  table thead th {
+    width: 1000% !important;
+}
+
+
+}
