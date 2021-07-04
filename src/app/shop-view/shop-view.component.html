@@ -25,9 +25,10 @@
         <div [ngClass]="{'outline':Cart[i]}">
           <img
         class="card-img-top"
-        src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+        [src]="product['productSrc']"
         alt="Card image cap"
-      />
+        height="100" width="100"
+      /> 
         </div>
         <div class="card-body">
           <h5 class="card-title text-primary">{{product['productName']}}</h5>
@@ -69,7 +70,7 @@
       <a routerLink="{{shop.shopOwnerInstaId}}" routerLinkActive="active">
         <div class="card m-3">
           <img
-        src="https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg"
+        [src]="shop['shopLogo']"
         class="card-img-top" alt="...">
           <div class="card-body">
             <h3 class="text-primary">{{shop['shopName']}}</h3>
