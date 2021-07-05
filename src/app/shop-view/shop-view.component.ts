@@ -19,11 +19,12 @@ export class ShopViewComponent implements OnInit {
   currOrder = '';
   shopOwnerInstaId = '';
   allShops;
+  defImg;
   nav() {
     this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
   }
   ngOnInit() {
-    console.log("Hello")
+    this.defImg = this.service.defaultImg;
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     //console.log(this.shopName);
     if (this.shopOwnerInstaId) {

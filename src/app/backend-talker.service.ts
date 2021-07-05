@@ -8,6 +8,8 @@ import * as CryptoJS from 'crypto-js';
 export class BackendTalkerService {
   constructor(private http: HttpClient) {}
   endpoint = 'https://w9oc5.sse.codesandbox.io/';
+  defaultImg =
+    'https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg';
   GetShop(id: any): any {
     return this.http.get(this.endpoint + 'GetShop/' + id);
     //console.log(d);
