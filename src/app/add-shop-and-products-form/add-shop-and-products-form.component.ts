@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormArray,
@@ -46,7 +46,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ProductVariance: FormArray;
   shopOwnerInstaId = '';
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     // console.log(this.shopName);
     if (this.shopOwnerInstaId) {
@@ -60,23 +60,24 @@ export class AddShopAndProductsFormComponent implements OnInit {
             //console.log(data);
             this.ClientForm = this.formBuilder.group({
               shopName: [data['shopName'], Validators.required],
-              shopOwner: [data['shopOwner'], 
-              [
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern('^[a-zA-Z ]*$')
-              ]],
+              shopOwner: [
+                data['shopOwner'],
+                [
+                  Validators.required,
+                  Validators.maxLength(50),
+                  Validators.pattern('^[a-zA-Z ]*$')
+                ]
+              ],
               shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
               shopOwnerEmail: [data['shopOwnerEmail'], Validators.required],
               shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
               shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
               shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
-              
+
               shopLogo: ['', Validators.required],
               ProductDetails: PDs
             });
             this.formLoaded = true;
-            
           } else {
             let ans = confirm(
               'Dear admin check your shop Instagram Id please...\n Wanna create one?'
@@ -94,18 +95,20 @@ export class AddShopAndProductsFormComponent implements OnInit {
     } else {
       this.ClientForm = this.formBuilder.group({
         shopName: ['', Validators.required],
-        shopOwner: ['',
-        [
-          Validators.required,
-          Validators.maxLength(50),
-          Validators.pattern('^[a-zA-Z ]*$')
-        ]],
+        shopOwner: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(50),
+            Validators.pattern('^[a-zA-Z ]*$')
+          ]
+        ],
         shopOwnerMobile: ['', Validators.required],
         shopOwnerEmail: ['', Validators.required],
         shopOwnerAddress: ['', Validators.required],
         shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
-        
+
         shopLogo: ['', Validators.required],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
@@ -221,10 +224,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+  @ViewChild('Logo')
+  Logo: ElementRef;
   deleteProductImage(i) {
-    // this.ClientForm.get('ProductDetails')
-    //   ['controls'][i].get('productSrc')
-    //   .setValue('');
+    console.log(this.Logo);
+    this.Logo.nativeElement.value = '';
     if (
       this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
         undefined &&
