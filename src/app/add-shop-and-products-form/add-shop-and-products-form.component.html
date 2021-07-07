@@ -40,7 +40,7 @@
       type="file"
       accept=".png,.jpg"
     />
-          <button (click)="see()">Click me</button>
+
 
           <button
       class="btn btn-sm btn-outline-danger"
@@ -49,14 +49,16 @@
     >
       Delete
     </button>
-          <div height="300" width="200" class="border border-success">
+          <div style="height:10rem;width:10rem">
             <img
-      *ngIf="dummyLogo['src']"
-      [src]="dummyLogo['src']"
-      alt="shop logo displayed here"
-      width="200" height="300" class="rounded-circle"
-    />
+            *ngIf="dummyLogo['src']"
+            [src]="dummyLogo['src']"
+            alt="shop logo displayed here"
+            style="height:10rem;width:10rem" class="rounded"
+          />
           </div>
+
+
         </div>
       </div>
       <div id="product " class="row" formArrayName="ProductDetails" class="container"
@@ -82,7 +84,7 @@
         [src]="ClientForm.get('ProductDetails')
     ['controls'][i].get('productSrc').value"
         alt="Product image displayed here"
-        width="150" height="500"
+        style="height:10rem;width:10rem"
       />
             <button class="btn btn-outline-danger"  *ngIf="ClientForm.get('ProductDetails')
     ['controls'][i].get('productSrc').value" (click)="deleteProductImage(i)">Delete image</button>
@@ -107,7 +109,7 @@
               </div>
               <div class="formGroup col-sm-6 pt-1">
                 <input formControlName="productSize" class="form-control form-control-sm" type="text" placeholder="Size">
-              </div>              
+              </div>
             </div>
           </div>
           <button class="btn btn-outline-primary btn-sm m-3" style="margin-top:0.5rem" (click)="addProductVariance(i)">Add
