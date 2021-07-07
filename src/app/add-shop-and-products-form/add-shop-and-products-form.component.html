@@ -40,20 +40,23 @@
       type="file"
       accept=".png,.jpg"
     />
+          <button (click)="see()">Click me</button>
 
           <button
       class="btn btn-sm btn-outline-danger"
       *ngIf="dummyLogo['src']"
-      (click)="deleteLogo()"
+      (click)="deleteLogo('remove')"
     >
       Delete
     </button>
-          <img
+          <div height="300" width="200" class="border border-success">
+            <img
       *ngIf="dummyLogo['src']"
       [src]="dummyLogo['src']"
       alt="shop logo displayed here"
-      width="200" height="300"
+      width="200" height="300" class="rounded-circle"
     />
+          </div>
         </div>
       </div>
       <div id="product " class="row" formArrayName="ProductDetails" class="container"
@@ -68,7 +71,7 @@
           <div class="formGroup col-sm-5">
             <input
         type="file"
-        class="form-control"
+        class="form-control m-1"
         (change)="addProductImage($event,i)"
         type="file"
         accept=".png,.jpg"
@@ -83,20 +86,19 @@
       />
             <button class="btn btn-outline-danger"  *ngIf="ClientForm.get('ProductDetails')
     ['controls'][i].get('productSrc').value" (click)="deleteProductImage(i)">Delete image</button>
-            <button *ngIf="i>0" style="margin-top:0.5rem" class='btn btn-danger' (click)="RemoveProduct(i)">
-           Remove
+            <button *ngIf="this.ClientForm.get('ProductDetails')['controls'].length>1" style="margin-top:0.5rem" class='btn btn-danger btn-sm m-1' (click)="RemoveProduct(i)">
+           Remove Product
           </button>
           </div>
           <div class="formGroup col-sm-6 mt-1">
             <input formControlName="productColor" class="form-control form-control-sm" type="text" placeholder="Product Color">
           </div>
-          <div class="btn btn-outline-primary btn-sm" style="margin-top:0.5rem" (click)="addProductVariance(i)">Add
-            Variance +</div>
+
           <div formArrayName="ProductVariance"
             *ngFor="let Variance of Product.get('ProductVariance')['controls']; let j=index;">
             <div [formGroupName]="j">
-              <div class="btn btn-danger" *ngIf='j>0' style="margin-top:0.5rem" (click)="RemoveVariance(i,j)">Remove
-                Variance</div>
+              <button class="btn btn-sm btn-danger" *ngIf="Product.get('ProductVariance')['controls'].length>1" style="margin-top:0.5rem" (click)="RemoveVariance(i,j)">Remove
+                Variance</button>
               <div class="formGroup col-sm-6 pt-1">
                 <input formControlName="productPrice" class="form-control form-control-sm" type="text" placeholder="Price">
               </div>
@@ -105,9 +107,11 @@
               </div>
               <div class="formGroup col-sm-6 pt-1">
                 <input formControlName="productSize" class="form-control form-control-sm" type="text" placeholder="Size">
-              </div>
+              </div>              
             </div>
           </div>
+          <button class="btn btn-outline-primary btn-sm m-3" style="margin-top:0.5rem" (click)="addProductVariance(i)">Add
+            Variance +</button>
 
 
         </div>

@@ -224,11 +224,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-  @ViewChild('Logo')
-  Logo: ElementRef;
+
   deleteProductImage(i) {
-    console.log(this.Logo);
-    this.Logo.nativeElement.value = '';
     if (
       this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] ==
         undefined &&
@@ -246,7 +243,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
     ];
   }
   addLogo(event) {
-    this.deleteLogo();
+    this.deleteLogo('change');
+
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onloadend = event => {
@@ -259,7 +257,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-  deleteLogo() {
+  @ViewChild('Logo')
+  Logo: ElementRef;
+  deleteLogo(type) {
+    if (type == 'remove') {
+      console.log(this.Logo, this.dummyLogo);
+      this.Logo.nativeElement.value = '';
+    }
     if (
       this.dummyLogo['deleted'] == undefined &&
       this.shopOwnerInstaId != undefined &&
@@ -395,10 +399,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   see() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
-    console.log(this.ProductDetails.value);
-    console.log(this.deletedProducts);
-    console.log(this.dummyProducts);
-    console.log(this.dummyLogo);
-    console.log(this.ClientForm);
+    // console.log(this.ProductDetails.value);
+    // console.log(this.deletedProducts);
+    // console.log(this.dummyProducts);
+    // console.log(this.dummyLogo);
+    // console.log(this.ClientForm);
+    console.log(this.ClientForm.get('ProductDetails')['controls'][0].get('ProductVariance')['controls'].length)
   }
 }
