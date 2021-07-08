@@ -29,15 +29,15 @@ export class AdminDashboardComponent implements OnInit {
           this.status.push(order['status']);
           this.shipmentId.push(order['shipmentId']);
         }
-        this.orders = this.filterByStatus('Pending');
+        this.filterByStatus('Pending');
         console.log(this.filterByStatus('Pending'), this.status);
       },
       err => console.log(err)
     );
   }
   filterByStatus(status) {
-    return this.AllOrders.filter((item, index) => {
-      return item['status'] == status || item['status'] == 'Confirmed';
+    this.orders = this.AllOrders.filter((item, index) => {
+      return item['status'] == status;
     });
   }
   updateStatus(i) {
@@ -49,11 +49,11 @@ export class AdminDashboardComponent implements OnInit {
     };
 
     console.log(temp);
-    //   this.service.updateOrderById(temp).subscribe(
-    //     data => {
-    //       console.log(data);
-    //     },
-    //     err => console.log(err)
-    //   );
+    this.service.updateOrderById(temp).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => console.log(err)
+    );
   }
 }

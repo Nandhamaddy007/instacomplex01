@@ -1,26 +1,30 @@
 <div>
-  <div>
+  <div class="">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending</button>
+        <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true" (click)="filterByStatus('Pending')">Pending</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="Shipped-tab" data-bs-toggle="tab" data-bs-target="#Shipped" type="button" role="tab" aria-controls="Shipped" aria-selected="false">Shipped</button>
+        <button class="nav-link" id="Confirmed-tab" data-bs-toggle="tab" data-bs-target="#Confirmed" type="button" role="tab" aria-controls="Confirmed" aria-selected="false" (click)="filterByStatus('Confirmed')">Confirmed</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="Shipped-tab" data-bs-toggle="tab" data-bs-target="#Shipped" type="button" role="tab" aria-controls="Shipped" aria-selected="false" (click)="filterByStatus('Shipped')">Shipped</button>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">Pending</div>
-      <div class="tab-pane fade" id="Shipped" role="tabpanel" aria-labelledby="Shipped-tab">shipped</div>
+      <div class="tab-pane fade" id="Confirmed" role="tabpanel" aria-labelledby="Confirmed-tab">Confirmed</div>
+      <div class="tab-pane fade" id="Shipped" role="tabpanel" aria-labelledby="Shipped-tab">Shipped</div>
     </div>
-    <table class="table table-hover table-responsive-xl m-3">
+    <table class=" animate__animated animate__fadeInRight animate__delay-1s table table-hover table-responsive-xl m-3">
       <thead class='table-primary'>
         <tr>
           <th style="width:50%">Order Details</th>
 
-          <th style="width:20%">Shopper Contact Details</th>
+          <th style="width:30%">Shopper Contact Details</th>
 
 
-          <th style="width:30%"> status</th>
+          <th style="width:20%"> status</th>
         </tr>
       </thead>
       <tbody>
