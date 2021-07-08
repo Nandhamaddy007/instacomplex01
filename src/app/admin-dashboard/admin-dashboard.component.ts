@@ -15,24 +15,30 @@ export class AdminDashboardComponent implements OnInit {
   //INC0207O4
   shopName;
   orders;
+  AllOrders;
   status;
   shipmentId;
   ngOnInit() {
     this.status = [];
     this.shipmentId = [];
     this.shopName = this.route.snapshot.params.shopOwnerInstaId;
-    console.log(this.shopName);
     this.service.getOrdersByShop(this.shopName).subscribe(
       data => {
-        this.orders = this.service.decryptData(data.body);
-        for (let order of this.orders) {
+        this.AllOrders = this.service.decryptData(data.body);
+        for (let order of this.AllOrders) {
           this.status.push(order['status']);
           this.shipmentId.push(order['shipmentId']);
         }
-        console.log(this.orders);
+        this.orders = this.filterByStatus('Pending');
+        console.log(this.filterByStatus('Pending'),this.status);
       },
       err => console.log(err)
     );
+  }
+  filterByStatus(status) {
+    return this.AllOrders.filter((item, index) => {
+      return item['status'] == status;
+    });
   }
   updateStatus(i) {
     //console.log(this.orders[i].orderId);

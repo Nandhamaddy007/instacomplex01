@@ -37,9 +37,9 @@
           <td>{{order['custDetails']['shopperName']}}
             <br>{{order['custDetails']['shopperMobile']}}<br>{{order['custDetails']['shopperMail']}}<br>{{order['custDetails']['shopperAddress']}}
           </td>
-
+          hello {{order['status']}}
           <td>
-            <select class="form-control form-control-sm" [(ngModel)]="status[i]">
+            <select class="form-control form-control-sm" [(ngModel)]="order['status']">
             <option>Pending</option>
             <option>Confirmed</option>
             <option>Shipped</option>
