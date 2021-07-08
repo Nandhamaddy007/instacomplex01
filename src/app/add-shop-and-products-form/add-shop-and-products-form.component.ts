@@ -47,6 +47,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
   shopOwnerInstaId = '';
 
   ngOnInit(): void {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = String(today.getFullYear());
+    var fulldate = `${dd}-${mm}-${yyyy}`;
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     // console.log(this.shopName);
     if (this.shopOwnerInstaId) {
@@ -108,7 +113,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
         shopOwnerAddress: ['', Validators.required],
         shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
-
+        shopCreatedAt: [fulldate],
         shopLogo: ['', Validators.required],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });

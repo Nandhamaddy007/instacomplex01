@@ -3,7 +3,7 @@
     <span class="text-danger" *ngIf="">Error</span>
     <form [formGroup]="ClientForm" class="m-3">
 
-      <div class="row jumbotron ">
+      <div class="row p-5 mb-4 bg-light rounded-3">
         <h3>Create your own Shop in 2min for Free!!!</h3>
         <div class="col-sm-3 p-1">
           <input formControlName="shopName" class="form-control form-control-sm" type="text" placeholder="Shop Name">
@@ -82,8 +82,8 @@
         accept=".png,.jpg"
         formControlName="productSrc"
       />
-      
-            <img 
+
+            <img
         *ngIf="ClientForm.get('ProductDetails')
     ['controls'][i].get('productSrc').value"
         [src]="ClientForm.get('ProductDetails')
@@ -132,7 +132,7 @@
 
       <div class="btn btn-success btn-sm m-3" (click)="addProduct()">Add an Item +</div>
     </form>
-    <button class="btn btn-success btn-sm m-1" *ngIf="!shopOwnerInstaId" [disabled]="!ClientForm.valid" (click)="CreateShop()">Submit</button>
+    <button class="btn btn-success btn-sm m-1" *ngIf="!shopOwnerInstaId" [disabled]="ClientForm.valid" (click)="CreateShop()">Submit</button>
     <div class="btn btn-primary btn-sm p-1" *ngIf="shopOwnerInstaId" (click)="updateShop()">Submit</div>
   </div>
 
