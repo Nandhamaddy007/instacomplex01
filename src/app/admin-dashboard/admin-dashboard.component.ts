@@ -25,12 +25,7 @@ export class AdminDashboardComponent implements OnInit {
     this.service.getOrdersByShop(this.shopName).subscribe(
       data => {
         this.AllOrders = this.service.decryptData(data.body);
-        for (let order of this.AllOrders) {
-          this.status.push(order['status']);
-          this.shipmentId.push(order['shipmentId']);
-        }
         this.filterByStatus('Pending');
-        console.log(this.filterByStatus('Pending'), this.status);
       },
       err => console.log(err)
     );
@@ -41,14 +36,13 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
   updateStatus(i) {
-    console.log(this.orders[i].status);
     let temp = {
       orderId: this.orders[i].orderId,
       status: this.orders[i].status,
-      shipmentId: this.orders[i].shipmentId
+      shipmentId: this.orders[i].shipmentId,
+      shopOwnerInstaId: this.shopName
     };
 
-    console.log(temp);
     this.service.updateOrderById(temp).subscribe(
       data => {
         console.log(data);
