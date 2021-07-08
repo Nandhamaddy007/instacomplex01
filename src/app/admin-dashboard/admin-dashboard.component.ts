@@ -30,30 +30,30 @@ export class AdminDashboardComponent implements OnInit {
           this.shipmentId.push(order['shipmentId']);
         }
         this.orders = this.filterByStatus('Pending');
-        console.log(this.filterByStatus('Pending'),this.status);
+        console.log(this.filterByStatus('Pending'), this.status);
       },
       err => console.log(err)
     );
   }
   filterByStatus(status) {
     return this.AllOrders.filter((item, index) => {
-      return item['status'] == status;
+      return item['status'] == status || item['status'] == 'Confirmed';
     });
   }
   updateStatus(i) {
-    //console.log(this.orders[i].orderId);
+    console.log(this.orders[i].status);
     let temp = {
       orderId: this.orders[i].orderId,
-      status: this.status[i],
-      shipmentId: this.shipmentId[i]
+      status: this.orders[i].status,
+      shipmentId: this.orders[i].shipmentId
     };
 
     console.log(temp);
-    this.service.updateOrderById(temp).subscribe(
-      data => {
-        console.log(data);
-      },
-      err => console.log(err)
-    );
+    //   this.service.updateOrderById(temp).subscribe(
+    //     data => {
+    //       console.log(data);
+    //     },
+    //     err => console.log(err)
+    //   );
   }
 }

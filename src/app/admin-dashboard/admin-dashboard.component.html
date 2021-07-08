@@ -17,10 +17,10 @@
         <tr>
           <th style="width:50%">Order Details</th>
 
-          <th style="width:5%">Shopper Contact Details</th>
+          <th style="width:20%">Shopper Contact Details</th>
 
 
-          <th style="width:40%"> status</th>
+          <th style="width:30%"> status</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +37,6 @@
           <td>{{order['custDetails']['shopperName']}}
             <br>{{order['custDetails']['shopperMobile']}}<br>{{order['custDetails']['shopperMail']}}<br>{{order['custDetails']['shopperAddress']}}
           </td>
-          hello {{order['status']}}
           <td>
             <select class="form-control form-control-sm" [(ngModel)]="order['status']">
             <option>Pending</option>
@@ -45,8 +44,8 @@
             <option>Shipped</option>
           </select>
             <br/>
-            <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2 form-control-sm ' placeholder="Shipment Id" required/>
-            <small clss="form-control" *ngIf="status=='Shipped'">Please enter the shipment id for this order</small>
+            <input *ngIf="order['status']=='Shipped'" type="text" [(ngModel)]="order['shipmentId']" class='form-control mt-2 form-control-sm ' placeholder="Shipment Id" required/>
+            <small clss="form-control" *ngIf="order['status']=='Shipped'">Please enter the shipment id for this order</small>
             <br/>
             <button class="btn btn-success" (click)="updateStatus(i)">Update</button>
           </td>
