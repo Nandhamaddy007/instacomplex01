@@ -1,40 +1,58 @@
-<table class="table table-hover table-responsive-xl m-3">
-  <thead class='table-primary'>
-    <tr>
-      <th style="width:50%" >Order Details</th>
-      
-      <th style="width:5%">Shopper Contact Details</th>
-      
-
-      <th style="width:40%"> status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor=" let order of orders; let i = index">
-      
-      <td >Order ID: <b><i>{{order['orderId']}}</i></b><br>
-    <div *ngFor="let product of order.products"><PRE class="p-0">
-      {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}</PRE >
+<div>
+  <div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="Shipped-tab" data-bs-toggle="tab" data-bs-target="#Shipped" type="button" role="tab" aria-controls="Shipped" aria-selected="false">Shipped</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">Pending</div>
+      <div class="tab-pane fade" id="Shipped" role="tabpanel" aria-labelledby="Shipped-tab">shipped</div>
     </div>
-    <b>Total Rs.{{order['total']}}</b>
-    </td>
-    
-    <td>{{order['custDetails']['shopperName']}} <br>{{order['custDetails']['shopperMobile']}}<br>{{order['custDetails']['shopperMail']}}<br>{{order['custDetails']['shopperAddress']}}</td>
-    
-    <td>
-      <select class="form-control form-control-sm" [(ngModel)]="status[i]">
-          <option>Pending</option>
-          <option>Confirmed</option>
-          <option>Shipped</option>
-        </select>
-      <br/>
-      <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2 form-control-sm ' placeholder="Shipment Id" required/>
-      <small clss="form-control" *ngIf="status=='Shipped'">Please enter the shipment id for this order</small>
-      <br/>
-      <button class="btn btn-success" (click)="updateStatus(i)">Update</button>
-    </td>
-    <div> </div>
-    </tr>
+    <table class="table table-hover table-responsive-xl m-3">
+      <thead class='table-primary'>
+        <tr>
+          <th style="width:50%">Order Details</th>
 
-  </tbody>
-</table>
+          <th style="width:5%">Shopper Contact Details</th>
+
+
+          <th style="width:40%"> status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let order of orders; let i = index">
+
+          <td>Order ID: <b><i>{{order['orderId']}}</i></b><br>
+            <div *ngFor="let product of order.products">
+              <PRE class="p-0">
+        {{product.count}} x {{product.productName}} ({{product.productColor}}) @{{product.price}}</PRE>
+            </div>
+            <b>Total Rs.{{order['total']}}</b>
+          </td>
+
+          <td>{{order['custDetails']['shopperName']}}
+            <br>{{order['custDetails']['shopperMobile']}}<br>{{order['custDetails']['shopperMail']}}<br>{{order['custDetails']['shopperAddress']}}
+          </td>
+
+          <td>
+            <select class="form-control form-control-sm" [(ngModel)]="status[i]">
+            <option>Pending</option>
+            <option>Confirmed</option>
+            <option>Shipped</option>
+          </select>
+            <br/>
+            <input *ngIf="status[i]=='Shipped'" type="text" [(ngModel)]="shipmentId[i]" class='form-control mt-2 form-control-sm ' placeholder="Shipment Id" required/>
+            <small clss="form-control" *ngIf="status=='Shipped'">Please enter the shipment id for this order</small>
+            <br/>
+            <button class="btn btn-success" (click)="updateStatus(i)">Update</button>
+          </td>
+          <div> </div>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
