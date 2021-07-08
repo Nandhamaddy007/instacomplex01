@@ -129,6 +129,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             products[product]['productColor'],
             Validators.required
           ],
+          productAvailability: products[product]['productAvailability'],
           ProductVariance: this.fillProductVariance(
             products[product]['ProductVariance']
           )
@@ -147,10 +148,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             variances[variance]['productPrice'],
             Validators.required
           ],
-          productAvailability: [
-            variances[variance]['productAvailability'],
-            Validators.required
-          ],
+          quantity: [variances[variance]['quantity'], Validators.required],
           productSize: [variances[variance]['productSize'], Validators.required]
         })
       );
@@ -160,12 +158,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
 
   createProduct(): FormGroup {
-    this.uploadProgressProducts.push();
     return this.formBuilder.group({
       productName: ['', Validators.required],
       productColor: ['', Validators.required],
       productId: ['IC' + new Date().getTime()],
-      productSrc: ['', Validators.required],
+      productSrc: [, Validators.required],
+      productAvailability: [true],
       ProductVariance: this.formBuilder.array([this.createProductVariance()])
     });
   }
@@ -173,7 +171,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
   createProductVariance(): FormGroup {
     return this.formBuilder.group({
       productPrice: ['', Validators.required],
-      productAvailability: ['', Validators.required],
+      quantity: ['', Validators.required],
       productSize: ['', Validators.required]
     });
   }
@@ -397,6 +395,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
           );
       });
   }
+  setDisable(i) {
+    this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
+    if (!this.ProductDetails.value[i]['productAvailability']) {
+      console.log();
+      this.ProductDetails['controls'][i].disable();
+    } else {
+      this.ClientForm.get('ProductDetails').enable();
+    }
+
+    this.ClientForm.get('ProductDetails')['controls'][i]['controls'][
+      'productAvailability'
+    ].enable();
+  }
   see() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
     // console.log(this.ProductDetails.value);
@@ -404,6 +415,15 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // console.log(this.dummyProducts);
     // console.log(this.dummyLogo);
     // console.log(this.ClientForm);
-    console.log(this.ClientForm.get('ProductDetails')['controls'][0].get('ProductVariance')['controls'].length)
+    //this.ClientForm.get('ProductDetails').disable()
+    console.log(
+      this.ClientForm.get('ProductDetails')['controls'][0]['controls'][
+        'productAvailability'
+      ]
+    );
+    this.ClientForm.get('ProductDetails').disable();
+    this.ClientForm.get('ProductDetails')['controls'][0]['controls'][
+      'productAvailability'
+    ].enable();
   }
 }
