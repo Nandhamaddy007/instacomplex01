@@ -401,7 +401,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       console.log();
       this.ProductDetails['controls'][i].disable();
     } else {
-      this.ClientForm.get('ProductDetails').enable();
+      this.ProductDetails['controls'][i].enable();
     }
 
     this.ClientForm.get('ProductDetails')['controls'][i]['controls'][
