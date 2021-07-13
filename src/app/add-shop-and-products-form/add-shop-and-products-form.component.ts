@@ -62,6 +62,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
           //console.log(data);
           if (data != null) {
             var PDs = this.fillProductDetails(data['ProductDetails']);
+            this.dummyLogo['src'] = data['shopLogo'];
             //console.log(data);
             this.ClientForm = this.formBuilder.group({
               shopName: [data['shopName'], Validators.required],
@@ -79,7 +80,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
               shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
 
-              shopLogo: ['', Validators.required],
+              shopLogo: [data['shopLogo'], Validators.required],
               ProductDetails: PDs
             });
             this.formLoaded = true;
@@ -253,6 +254,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       reader.onloadend = event => {
         this.imgService.compressor(event.target.result).subscribe(result => {
           this.dummyLogo['src'] = result;
+          this.ClientForm.controls.shopLogo.setValue(result);
           this.dummyLogo['name'] =
             this.ClientForm.value.shopOwnerInstaId + '@Logo';
         });
@@ -268,8 +270,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
       this.Logo.nativeElement.value = '';
     }
     if (
-      this.dummyLogo['deleted'] == undefined &&
       this.shopOwnerInstaId != undefined &&
+      this.dummyLogo['deleted'] == undefined &&      
       this.ClientForm.value.shopLogo != ''
     ) {
       this.dummyLogo['deleted'] = this.ClientForm.value.shopLogo;
@@ -365,7 +367,9 @@ export class AddShopAndProductsFormComponent implements OnInit {
     this.imgService
       .LogoManipulation(this.dummyLogo, this.ClientForm.value.shopOwnerInstaId)
       .subscribe(res => {
-        this.ClientForm.controls.shopLogo.setValue(res);
+        if (res != 'Same') {
+          this.ClientForm.controls.shopLogo.setValue(res);
+        }
         this.imgService
           .uploadToCloud(
             this.ProductDetails.value,
