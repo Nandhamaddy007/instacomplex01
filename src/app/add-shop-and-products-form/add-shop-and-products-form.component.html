@@ -6,45 +6,38 @@
       <div class="row p-5 mb-4 bg-light rounded-3">
         <h3>Create your own Shop in 2min for Free!!!</h3>
         <div class="col-sm-3 p-1">
-          <span class="text-danger" *ngIf="ClientForm.controls.shopName.errors &&ClientForm.controls.shopName.touched">
-        <sub *ngIf="ClientForm.controls.shopName.errors['required']">Required</sub>
-        </span>
-          <input formControlName="shopName" class="form-control form-control-sm" type="text" placeholder="Shop Name">
+          <input formControlName="shopName" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopName.errors &&(ClientForm.controls.shopName.touched)}" type="text" placeholder="Shop Name">
         </div>
 
         <div class="col-sm-3 p-1">
-          <span class="text-danger" *ngIf="ClientForm.controls.shopOwner.errors &&ClientForm.controls.shopOwner.touched">
-        <sub *ngIf="ClientForm.controls.shopOwner.errors['required']">Required</sub>
-        <sub *ngIf="ClientForm.controls.shopOwner.errors['pattern']">Provide Valid Text</sub>
-        </span>
-          <input formControlName="shopOwner" class="form-control form-control-sm" type="text" placeholder="Shop Owner Name">
+          <input formControlName="shopOwner" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwner.errors &&(ClientForm.controls.shopOwner.touched)}" type="text" placeholder="Shop Owner Name">
         </div>
 
         <div class="col-sm-3 p-1">
-          <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerMobile.errors &&ClientForm.controls.shopOwnerMobile.touched">
+          <!-- <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerMobile.errors &&ClientForm.controls.shopOwnerMobile.touched">
         <sub *ngIf="ClientForm.controls.shopOwnerMobile.errors['required']">Required</sub>
         <sub *ngIf="ClientForm.controls.shopOwnerMobile.errors['pattern']">Enter only numbers</sub>
         <sub *ngIf="!ClientForm.controls.shopOwnerMobile.errors['pattern']&&ClientForm.controls.shopOwnerMobile.errors['minlength']"> {{10-ClientForm.controls.shopOwnerMobile.errors['minlength']['actualLength']}} Numbers is missing</sub>       
-        </span>
-          <input formControlName="shopOwnerMobile" class="form-control form-control-sm" type="text" placeholder="Mobile No." maxLength="10">
+        </span> -->
+          <input formControlName="shopOwnerMobile" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerMobile.errors &&(ClientForm.controls.shopOwnerMobile.touched)}" type="text" placeholder="Mobile No." maxLength="10">
         </div>
 
         <div class="col-sm-3 p-1">
-          <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerEmail.errors &&ClientForm.controls.shopOwnerEmail.touched">
+          <!-- <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerEmail.errors &&ClientForm.controls.shopOwnerEmail.touched">
         <sub *ngIf="ClientForm.controls.shopOwnerEmail.errors['required']">Required</sub>
         <sub *ngIf="ClientForm.controls.shopOwnerEmail.errors['email']">Please Enter a valid Email</sub>
-        </span>
-          <input formControlName="shopOwnerEmail" class="form-control form-control-sm" type="text" placeholder="Email ID">
+        </span> -->
+          <input formControlName="shopOwnerEmail" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerEmail.errors &&(ClientForm.controls.shopOwnerEmail.touched)}" type="text" placeholder="Email ID">
         </div>
 
         <div class="col-sm-3 p-1">
-          <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerInstaId.errors &&ClientForm.controls.shopOwnerInstaId.touched">
+          <!-- <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerInstaId.errors &&ClientForm.controls.shopOwnerInstaId.touched">
         <sub *ngIf="ClientForm.controls.shopOwnerInstaId.errors['required']">Required</sub>
-        </span>
-          <input formControlName="shopOwnerInstaId" class="form-control form-control-sm" type="text" placeholder="Instagram ID" >
+        </span> -->
+          <input formControlName="shopOwnerInstaId" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerInstaId.errors &&(ClientForm.controls.shopOwnerInstaId.touched)}" type="text" placeholder="Instagram ID" >
         </div>
         <div class="col-sm-3 p-1">
-          <input formControlName="shopOwnerGpay" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)} " type="text" [placeholder]="ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)?'Required UPI ID':'Any UPI Address'">
+          <input formControlName="shopOwnerGpay" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)}" type="text" [placeholder]="ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)?'Required UPI ID':'Any UPI Address'">
         </div>
 
 
@@ -53,16 +46,16 @@
           <input foromControlName="shopOwnerAddress" rows="3" cols="40" style="resize:none" class="form-control form-control-sm" placeholder="Address" >
         </div>
         <div class="col-sm-3 p-1">
-          <label>Shop LOGO</label>:
+          <label for="uploadfile" class="btn btn-sm btn-outline-success">Shop LOGO</label>
           <input #Logo
       (change)="addLogo($event)"
-      class="outline"
+      class="form-control"
+      style="visibility:hidden"
       name="uploadfile"
+      id="uploadfile"
       type="file"
       accept=".png,.jpg"
     />
-
-
           <button
       class="btn btn-sm btn-outline-danger"
       *ngIf="dummyLogo['src']"
