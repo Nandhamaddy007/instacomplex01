@@ -5,7 +5,6 @@
   height: 17px;
 }
 
-
 .switch input {
   opacity: 0;
   width: 0;
@@ -57,4 +56,14 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
 }

@@ -75,12 +75,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
                 ]
               ],
               shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
-              shopOwnerEmail: [data['shopOwnerEmail'], Validators.required],
-              shopOwnerAddress: [data['shopOwnerAddress'], Validators.required],
+              shopOwnerEmail: [
+                data['shopOwnerEmail'],
+                [Validators.required, Validators.email]
+              ],
+              shopOwnerAddress: [data['shopOwnerAddress']],
               shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
               shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
-
-              shopLogo: [data['shopLogo'], Validators.required],
+              shopLogo: [data['shopLogo']],
               ProductDetails: PDs
             });
             this.formLoaded = true;
@@ -109,9 +111,16 @@ export class AddShopAndProductsFormComponent implements OnInit {
             Validators.pattern('^[a-zA-Z ]*$')
           ]
         ],
-        shopOwnerMobile: ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^[0-9]\d*$/)]],
-        shopOwnerEmail: ['', [Validators.required,Validators.email]],
-        shopOwnerAddress: ['', Validators.required],
+        shopOwnerMobile: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.pattern(/^[0-9]\d*$/)
+          ]
+        ],
+        shopOwnerEmail: ['', [Validators.required, Validators.email]],
+        shopOwnerAddress: [''],
         shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
         shopCreatedAt: [fulldate],
@@ -142,7 +151,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
         })
       );
     }
-
     return list;
   }
   fillProductVariance(variances): FormArray {
@@ -159,16 +167,15 @@ export class AddShopAndProductsFormComponent implements OnInit {
         })
       );
     }
-
     return list;
   }
 
   createProduct(): FormGroup {
     return this.formBuilder.group({
       productName: ['', Validators.required],
-      productColor: ['', Validators.required],
+      productColor: [''],
       productId: ['IC' + new Date().getTime()],
-      productSrc: [, Validators.required],
+      productSrc: [''],
       productAvailability: [true],
       ProductVariance: this.formBuilder.array([this.createProductVariance()])
     });
