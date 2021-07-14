@@ -105,17 +105,17 @@ export class AddShopAndProductsFormComponent implements OnInit {
           '',
           [
             Validators.required,
-            Validators.maxLength(50),
+            Validators.maxLength(100),
             Validators.pattern('^[a-zA-Z ]*$')
           ]
         ],
-        shopOwnerMobile: ['', Validators.required],
-        shopOwnerEmail: ['', Validators.required],
+        shopOwnerMobile: ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^[0-9]\d*$/)]],
+        shopOwnerEmail: ['', [Validators.required,Validators.email]],
         shopOwnerAddress: ['', Validators.required],
         shopOwnerInstaId: ['', Validators.required],
         shopOwnerGpay: ['', Validators.required],
         shopCreatedAt: [fulldate],
-        shopLogo: ['', Validators.required],
+        shopLogo: [''],
         ProductDetails: this.formBuilder.array([this.createProduct()])
       });
       this.formLoaded = true;
@@ -271,7 +271,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     }
     if (
       this.shopOwnerInstaId != undefined &&
-      this.dummyLogo['deleted'] == undefined &&      
+      this.dummyLogo['deleted'] == undefined &&
       this.ClientForm.value.shopLogo != ''
     ) {
       this.dummyLogo['deleted'] = this.ClientForm.value.shopLogo;
@@ -425,14 +425,6 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // console.log(this.dummyLogo);
     // console.log(this.ClientForm);
     //this.ClientForm.get('ProductDetails').disable()
-    console.log(
-      this.ClientForm.get('ProductDetails')['controls'][0]['controls'][
-        'productAvailability'
-      ]
-    );
-    this.ClientForm.get('ProductDetails').disable();
-    this.ClientForm.get('ProductDetails')['controls'][0]['controls'][
-      'productAvailability'
-    ].enable();
+    console.log(this.ClientForm);
   }
 }
