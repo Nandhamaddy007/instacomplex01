@@ -14,6 +14,10 @@ export class BackendTalkerService {
     return this.http.get(this.endpoint + 'GetShop/' + id);
     //console.log(d);
   }
+  GetShopUI(id: any): any {
+    return this.http.get(this.endpoint + 'UI/GetShop/' + id);
+    //console.log(d);
+  }
   CreateShop(data: any): any {
     let d = this.encryptData(data);
     let str = { body: d };
@@ -34,7 +38,7 @@ export class BackendTalkerService {
     return this.http.get(this.endpoint + 'getOrderCount/' + date);
   }
   getAllShops(): any {
-    return this.http.get(this.endpoint + 'getShops');
+    return this.http.get(this.endpoint + 'UI/getShops');
   }
   getOrdersByShop(id): any {
     return this.http.get(this.endpoint + 'getOrders/' + id);
@@ -45,7 +49,7 @@ export class BackendTalkerService {
     return this.http.patch(this.endpoint + 'updateOrder', str);
   }
   getOrderStatus(orderId): any {
-    return this.http.get(this.endpoint + 'getStatus/' + orderId);
+    return this.http.get(this.endpoint + 'UI/getStatus/' + orderId);
   }
 
   decryptData(data: any) {

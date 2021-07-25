@@ -28,7 +28,7 @@ export class ShopViewComponent implements OnInit {
     this.shopOwnerInstaId = this.route.snapshot.params.shopOwnerInstaId;
     //console.log(this.shopName);
     if (this.shopOwnerInstaId) {
-      this.service.GetShop(this.shopOwnerInstaId).subscribe(
+      this.service.GetShopUI(this.shopOwnerInstaId).subscribe(
         data1 => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
@@ -44,6 +44,7 @@ export class ShopViewComponent implements OnInit {
       );
     } else {
       this.service.getAllShops().subscribe(data => {
+        console.log(data);
         this.allShops = this.service.decryptData(data.body);
         console.log(this.allShops);
       });
