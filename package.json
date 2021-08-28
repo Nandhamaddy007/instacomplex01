@@ -18,7 +18,7 @@
     "@popperjs/core": "^2.9.2",
     "bootstrap": "^5.0.1",
     "crypto-js": "^4.0.0",
-    "firebase": "^8.6.2",
+    "firebase": "7",
     "jquery": "^3.6.0",
     "ngx-image-compress": "^11.0.3",
     "popper.js": "^1.16.1",
