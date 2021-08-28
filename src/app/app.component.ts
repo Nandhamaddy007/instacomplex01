@@ -1,7 +1,6 @@
 import { Component, VERSION } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import firebase from 'firebase/app';
-import fire from 'firebase';
 import { BackendTalkerService } from './backend-talker.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class AppComponent {
     private service: BackendTalkerService
   ) {}
   ngOnInit() {
-    firebase.initializeApp({})
+    firebase.initializeApp({});
     this.ProfilePic = localStorage.getItem('picture');
   }
   googleSignIn() {
