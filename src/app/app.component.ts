@@ -16,27 +16,7 @@ export class AppComponent {
     private service: BackendTalkerService
   ) {}
   ngOnInit() {
-    firebase.initializeApp({});
+    // firebase.initializeApp({});
     this.ProfilePic = localStorage.getItem('picture');
-  }
-  googleSignIn() {
-    this.service
-      .GoogleSiginIn()
-      .then(result => {
-        console.log('Success...\n', result);
-        localStorage.setItem(
-          'picure',
-          result.additionalUserInfo.profile['picture']
-        );
-        this.ProfilePic = result.additionalUserInfo.profile['picture'];
-      })
-      .catch(err => {
-        console.log('Error:\n', err);
-      });
-  }
-  googleSignOut() {
-    this.service
-      .GoogleSignOut()
-      .then(res => console.log(res), err => console.log(err));
   }
 }

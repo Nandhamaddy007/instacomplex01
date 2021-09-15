@@ -5,7 +5,7 @@ import {
   AngularFireStorage,
   AngularFireStorageReference,
   AngularFireUploadTask
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 // import { finalize } from 'rxjs/dist/types/operators';
 import { finalize } from 'rxjs/operators';
 

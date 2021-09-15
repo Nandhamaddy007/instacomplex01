@@ -18,7 +18,7 @@ import {
   AngularFireStorage,
   AngularFireStorageReference,
   AngularFireUploadTask
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 // import { Observable } from 'rxjs/dist/types';
 
 @Component({
