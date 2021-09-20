@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environment';
 import {
   AngularFireStorageModule,
@@ -11,7 +12,7 @@ import {
   AngularFireUploadTask,
 } from '@angular/fire/compat/storage';
 import { NgxImageCompressService } from 'ngx-image-compress';
-import { AppFirebaseModule } from './app-firebase.module';
+//import { AppFirebaseModule } from './app-firebase.module';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -33,7 +34,7 @@ import { ImageProcessingService } from './image-processing.service';
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireStorageModule,
-    AppFirebaseModule,
+    AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
   ],
   declarations: [

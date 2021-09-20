@@ -1,6 +1,9 @@
 import { Component, VERSION } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
+// import * as fire from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 import { BackendTalkerService } from './backend-talker.service';
 
 @Component({
@@ -13,10 +16,13 @@ export class AppComponent {
   ProfilePic;
   constructor(
     private route: ActivatedRoute,
-    private service: BackendTalkerService
+    private service: BackendTalkerService,
+    // public auth: AngularFireAuth
   ) {}
-  ngOnInit() {
-    // firebase.initializeApp({});
+  ngOnInit() {   
     this.ProfilePic = localStorage.getItem('picture');
+  }
+  GoogleSignIn(){
+    //this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
   }
 }

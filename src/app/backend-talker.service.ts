@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
 // import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({
@@ -9,7 +11,7 @@ import * as CryptoJS from 'crypto-js';
 })
 export class BackendTalkerService {
   constructor(private http: HttpClient, 
-    //private afAuth: AngularFireAuth
+    // public afAuth: AngularFireAuth
     ) {}
   endpoint = 'https://w9oc5.sse.codesandbox.io/';
   defaultImg =
