@@ -31,4 +31,7 @@ export class AppComponent {
   GoogleSignOut() {
     this.socialAuthService.signOut();
   }
+  check(){
+    console.log(this.userData)
+  }
 }

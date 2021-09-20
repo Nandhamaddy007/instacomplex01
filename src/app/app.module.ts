@@ -31,6 +31,9 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { CheckStatusComponent } from './check-status/check-status.component';
 import { ImageProcessingService } from './image-processing.service';
 
+const googleLoginOptions = {
+  scope: 'profile email'
+};
 @NgModule({
   imports: [
     BrowserModule,
@@ -66,7 +69,7 @@ import { ImageProcessingService } from './image-processing.service';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com'
+              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com',googleLoginOptions
             ),
           },
         ],

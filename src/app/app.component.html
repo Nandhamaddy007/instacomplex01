@@ -2,6 +2,7 @@
   <a class="navbar-brand" href="#">InstaComplex.in </a>
   <h3>{{ Shopname }}</h3>
   <button class="btn btn-success" (click)="GoogleSignIn()">SignIn</button>
+  <!-- <button (click)="check()">test</button> -->
   <div *ngIf="socialAuthService.authState | async as socialUser">
     <img
       [src]="socialUser.photoUrl"
