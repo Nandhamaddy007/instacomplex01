@@ -13,6 +13,11 @@ import {
 } from '@angular/fire/compat/storage';
 import { NgxImageCompressService } from 'ngx-image-compress';
 //import { AppFirebaseModule } from './app-firebase.module';
+import {
+  GoogleLoginProvider,
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -36,6 +41,7 @@ import { ImageProcessingService } from './image-processing.service';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
+    SocialLoginModule,
   ],
   declarations: [
     AppComponent,
@@ -52,6 +58,20 @@ import { ImageProcessingService } from './image-processing.service';
     BackendTalkerService,
     NgxImageCompressService,
     ImageProcessingService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true, //keeps the user signed in
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com'
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
   ],
 })
 export class AppModule {}

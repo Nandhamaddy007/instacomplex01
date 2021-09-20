@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // import firebase from 'firebase/app';
 // import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
+// import { AngularFireAuth } from '@angular/fire/compat/auth';
+// import firebase from 'firebase/compat/app';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BackendTalkerService {
-  constructor(private http: HttpClient, 
-    // public afAuth: AngularFireAuth
-    ) {}
+  constructor(private http: HttpClient) // public afAuth: AngularFireAuth
+  {}
   endpoint = 'https://w9oc5.sse.codesandbox.io/';
   defaultImg =
     'https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg';
- 
 
   GetShop(id: any): any {
     return this.http.get(this.endpoint + 'GetShop/' + id);
