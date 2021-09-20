@@ -2,9 +2,16 @@
   <a class="navbar-brand" href="#">InstaComplex.in </a>
   <h3>{{ Shopname }}</h3>
   <button class="btn btn-success" (click)="GoogleSignIn()">SignIn</button>
-  <button class="btn btn-danger" (click)="test()">Check</button>
-  <!-- <button class="btn btn-primary" (click)="googleSignOut()">SignOut</button> -->
-  <!-- <img height="40" width="40" *ngIf="ProfilePic!=''" class="rounded-circle" [src]="ProfilePic"/> -->
+  <div *ngIf="socialAuthService.authState | async as socialUser">
+    <img
+      [src]="socialUser.photoUrl"
+      class="img-responsive rounded-circle"
+      style="width:20%"
+    />
+    &nbsp;
+    <button class="btn btn-danger" (click)="GoogleSignOut()">Signout</button>
+  </div>
+
   <button
     class="navbar-toggler"
     type="button"

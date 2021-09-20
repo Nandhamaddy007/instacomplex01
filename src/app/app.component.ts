@@ -18,20 +18,17 @@ export class AppComponent {
   constructor(
     private route: ActivatedRoute,
     private service: BackendTalkerService,
-    private socialAuthService: SocialAuthService // public auth:AngularFireAuth
+    public socialAuthService: SocialAuthService // public auth:AngularFireAuth
   ) {}
   ngOnInit() {
     this.ProfilePic = localStorage.getItem('picture');
   }
   GoogleSignIn() {
-    console.log("google signin")
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
-      console.log("hello")
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => { 
       this.socialAuthService.authState.subscribe(user=>this.userData=user)
     });
   }
-  test() {
-    this.socialAuthService.authState.subscribe(user=>this.userData=user)
-    console.log(this.userData);
+  GoogleSignOut() {
+    this.socialAuthService.signOut();
   }
 }
