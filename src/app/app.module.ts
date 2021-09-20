@@ -8,9 +8,10 @@ import { environment } from '../environment';
 import {
   AngularFireStorageModule,
   AngularFireStorageReference,
-  AngularFireUploadTask
+  AngularFireUploadTask,
 } from '@angular/fire/compat/storage';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { AppFirebaseModule } from './app-firebase.module';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -32,7 +33,8 @@ import { ImageProcessingService } from './image-processing.service';
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireStorageModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud')
+    AppFirebaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
   ],
   declarations: [
     AppComponent,
@@ -42,13 +44,13 @@ import { ImageProcessingService } from './image-processing.service';
     PricePipe,
     CartComponent,
     AdminDashboardComponent,
-    CheckStatusComponent
+    CheckStatusComponent,
   ],
   bootstrap: [AppComponent],
   providers: [
     BackendTalkerService,
     NgxImageCompressService,
-    ImageProcessingService
-  ]
+    ImageProcessingService,
+  ],
 })
 export class AppModule {}
