@@ -4,22 +4,28 @@ import { AddShopAndProductsFormComponent } from './add-shop-and-products-form/ad
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CheckStatusComponent } from './check-status/check-status.component';
 import { ShopViewComponent } from './shop-view/shop-view.component';
+import { AdminGuardGuard } from './admin-guard.guard';
 
 const routes: Routes = [
-  {
-    path: 'UpdateShop/:shopOwnerInstaId',
-    component: AddShopAndProductsFormComponent
-  },
-  { path: 'admin/:shopOwnerInstaId', component: AdminDashboardComponent },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopOwnerInstaId', component: ShopViewComponent },
   { path: 'complex', component: ShopViewComponent },
   { path: 'checkStatus', component: CheckStatusComponent },
-  { path: '**', redirectTo: 'complex' }
+  {
+    path: 'admin/:shopOwnerInstaId',
+    component: AdminDashboardComponent,
+    canActivate: [AdminGuardGuard],
+  },
+  {
+    path: 'UpdateShop/:shopOwnerInstaId',
+    component: AddShopAndProductsFormComponent,
+    canActivate: [AdminGuardGuard],
+  },
+  { path: '**', redirectTo: 'complex' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

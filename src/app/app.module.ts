@@ -30,9 +30,10 @@ import { CartComponent } from './shop-view/cart/cart.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CheckStatusComponent } from './check-status/check-status.component';
 import { ImageProcessingService } from './image-processing.service';
+import { AdminGuardGuard } from './admin-guard.guard';
 
 const googleLoginOptions = {
-  scope: 'profile email'
+  scope: 'profile email',
 };
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ const googleLoginOptions = {
     BackendTalkerService,
     NgxImageCompressService,
     ImageProcessingService,
+    AdminGuardGuard,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -69,7 +71,8 @@ const googleLoginOptions = {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com',googleLoginOptions
+              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com',
+              googleLoginOptions
             ),
           },
         ],

@@ -1,10 +1,15 @@
 import { Component, VERSION } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 // import firebase from 'firebase/compat/app';
 import { BackendTalkerService } from './backend-talker.service';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialUser,
+} from 'angularx-social-login';
 import { authState } from 'rxfire/auth';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-app',
@@ -18,21 +23,29 @@ export class AppComponent {
   constructor(
     private route: ActivatedRoute,
     private service: BackendTalkerService,
+    private router: Router,
     public socialAuthService: SocialAuthService // public auth:AngularFireAuth
   ) {}
   ngOnInit() {
     this.ProfilePic = localStorage.getItem('picture');
   }
   GoogleSignIn() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => { 
-      this.socialAuthService.authState.subscribe(user=>this.userData=user)
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
+      this.socialAuthService.authState.subscribe(
+        (user) => (this.userData = user)
+      );
     });
   }
   GoogleSignOut() {
     this.socialAuthService.signOut();
-    this.userData=null;
+    this.userData = null;
+    this.router.navigate(['/complex']);
   }
-  check(){
-    console.log(this.userData)
+  check() {
+    return this.socialAuthService.authState.pipe(
+      map((socialUser: SocialUser) => !!socialUser),
+      tap((isLoggedIn: boolean) => {
+      })
+    );
   }
 }

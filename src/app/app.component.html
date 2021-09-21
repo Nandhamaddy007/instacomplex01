@@ -3,7 +3,7 @@
   <h3>{{ Shopname }}</h3>
   <button
     class="btn btn-success"
-    *ngIf="userData == null"
+    *ngIf="!(check() | async)"
     (click)="GoogleSignIn()"
   >
     SignIn
