@@ -1,7 +1,13 @@
 <nav class="navbar navbar-dark bg-primary">
   <a class="navbar-brand" href="#">InstaComplex.in </a>
   <h3>{{ Shopname }}</h3>
-  <button class="btn btn-success" (click)="GoogleSignIn()">SignIn</button>
+  <button
+    class="btn btn-success"
+    *ngIf="userData == null"
+    (click)="GoogleSignIn()"
+  >
+    SignIn
+  </button>
   <!-- <button (click)="check()">test</button> -->
   <div *ngIf="socialAuthService.authState | async as socialUser">
     <img

@@ -30,6 +30,7 @@ export class AppComponent {
   }
   GoogleSignOut() {
     this.socialAuthService.signOut();
+    this.userData=null;
   }
   check(){
     console.log(this.userData)
