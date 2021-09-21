@@ -10,6 +10,7 @@ import {
 } from 'angularx-social-login';
 import { authState } from 'rxfire/auth';
 import { map, tap } from 'rxjs/operators';
+import {CookieService} from 'ngx-cookie-service'
 
 @Component({
   selector: 'my-app',
@@ -24,6 +25,7 @@ export class AppComponent {
     private route: ActivatedRoute,
     private service: BackendTalkerService,
     private router: Router,
+    private cookie:CookieService,
     public socialAuthService: SocialAuthService // public auth:AngularFireAuth
   ) {}
   ngOnInit() {
@@ -31,9 +33,16 @@ export class AppComponent {
   }
   GoogleSignIn() {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
-      this.socialAuthService.authState.subscribe(
-        (user) => (this.userData = user)
-      );
+      this.socialAuthService.authState.subscribe((user) => {
+        this.userData = user;
+        this.service.getToken(user.email).subscribe(
+          (data) => console.log(data),
+          (err) => {
+            console.log(err);
+            this.router.navigate(['/complex']);
+          }
+        );
+      });
     });
   }
   GoogleSignOut() {
@@ -44,8 +53,10 @@ export class AppComponent {
   check() {
     return this.socialAuthService.authState.pipe(
       map((socialUser: SocialUser) => !!socialUser),
-      tap((isLoggedIn: boolean) => {
-      })
+      tap((isLoggedIn: boolean) => {})
     );
+  }
+  test(){
+console.log(this.cookie.get("token"))
   }
 }

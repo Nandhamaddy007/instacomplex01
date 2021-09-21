@@ -10,8 +10,9 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class BackendTalkerService {
-  constructor(private http: HttpClient) // public afAuth: AngularFireAuth
-  {}
+  constructor(
+    private http: HttpClient // public afAuth: AngularFireAuth
+  ) {}
   endpoint = 'https://w9oc5.sse.codesandbox.io/';
   defaultImg =
     'https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg';
@@ -56,6 +57,14 @@ export class BackendTalkerService {
   }
   getOrderStatus(orderId): any {
     return this.http.get(this.endpoint + 'UI/getStatus/' + orderId);
+  }
+
+  getToken(emailId): any {
+    let e = this.encryptData(emailId);
+    let pack = { user: e };
+    return this.http.post(this.endpoint + 'token/signIn', pack, {
+      withCredentials: true,
+    });
   }
 
   decryptData(data: any) {

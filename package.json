@@ -18,6 +18,7 @@
     "crypto-js": "^4.1.1",
     "firebase": "^9.0.2",
     "jquery": "^3.6.0",
+    "ngx-cookie-service": "^12.0.3",
     "ngx-image-compress": "^11.0.3",
     "popper.js": "^1.16.1",
     "rxfire": "^6.0.1",

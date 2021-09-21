@@ -8,7 +8,7 @@
   >
     SignIn
   </button>
-  <!-- <button (click)="check()">test</button> -->
+  <button (click)="test()">test</button>
   <div *ngIf="socialAuthService.authState | async as socialUser">
     <img
       [src]="socialUser.photoUrl"

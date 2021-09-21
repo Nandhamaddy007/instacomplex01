@@ -18,6 +18,7 @@ import {
   SocialLoginModule,
   SocialAuthServiceConfig,
 } from 'angularx-social-login';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -63,6 +64,7 @@ const googleLoginOptions = {
     NgxImageCompressService,
     ImageProcessingService,
     AdminGuardGuard,
+    CookieService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
