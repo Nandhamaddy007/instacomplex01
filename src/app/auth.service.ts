@@ -10,11 +10,11 @@ export class AuthService {
   ) {}
   endpoint = environment.DevEndpoint;
   GenerateOTP(email): any {
-    let enc = this.service.encryptData(email);
-    return this.http.get(this.endpoint + 'Auth/GetOtp/' + enc);
+    let enc = this.service.encryptData({ email: email });
+    return this.http.post(this.endpoint + 'Auth/GetOtp', { body: enc });
   }
-  ValidateLogin(PINOTP,email): any {
-    let enc = this.service.encryptData({pinotp:PINOTP,email:email});
+  ValidateLogin(PINOTP, email): any {
+    let enc = this.service.encryptData({ pinotp: PINOTP, email: email });
     let b = { otp: enc };
     return this.http.post(this.endpoint + 'Auth/SubmitOtp', b);
   }
