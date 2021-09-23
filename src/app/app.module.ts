@@ -32,6 +32,7 @@ import { CheckStatusComponent } from './check-status/check-status.component';
 import { ImageProcessingService } from './image-processing.service';
 import { AdminGuardGuard } from './admin-guard.guard';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
 const googleLoginOptions = {
   scope: 'profile email',
@@ -65,6 +66,7 @@ const googleLoginOptions = {
     NgxImageCompressService,
     ImageProcessingService,
     AdminGuardGuard,
+    AuthService,
 
     // {
     //   provide: 'SocialAuthServiceConfig',
