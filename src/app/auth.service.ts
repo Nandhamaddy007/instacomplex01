@@ -13,5 +13,9 @@ export class AuthService {
     let enc = this.service.encryptData(email);
     return this.http.get(this.endpoint + 'Auth/GetOtp/' + enc);
   }
-  ValidateLogin() {}
+  ValidateLogin(PINOTP,email): any {
+    let enc = this.service.encryptData({pinotp:PINOTP,email:email});
+    let b = { otp: enc };
+    return this.http.post(this.endpoint + 'Auth/SubmitOtp', b);
+  }
 }

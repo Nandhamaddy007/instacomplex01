@@ -22,5 +22,14 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  SubmitOTP() {}
+  SubmitOTP() {
+    this.AuthService.ValidateLogin(this.OTP.value, this.Email.value).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 }
