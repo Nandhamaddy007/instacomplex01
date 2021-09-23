@@ -31,6 +31,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { CheckStatusComponent } from './check-status/check-status.component';
 import { ImageProcessingService } from './image-processing.service';
 import { AdminGuardGuard } from './admin-guard.guard';
+import { LoginComponent } from './login/login.component';
 
 const googleLoginOptions = {
   scope: 'profile email',
@@ -56,6 +57,7 @@ const googleLoginOptions = {
     CartComponent,
     AdminDashboardComponent,
     CheckStatusComponent,
+    LoginComponent,
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -63,7 +65,7 @@ const googleLoginOptions = {
     NgxImageCompressService,
     ImageProcessingService,
     AdminGuardGuard,
-    
+
     // {
     //   provide: 'SocialAuthServiceConfig',
     //   useValue: {
@@ -78,7 +80,7 @@ const googleLoginOptions = {
     //       },
     //     ],
     //   } as SocialAuthServiceConfig,
-   // },
+    // },
   ],
 })
 export class AppModule {}
