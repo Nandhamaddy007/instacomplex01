@@ -5,8 +5,10 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { CheckStatusComponent } from './check-status/check-status.component';
 import { ShopViewComponent } from './shop-view/shop-view.component';
 import { AdminGuardGuard } from './admin-guard.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopOwnerInstaId', component: ShopViewComponent },
   { path: 'complex', component: ShopViewComponent },

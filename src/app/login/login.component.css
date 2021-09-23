@@ -1,0 +1,10 @@
+.center {
+  margin: auto; 
+  padding: 10px;
+  top:35%;
+  left:35%;
+  position:absolute;
+}
+.animate__bounce{
+  animation-duration: 20s;
+}
