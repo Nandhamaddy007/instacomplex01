@@ -13,12 +13,11 @@ import {
 } from '@angular/fire/compat/storage';
 import { NgxImageCompressService } from 'ngx-image-compress';
 //import { AppFirebaseModule } from './app-firebase.module';
-import {
-  GoogleLoginProvider,
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from 'angularx-social-login';
-import { CookieService } from 'ngx-cookie-service';
+// import {
+//   GoogleLoginProvider,
+//   SocialLoginModule,
+//   SocialAuthServiceConfig,
+// } from 'angularx-social-login';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -46,7 +45,7 @@ const googleLoginOptions = {
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
-    SocialLoginModule,
+    //SocialLoginModule,
   ],
   declarations: [
     AppComponent,
@@ -64,22 +63,22 @@ const googleLoginOptions = {
     NgxImageCompressService,
     ImageProcessingService,
     AdminGuardGuard,
-    CookieService,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true, //keeps the user signed in
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com',
-              googleLoginOptions
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: true, //keeps the user signed in
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider(
+    //           '841021988909-76o0jt8lkkdchknitjtvf8r7ea362fft.apps.googleusercontent.com',
+    //           googleLoginOptions
+    //         ),
+    //       },
+    //     ],
+    //   } as SocialAuthServiceConfig,
+   // },
   ],
 })
 export class AppModule {}
