@@ -12,4 +12,5 @@ export class LoginComponent implements OnInit {
   OTP = new FormControl('', [Validators.required]);
   ngOnInit() {}
   SendOTP() {}
+  SubmitOTP() {}
 }
