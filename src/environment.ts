@@ -7,6 +7,7 @@ export const environment = {
     storageBucket: 'instacomplex01.appspot.com',
     messagingSenderId: '440604307120',
     appId: '1:440604307120:web:1e9965bb04006d4b0d1575',
-    measurementId: 'G-DYS8Z6NGVD'
-  }
+    measurementId: 'G-DYS8Z6NGVD',
+  },
+  DevEndpoint: 'https://w9oc5.sse.codesandbox.io/',
 };

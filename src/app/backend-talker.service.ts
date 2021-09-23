@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 // import firebase from 'firebase/compat/app';
 import * as CryptoJS from 'crypto-js';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class BackendTalkerService {
   constructor(
     private http: HttpClient // public afAuth: AngularFireAuth
   ) {}
-  endpoint = 'https://w9oc5.sse.codesandbox.io/';
+  endpoint = environment.DevEndpoint;
   defaultImg =
     'https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg';
 

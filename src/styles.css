@@ -1,7 +1,7 @@
 /* Add application styles & imports to this file! */
 .floating {
   animation-name: floating;
-  animation-duration: 3s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
@@ -11,7 +11,7 @@
     transform: translate(0, 0px);
   }
   50% {
-    transform: translate(0, 15px);
+    transform: translate(0, 5px);
   }
   100% {
     transform: translate(0, -0px);
