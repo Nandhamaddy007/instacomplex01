@@ -9,8 +9,8 @@ export class AuthService {
     private service: BackendTalkerService
   ) {}
   endpoint = environment.DevEndpoint;
-  GenerateOTP(email): any {
-    let enc = this.service.encryptData({ email: email });
+  GenerateOTP(email: String): any {
+    let enc = this.service.encryptData({ email: email.toLowerCase() });
     return this.http.post(this.endpoint + 'Auth/GetOtp', { body: enc });
   }
   ValidateLogin(PINOTP, email): any {
