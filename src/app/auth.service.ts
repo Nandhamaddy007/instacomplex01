@@ -13,9 +13,34 @@ export class AuthService {
     let enc = this.service.encryptData({ email: email.toLowerCase() });
     return this.http.post(this.endpoint + 'Auth/GetOtp', { body: enc });
   }
-  ValidateLogin(PINOTP, email): any {
+  ValidateLogin(PINOTP, email) {
     let enc = this.service.encryptData({ pinotp: PINOTP, email: email });
     let b = { otp: enc };
-    return this.http.post(this.endpoint + 'Auth/SubmitOtp', b);
+    this.http.post(this.endpoint + 'Auth/SubmitOtp', b).subscribe({
+      next: (data) => {
+        console.log(data);
+        console.log(this.service.decryptData(data['tkn']));
+        localStorage.setItem('token', data['tkn']);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  forceLogout(email, pin): any {
+    let pack = this.service.encryptData({ code: pin, email: email });
+    let body = { body: pack };
+    return this.http.patch(this.endpoint + 'Auth/setLogout', body);
+  }
+  Logout(email) {
+    let pack = { body: this.service.encryptData({ email: email }) };
+    return this.http.put(this.endpoint + 'secure/Logout', pack);
+  }
+  isLoggedIn(){
+    let token=this.service.decryptData(localStorage.getItem('token'))
+    
+  }
+  checker() {
+    return this.http.get(this.endpoint + 'secure/check');
   }
 }

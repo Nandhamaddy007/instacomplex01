@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environment';
@@ -33,6 +33,7 @@ import { ImageProcessingService } from './image-processing.service';
 import { AdminGuardGuard } from './admin-guard.guard';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 const googleLoginOptions = {
   scope: 'profile email',
@@ -67,7 +68,11 @@ const googleLoginOptions = {
     ImageProcessingService,
     AdminGuardGuard,
     AuthService,
-
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: TokenInterceptorService, 
+      multi: true
+    },
     // {
     //   provide: 'SocialAuthServiceConfig',
     //   useValue: {

@@ -35,7 +35,7 @@ export class BackendTalkerService {
   updateShop(data: any, id: String): any {
     let d = this.encryptData(data);
     let str = { body: d };
-    return this.http.post(this.endpoint + 'updateShop/' + id, str);
+    return this.http.post(this.endpoint + 'secure/updateShop/' + id, str);
   }
   placeOrder(data: any): any {
     console.log(data);
@@ -49,12 +49,12 @@ export class BackendTalkerService {
     return this.http.get(this.endpoint + 'UI/getShops');
   }
   getOrdersByShop(id): any {
-    return this.http.get(this.endpoint + 'getOrders/' + id);
+    return this.http.get(this.endpoint + 'secure/getOrders/' + id);
   }
   updateOrderById(data): any {
     let d = this.encryptData(data);
     let str = { body: d };
-    return this.http.patch(this.endpoint + 'updateOrder', str);
+    return this.http.patch(this.endpoint + 'secure/updateOrder', str);
   }
   getOrderStatus(orderId): any {
     return this.http.get(this.endpoint + 'UI/getStatus/' + orderId);

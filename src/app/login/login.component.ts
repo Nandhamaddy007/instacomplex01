@@ -9,8 +9,11 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   constructor(private AuthService: AuthService) {}
-  Email = new FormControl('', [Validators.required, Validators.email]);
-  OTP = new FormControl('', [Validators.required]);
+  Email = new FormControl('nandhamaddy007@gmail.com', [
+    Validators.required,
+    Validators.email,
+  ]);
+  OTP = new FormControl('GSno9841', [Validators.required]);
   ngOnInit() {}
   SendOTP() {
     this.AuthService.GenerateOTP(this.Email.value).subscribe(
@@ -23,7 +26,11 @@ export class LoginComponent implements OnInit {
     );
   }
   SubmitOTP() {
-    this.AuthService.ValidateLogin(this.OTP.value, this.Email.value).subscribe(
+    this.AuthService.ValidateLogin(this.OTP.value, this.Email.value);
+  }
+  forceLogout() {
+    console.log('force initiated');
+    this.AuthService.forceLogout(this.Email.value, this.OTP.value).subscribe(
       (data) => {
         console.log(data);
       },
@@ -31,5 +38,13 @@ export class LoginComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  check() {
+    this.AuthService.checker().subscribe((data) => {
+      console.log(data),
+        (err) => {
+          console.log(err);
+        };
+    });
   }
 }

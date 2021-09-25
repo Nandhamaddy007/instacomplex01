@@ -27,7 +27,21 @@
         [formControl]="OTP"
         placeholder="Enter OTP+4 digit PIN"
       />
-      <button class="btn btn-primary" style="margin-top:10px" (click)="SubmitOTP()">Submit</button>
+      <button
+        class="btn btn-primary"
+        style="margin-top:10px"
+        (click)="SubmitOTP()"
+      >
+        Submit
+      </button>
+      <button
+        class="btn btn-danger"
+        style="margin-top:10px"
+        (click)="forceLogout()"
+      >
+        Force logout
+      </button>
+      <button (click)="check()">Check</button>
     </div>
   </div>
 </div>

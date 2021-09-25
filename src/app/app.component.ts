@@ -23,12 +23,11 @@ export class AppComponent {
   constructor(
     private route: ActivatedRoute,
     private service: BackendTalkerService,
-    private router: Router,    
-    //public socialAuthService: SocialAuthService // public auth:AngularFireAuth
-  ) {}
-  ngOnInit() {
-    this.ProfilePic = localStorage.getItem('picture');
-  }
+    private router: Router
+  ) //public socialAuthService: SocialAuthService // public auth:AngularFireAuth
+  {}
+  ngOnInit() {}
+  logout() {}
   GoogleSignIn() {
     // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
     //   this.socialAuthService.authState.subscribe((user) => {
@@ -54,7 +53,7 @@ export class AppComponent {
     //   tap((isLoggedIn: boolean) => {})
     // );
   }
-  test(){
-//console.log(this.cookie.get("token"))
+  test() {
+    //console.log(this.cookie.get("token"))
   }
 }
