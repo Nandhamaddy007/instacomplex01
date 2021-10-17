@@ -13,19 +13,23 @@ import { tap, map } from 'rxjs/operators';
 @Injectable()
 export class AdminGuardGuard implements CanActivate {
   constructor(
-    //private socialAuth: SocialAuthService, 
-    private router: Router,
-    ) {}
+    //private socialAuth: SocialAuthService,
+    private router: Router
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+    var token = localStorage.getItem('token');
+    if (token) return true;
+
+    this.router.navigate(['login'])
+    return false;
     // this.socialAuth.authState.pipe(
-    //   map((socialUser: SocialUser) => 
-    //     !!socialUser        
-    //   ),      
-    //   tap((isLoggedIn: boolean) => {                     
+    //   map((socialUser: SocialUser) =>
+    //     !!socialUser
+    //   ),
+    //   tap((isLoggedIn: boolean) => {
     //     if (!isLoggedIn) {
     //       alert('Unauthorized access!!');
     //       this.router.navigate(['/complex']);

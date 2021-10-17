@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BackendTalkerService } from '../backend-talker.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  styleUrls: ['./admin-dashboard.component.css'],
 })
 export class AdminDashboardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private service: BackendTalkerService
+    private service: BackendTalkerService,
+    private router: Router
   ) {}
   //INC0207O4
   shopName;
@@ -23,11 +24,16 @@ export class AdminDashboardComponent implements OnInit {
     this.shipmentId = [];
     this.shopName = this.route.snapshot.params.shopOwnerInstaId;
     this.service.getOrdersByShop(this.shopName).subscribe(
-      data => {
+      (data) => {
         this.AllOrders = this.service.decryptData(data.body);
         this.filterByStatus('Pending');
       },
-      err => console.log(err)
+      (err) => {
+        console.log(err);
+        alert(err.error.err);
+        localStorage.removeItem('token');
+        this.router.navigate(['login']);
+      }
     );
   }
   filterByStatus(status) {
@@ -40,14 +46,14 @@ export class AdminDashboardComponent implements OnInit {
       orderId: this.orders[i].orderId,
       status: this.orders[i].status,
       shipmentId: this.orders[i].shipmentId,
-      shopOwnerInstaId: this.shopName
+      shopOwnerInstaId: this.shopName,
     };
 
     this.service.updateOrderById(temp).subscribe(
-      data => {
+      (data) => {
         console.log(data);
       },
-      err => console.log(err)
+      (err) => console.log(err)
     );
   }
 }
