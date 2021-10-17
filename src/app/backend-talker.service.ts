@@ -19,7 +19,7 @@ export class BackendTalkerService {
     'https://raw.githubusercontent.com/Nandhamaddy007/instacomplex01/master/src/assets/images/images.jpeg';
 
   GetShop(id: any): any {
-    return this.http.get(this.endpoint + 'GetShop/' + id);
+    return this.http.get(this.endpoint + 'secure/GetShop/' + id);
     //console.log(d);
   }
   GetShopUI(id: any): any {

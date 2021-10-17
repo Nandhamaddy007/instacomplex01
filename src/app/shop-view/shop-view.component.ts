@@ -21,7 +21,7 @@ export class ShopViewComponent implements OnInit {
   allShops;
   defImg;
   nav() {
-    this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
+    //this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
   }
   ngOnInit() {
     this.defImg = this.service.defaultImg;

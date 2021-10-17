@@ -21,6 +21,7 @@ export class AuthService {
         console.log(data);
         console.log(this.service.decryptData(data['tkn']));
         localStorage.setItem('token', data['tkn']);
+        localStorage.setItem('expiresIn', data['expiresIn']);
       },
       error: (err) => {
         console.log(err);
@@ -36,9 +37,8 @@ export class AuthService {
     let pack = { body: this.service.encryptData({ email: email }) };
     return this.http.put(this.endpoint + 'secure/Logout', pack);
   }
-  isLoggedIn(){
-    let token=this.service.decryptData(localStorage.getItem('token'))
-    
+  isLoggedIn() {
+    let token = this.service.decryptData(localStorage.getItem('token'));
   }
   checker() {
     return this.http.get(this.endpoint + 'secure/check');

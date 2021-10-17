@@ -21,9 +21,17 @@ export class AdminGuardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     var token = localStorage.getItem('token');
-    if (token) return true;
+    if (token) {
+      let expire = localStorage.getItem('expiresIn');
+      if (new Date().getTime() < Number(expire)) {
+        return true;
+      } else {
+        alert('Token expired... \n Please login again');
+        this.router.navigate(['login']);
+      }
+    }
 
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
     return false;
     // this.socialAuth.authState.pipe(
     //   map((socialUser: SocialUser) =>

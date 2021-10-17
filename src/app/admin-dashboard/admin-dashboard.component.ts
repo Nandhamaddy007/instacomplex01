@@ -32,6 +32,7 @@ export class AdminDashboardComponent implements OnInit {
         console.log(err);
         alert(err.error.err);
         localStorage.removeItem('token');
+        localStorage.removeItem('expiresIn');
         this.router.navigate(['login']);
       }
     );
