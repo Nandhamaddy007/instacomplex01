@@ -4,7 +4,7 @@ import {
   FormArray,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Observable } from 'rxjs/dist/types';
@@ -17,14 +17,14 @@ import { BackendTalkerService } from '../backend-talker.service';
 import {
   AngularFireStorage,
   AngularFireStorageReference,
-  AngularFireUploadTask
+  AngularFireUploadTask,
 } from '@angular/fire/compat/storage';
 // import { Observable } from 'rxjs/dist/types';
 
 @Component({
   selector: 'app-add-shop-and-products-form',
   templateUrl: './add-shop-and-products-form.component.html',
-  styleUrls: ['./add-shop-and-products-form.component.css']
+  styleUrls: ['./add-shop-and-products-form.component.css'],
 })
 export class AddShopAndProductsFormComponent implements OnInit {
   formLoaded = false;
@@ -56,7 +56,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     // console.log(this.shopName);
     if (this.shopOwnerInstaId) {
       this.service.GetShop(this.shopOwnerInstaId).subscribe(
-        data1 => {
+        (data1) => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
           //console.log(data);
@@ -71,19 +71,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
                 [
                   Validators.required,
                   Validators.maxLength(50),
-                  Validators.pattern('^[a-zA-Z ]*$')
-                ]
+                  Validators.pattern('^[a-zA-Z ]*$'),
+                ],
               ],
               shopOwnerMobile: [data['shopOwnerMobile'], Validators.required],
               shopOwnerEmail: [
                 data['shopOwnerEmail'],
-                [Validators.required, Validators.email]
+                [Validators.required, Validators.email],
               ],
               shopOwnerAddress: [data['shopOwnerAddress']],
               shopOwnerInstaId: [data['shopOwnerInstaId'], Validators.required],
               shopOwnerGpay: [data['shopOwnerGpay'], Validators.required],
               shopLogo: [data['shopLogo']],
-              ProductDetails: PDs
+              ProductDetails: PDs,
             });
             this.formLoaded = true;
           } else {
@@ -98,34 +98,37 @@ export class AddShopAndProductsFormComponent implements OnInit {
             }
           }
         },
-        err => console.log(err)
+        (err) => console.log(err)
       );
     } else {
       this.ClientForm = this.formBuilder.group({
-        shopName: ['', Validators.required],
+        shopName: ['Rainbow Colors', Validators.required],
         shopOwner: [
-          '',
+          'Nandhagopal',
           [
             Validators.required,
             Validators.maxLength(100),
-            Validators.pattern('^[a-zA-Z ]*$')
-          ]
+            Validators.pattern('^[a-zA-Z ]*$'),
+          ],
         ],
         shopOwnerMobile: [
-          '',
+          '1234567890',
           [
             Validators.required,
             Validators.minLength(10),
-            Validators.pattern(/^[0-9]\d*$/)
-          ]
+            Validators.pattern(/^[0-9]\d*$/),
+          ],
         ],
-        shopOwnerEmail: ['', [Validators.required, Validators.email]],
-        shopOwnerAddress: [''],
-        shopOwnerInstaId: ['', Validators.required],
-        shopOwnerGpay: ['', Validators.required],
+        shopOwnerEmail: [
+          'nandha@mail.com',
+          [Validators.required, Validators.email],
+        ],
+        shopOwnerAddress: ['chennai'],
+        shopOwnerInstaId: ['rainbowcolors', Validators.required],
+        shopOwnerGpay: ['nandha@okaxis.com', Validators.required],
         shopCreatedAt: [fulldate],
         shopLogo: [''],
-        ProductDetails: this.formBuilder.array([this.createProduct()])
+        ProductDetails: this.formBuilder.array([this.createProduct()]),
       });
       this.formLoaded = true;
       console.log(this.ClientForm);
@@ -142,12 +145,12 @@ export class AddShopAndProductsFormComponent implements OnInit {
           productId: [products[product]['productId']],
           productColor: [
             products[product]['productColor'],
-            Validators.required
+            Validators.required,
           ],
           productAvailability: products[product]['productAvailability'],
           ProductVariance: this.fillProductVariance(
             products[product]['ProductVariance']
-          )
+          ),
         })
       );
     }
@@ -160,10 +163,13 @@ export class AddShopAndProductsFormComponent implements OnInit {
         this.formBuilder.group({
           productPrice: [
             variances[variance]['productPrice'],
-            Validators.required
+            Validators.required,
           ],
           quantity: [variances[variance]['quantity'], Validators.required],
-          productSize: [variances[variance]['productSize'], Validators.required]
+          productSize: [
+            variances[variance]['productSize'],
+            Validators.required,
+          ],
         })
       );
     }
@@ -177,7 +183,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
       productId: ['IC' + new Date().getTime()],
       productSrc: [''],
       productAvailability: [true],
-      ProductVariance: this.formBuilder.array([this.createProductVariance()])
+      ProductVariance: this.formBuilder.array([this.createProductVariance()]),
     });
   }
 
@@ -185,7 +191,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     return this.formBuilder.group({
       productPrice: ['', Validators.required],
       quantity: ['', Validators.required],
-      productSize: ['', Validators.required]
+      productSize: ['', Validators.required],
     });
   }
   addProductVariance(i): void {
@@ -208,8 +214,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
   addProductImage(event, i) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-      reader.onload = event => {
-        this.imgService.compressor(event.target.result).subscribe(result => {
+      reader.onload = (event) => {
+        this.imgService.compressor(event.target.result).subscribe((result) => {
           if (
             this.deletedProducts[
               this.ClientForm.value.ProductDetails[i].productId
@@ -242,9 +248,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
         undefined &&
       this.shopOwnerInstaId != undefined
     ) {
-      this.deletedProducts[
-        this.ClientForm.value.ProductDetails[i].productId
-      ] = this.ClientForm.value.ProductDetails[i].productSrc;
+      this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] =
+        this.ClientForm.value.ProductDetails[i].productSrc;
     }
     this.ClientForm.get('ProductDetails')
       ['controls'][i].get('productSrc')
@@ -258,8 +263,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
 
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-      reader.onloadend = event => {
-        this.imgService.compressor(event.target.result).subscribe(result => {
+      reader.onloadend = (event) => {
+        this.imgService.compressor(event.target.result).subscribe((result) => {
           this.dummyLogo['src'] = result;
           this.ClientForm.controls.shopLogo.setValue(result);
           this.dummyLogo['name'] =
@@ -297,9 +302,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
         undefined &&
       this.shopOwnerInstaId != undefined
     ) {
-      this.deletedProducts[
-        this.ClientForm.value.ProductDetails[i].productId
-      ] = this.ClientForm.value.ProductDetails[i].productSrc;
+      this.deletedProducts[this.ClientForm.value.ProductDetails[i].productId] =
+        this.ClientForm.value.ProductDetails[i].productSrc;
     }
     this.deleteProductImage(i);
     this.ClientForm.get('ProductDetails')['controls'].splice(i, 1);
@@ -324,21 +328,21 @@ export class AddShopAndProductsFormComponent implements OnInit {
     console.log(this.dummyProducts);
     this.imgService
       .LogoManipulation(this.dummyLogo, this.ClientForm.value.shopOwnerInstaId)
-      .subscribe(res => {
+      .subscribe((res) => {
         if (res != 'Same') this.ClientForm.controls.shopLogo.setValue(res);
         this.imgService
           .deleteImages(
             this.deletedProducts,
             this.ClientForm.value.shopOwnerInstaId + '/'
           )
-          .subscribe(res => {
+          .subscribe((res) => {
             this.imgService
               .UpdateImages(
                 this.dummyProducts,
                 this.ClientForm.value.shopOwnerInstaId
               )
               .subscribe(
-                urls => {
+                (urls) => {
                   console.log('updateshop: ', urls);
                   Object.entries(urls).forEach(([key, value]) => {
                     this.ClientForm.get('ProductDetails')
@@ -346,7 +350,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
                       .setValue(value['data']);
                   });
                 },
-                err => {
+                (err) => {
                   console.log(err);
                 },
                 () => {
@@ -354,14 +358,14 @@ export class AddShopAndProductsFormComponent implements OnInit {
                   this.service
                     .updateShop(this.ClientForm.value, this.shopOwnerInstaId)
                     .subscribe(
-                      res => {
+                      (res) => {
                         console.log(res);
                         alert(res.body);
                         this.router.navigate([
-                          'complex/' + this.shopOwnerInstaId
+                          'complex/' + this.shopOwnerInstaId,
                         ]);
                       },
-                      err => console.log(err)
+                      (err) => console.log(err)
                     );
                 }
               );
@@ -370,10 +374,11 @@ export class AddShopAndProductsFormComponent implements OnInit {
   }
   CreateShop() {
     this.ProductDetails = this.ClientForm.get('ProductDetails') as FormArray;
-
+    console.log(this.dummyLogo);
     this.imgService
       .LogoManipulation(this.dummyLogo, this.ClientForm.value.shopOwnerInstaId)
-      .subscribe(res => {
+      .subscribe((res) => {
+        console.log(res);
         if (res != 'Same') {
           this.ClientForm.controls.shopLogo.setValue(res);
         }
@@ -383,7 +388,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
             this.ClientForm.value.shopOwnerInstaId
           )
           .subscribe(
-            urls => {
+            (urls) => {
               console.log(urls);
               urls.forEach((url, j) => {
                 console.log(url);
@@ -393,19 +398,19 @@ export class AddShopAndProductsFormComponent implements OnInit {
                   .setValue(url);
               });
             },
-            err => {
+            (err) => {
               console.log(err);
             },
             () => {
               // console.log(this.ClientForm.value);
               //console.log('another');
               this.service.CreateShop(this.ClientForm.value).subscribe(
-                res => {
+                (res) => {
                   console.log(res);
                   alert(res.body);
                   this.router.navigate(['complex/' + res.shopOwnerInstaId]);
                 },
-                err => console.log(err)
+                (err) => console.log(err)
               );
             }
           );

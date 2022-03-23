@@ -6,7 +6,7 @@ import { BackendTalkerService } from '../backend-talker.service';
 @Component({
   selector: 'app-shop-view',
   templateUrl: './shop-view.component.html',
-  styleUrls: ['./shop-view.component.css']
+  styleUrls: ['./shop-view.component.css'],
 })
 export class ShopViewComponent implements OnInit {
   constructor(
@@ -20,6 +20,7 @@ export class ShopViewComponent implements OnInit {
   shopOwnerInstaId = '';
   allShops;
   defImg;
+  logo;
   nav() {
     //this.router.navigate(['/UpdateShop/' + this.shopOwnerInstaId]);
   }
@@ -29,21 +30,22 @@ export class ShopViewComponent implements OnInit {
     //console.log(this.shopName);
     if (this.shopOwnerInstaId) {
       this.service.GetShopUI(this.shopOwnerInstaId).subscribe(
-        data1 => {
+        (data1) => {
           //console.log(data1);
           let data = this.service.decryptData(data1.body);
-          //console.log(data);
+          console.log(data);
           if (data != null) {
             this.Products = data.ProductDetails;
+            this.logo = data.shopLogo;
             this.Cart = {};
           } else {
             this.router.navigate(['complex']);
           }
         },
-        err => {}
+        (err) => {}
       );
     } else {
-      this.service.getAllShops().subscribe(data => {
+      this.service.getAllShops().subscribe((data) => {
         console.log(data);
         this.allShops = this.service.decryptData(data.body);
         console.log(this.allShops);
@@ -60,7 +62,7 @@ export class ShopViewComponent implements OnInit {
       productName: product.productName,
       price: price,
       count: 1,
-      productColor: product.productColor
+      productColor: product.productColor,
     };
     this.Cart[i][price] = temp;
     //console.log(this.Cart);

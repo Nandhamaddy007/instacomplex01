@@ -5,7 +5,7 @@ import { BackendTalkerService } from '../../backend-talker.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
   keys = [];
@@ -24,10 +24,10 @@ export class CartComponent implements OnInit {
       shopperName: ['', Validators.required],
       shopperMobile: [
         '',
-        [Validators.required, Validators.pattern('[0-9]{10}')]
+        [Validators.required, Validators.pattern('[0-9]{10}')],
       ],
       shopperMail: ['', [Validators.required, Validators.email]],
-      shopperAddress: ['', Validators.required]
+      shopperAddress: ['', Validators.required],
     });
   }
   f() {
@@ -35,17 +35,21 @@ export class CartComponent implements OnInit {
     this.total = 0;
     this.orderId = '';
     console.log(this.cartValue);
-    let temp = Object.values(this.cartValue);
+    let temp = Object.keys(this.cartValue);
+    console.log(temp);
     for (let lvl1 of temp) {
-      //console.log(Object.values(lvl1));
-      if (typeof lvl1 === 'string') {
+      console.log(lvl1);
+      if (typeof this.cartValue[lvl1] === 'string') {
         continue;
       }
-      for (let lvl2 of Object.values(lvl1)) {
-        let t = +lvl2.price.split('-')[1].replace('Rs.', '');
-        t = lvl2.count * t;
+      console.log(Object.keys(this.cartValue[lvl1]));
+      for (let lvl2 of Object.keys(this.cartValue[lvl1])) {
+        let t = +this.cartValue[lvl1][lvl2].price
+          .split('-')[1]
+          .replace('Rs.', '');
+        t = this.cartValue[lvl1][lvl2].count * t;
         this.total += t;
-        this.keys.push(lvl2);
+        this.keys.push(this.cartValue[lvl1][lvl2]);
       }
     }
     //console.log(this.keys);
@@ -57,7 +61,7 @@ export class CartComponent implements OnInit {
     var yyyy = String(today.getFullYear());
     var fulldate = `${dd}-${mm}-${yyyy}`;
     this.service.getOrderCount(fulldate).subscribe(
-      data1 => {
+      (data1) => {
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = String(today.getFullYear());
@@ -71,17 +75,17 @@ export class CartComponent implements OnInit {
         data['status'] = 'Pending';
         data['orderedDate'] = fulldate;
         this.service.placeOrder(data).subscribe(
-          data => {
+          (data) => {
             console.log(data);
             alert(data['msg']);
             this.userDetails.reset();
             this.keys = [];
             this.cartToView.emit(this.orderId);
           },
-          err => console.log(err)
+          (err) => console.log(err)
         );
       },
-      err => console.log(err)
+      (err) => console.log(err)
     );
   }
   copyInputMessage(inputElement) {

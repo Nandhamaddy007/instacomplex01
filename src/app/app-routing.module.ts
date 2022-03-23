@@ -23,7 +23,7 @@ const routes: Routes = [
     component: AddShopAndProductsFormComponent,
     canActivate: [AdminGuardGuard],
   },
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'complex' },
 ];
 
 @NgModule({

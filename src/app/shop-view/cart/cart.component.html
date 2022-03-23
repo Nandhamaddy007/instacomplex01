@@ -1,18 +1,40 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="f()" style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;">Cart <i class="fa fa-shopping-cart"></i></button>
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#bd-example-modal-lg"
+  (click)="f()"
+  style=" position: -webkit-sticky; position: sticky; top:0; z-index:9;"
+>
+  Cart <i class="fa fa-shopping-cart"></i>
+</button>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
-
-  <div class="modal-dialog modal-lg">
-
+<div
+  class="modal fade"
+  id="bd-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <button type="button" style="text-align:right;padding:0.5rem" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <button
+        type="button"
+        style="text-align:right;padding:0.5rem"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
       <h3 style="padding-left:1rem">Cart</h3>
       <div class="container">
-        <div class='table-responsive-sm'>
-          <table class="table table-striped border overflow-auto" style="text-align:center;">
+        <div class="table-responsive-sm">
+          <table
+            class="table table-striped border overflow-auto"
+            style="text-align:center;"
+          >
             <thead>
               <tr>
                 <th>Si no</th>
@@ -24,70 +46,159 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let key of keys; let i=index">
-                <td>{{i+1}}</td>
-                <td>{{key['productName']}}</td>
-                <td>{{key['productColor']}}</td>
-                <td>{{key['price']|price:'size'}}</td>
-                <td>{{key['price']|price}}</td>
-                <td>x{{key['count']}}</td>
+              <tr *ngFor="let key of keys; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ key['productName'] }}</td>
+                <td>{{ key['productColor'] }}</td>
+                <td>{{ key['price'] | price: 'size' }}</td>
+                <td>{{ key['price'] | price }}</td>
+                <td>x{{ key['count'] }}</td>
               </tr>
-              <tr *ngIf="!(keys.length==0)" style="position: -webkit-sticky; position: sticky;">
+              <tr
+                *ngIf="!(keys.length == 0)"
+                style="position: -webkit-sticky; position: sticky;"
+              >
                 <td>
                   <h5>Total</h5>
                 </td>
                 <td>
-                  <h5>RS.{{total}}</h5>
+                  <h5>RS.{{ total }}</h5>
                 </td>
                 <td></td>
-                <td>
-
-                </td>
-                <td>
-                </td>
-                <td>
-
-                </td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
           </table>
-          <form [formGroup]="userDetails" class="container" *ngIf="!(keys.length==0)">
-            <div class='form-group'>
+          <form
+            [formGroup]="userDetails"
+            class="container"
+            *ngIf="!(keys.length == 0)"
+          >
+            <div class="form-group">
               <label for="userName">Name</label>
-              <input type="text" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperName.errors &&userDetails.controls.shopperName.touched}" id="userName" formControlName="shopperName"/>
-              <span class='text-danger' *ngIf="userDetails.controls.shopperName.errors &&userDetails.controls.shopperName.touched">Please enter your name</span>
+              <input
+                type="text"
+                [ngClass]="{
+                  'form-control': true,
+                  'is-invalid':
+                    userDetails.controls.shopperName.errors &&
+                    userDetails.controls.shopperName.touched
+                }"
+                id="userName"
+                formControlName="shopperName"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  userDetails.controls.shopperName.errors &&
+                  userDetails.controls.shopperName.touched
+                "
+                >Please enter your name</span
+              >
             </div>
-            <div class='form-group'>
+            <div class="form-group">
               <label for="userMobile">Mobile number</label>
-              <input type="tel" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperMobile.errors &&userDetails.controls.shopperMobile.touched}" id="userMobile" formControlName="shopperMobile"/>
-              <span class='text-danger' *ngIf="userDetails.controls.shopperMobile.errors &&userDetails.controls.shopperMobile.touched">Please enter your contact number so that we can contact you during delivery</span>
+              <input
+                type="tel"
+                [ngClass]="{
+                  'form-control': true,
+                  'is-invalid':
+                    userDetails.controls.shopperMobile.errors &&
+                    userDetails.controls.shopperMobile.touched
+                }"
+                id="userMobile"
+                formControlName="shopperMobile"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  userDetails.controls.shopperMobile.errors &&
+                  userDetails.controls.shopperMobile.touched
+                "
+                >Please enter your contact number so that we can contact you
+                during delivery</span
+              >
             </div>
-            <div class='form-group'>
+            <div class="form-group">
               <label for="userEmail">Email id</label>
-              <input type="text" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperMail.errors &&userDetails.controls.shopperMail.touched}" id="userEmail" formControlName="shopperMail"/>
-              <span class='text-danger' *ngIf="userDetails.controls.shopperMail.errors &&userDetails.controls.shopperMail.touched">Please enter a valid Email Id for further updates on your order</span>
+              <input
+                type="text"
+                [ngClass]="{
+                  'form-control': true,
+                  'is-invalid':
+                    userDetails.controls.shopperMail.errors &&
+                    userDetails.controls.shopperMail.touched
+                }"
+                id="userEmail"
+                formControlName="shopperMail"
+              />
+              <span
+                class="text-danger"
+                *ngIf="
+                  userDetails.controls.shopperMail.errors &&
+                  userDetails.controls.shopperMail.touched
+                "
+                >Please enter a valid Email Id for further updates on your
+                order</span
+              >
             </div>
-            <div class='form-group'>
+            <div class="form-group">
               <label for="userAddress">Address</label>
-              <textarea type="text" [ngClass]="{'form-control':true, 'is-invalid':userDetails.controls.shopperAddress.errors &&userDetails.controls.shopperAddress.touched}" id="userAddress" rows="3" cols="40" style="resize:none" formControlName="shopperAddress"></textarea>
-              <span class='text-danger' *ngIf="userDetails.controls.shopperAddress.errors &&userDetails.controls.shopperAddress.touched">Please enter your Address so we can deliver</span>
+              <textarea
+                type="text"
+                [ngClass]="{
+                  'form-control': true,
+                  'is-invalid':
+                    userDetails.controls.shopperAddress.errors &&
+                    userDetails.controls.shopperAddress.touched
+                }"
+                id="userAddress"
+                rows="3"
+                cols="40"
+                style="resize:none"
+                formControlName="shopperAddress"
+              ></textarea>
+              <span
+                class="text-danger"
+                *ngIf="
+                  userDetails.controls.shopperAddress.errors &&
+                  userDetails.controls.shopperAddress.touched
+                "
+                >Please enter your Address so we can deliver</span
+              >
             </div>
-            <button class="btn btn-primary"  [disabled]="!userDetails.valid" style="margin-bottom:2rem"
-            (click)="placeOrder()" > Place
-            Order <i
-            class="fas fa-angle-double-right"></i>
-          </button>
+            <button
+              class="btn btn-primary"
+              [disabled]="!userDetails.valid"
+              style="margin-bottom:2rem"
+              (click)="placeOrder()"
+            >
+              Place Order <i class="fas fa-angle-double-right"></i>
+            </button>
           </form>
-          <h3 *ngIf="keys.length==0">The cart is empty</h3>
-
+          <h3 *ngIf="keys.length == 0">The cart is empty</h3>
         </div>
         <div style="padding-bottom:1rem" *ngIf="orderId">
-          <i class="fas fa-clipboard" style="font-size:2rem; text-align:right" (click)=" copyInputMessage(OrderId)" ></i>
-          <label for="orderId" style="font-weight:700;">Click here to copy Order ID</label>
-          <textarea class="form-control" style="font-size:2rem;text-align:center;height:3rem;resize:none" readonly id="orderId" #OrderId>{{orderId||prevOrder}}</textarea>
+          <i
+            class="fas fa-clipboard"
+            style="font-size:2rem; text-align:right"
+            (click)="copyInputMessage(OrderId)"
+          ></i>
+          <label for="orderId" style="font-weight:700;"
+            >Click here to copy Order ID</label
+          >
+          <textarea
+            class="form-control"
+            style="font-size:2rem;text-align:center;height:3rem;resize:none"
+            readonly
+            id="orderId"
+            #OrderId
+            >{{ orderId || prevOrder }}</textarea
+          >
         </div>
       </div>
-
     </div>
   </div>
 </div>

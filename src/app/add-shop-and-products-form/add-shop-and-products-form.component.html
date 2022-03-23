@@ -2,15 +2,36 @@
   <div *ngIf="formLoaded" class="container">
     <span class="text-danger" *ngIf="">Error</span>
     <form [formGroup]="ClientForm" class="m-3">
-
       <div class="row p-5 mb-4 bg-light rounded-3">
         <h3>Create your own Shop in 2min for Free!!!</h3>
         <div class="col-sm-3 p-1">
-          <input formControlName="shopName" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopName.errors &&(ClientForm.controls.shopName.touched)}" type="text" placeholder="Shop Name">
+          <input
+            formControlName="shopName"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopName.errors &&
+                ClientForm.controls.shopName.touched
+            }"
+            type="text"
+            placeholder="Shop Name"
+          />
         </div>
 
         <div class="col-sm-3 p-1">
-          <input formControlName="shopOwner" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwner.errors &&(ClientForm.controls.shopOwner.touched)}" type="text" placeholder="Shop Owner Name">
+          <input
+            formControlName="shopOwner"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopOwner.errors &&
+                ClientForm.controls.shopOwner.touched
+            }"
+            type="text"
+            placeholder="Shop Owner Name"
+          />
         </div>
 
         <div class="col-sm-3 p-1">
@@ -19,7 +40,19 @@
         <sub *ngIf="ClientForm.controls.shopOwnerMobile.errors['pattern']">Enter only numbers</sub>
         <sub *ngIf="!ClientForm.controls.shopOwnerMobile.errors['pattern']&&ClientForm.controls.shopOwnerMobile.errors['minlength']"> {{10-ClientForm.controls.shopOwnerMobile.errors['minlength']['actualLength']}} Numbers is missing</sub>       
         </span> -->
-          <input formControlName="shopOwnerMobile" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerMobile.errors &&(ClientForm.controls.shopOwnerMobile.touched)}" type="text" placeholder="Mobile No." maxLength="10">
+          <input
+            formControlName="shopOwnerMobile"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopOwnerMobile.errors &&
+                ClientForm.controls.shopOwnerMobile.touched
+            }"
+            type="text"
+            placeholder="Mobile No."
+            maxLength="10"
+          />
         </div>
 
         <div class="col-sm-3 p-1">
@@ -27,132 +60,297 @@
         <sub *ngIf="ClientForm.controls.shopOwnerEmail.errors['required']">Required</sub>
         <sub *ngIf="ClientForm.controls.shopOwnerEmail.errors['email']">Please Enter a valid Email</sub>
         </span> -->
-          <input formControlName="shopOwnerEmail" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerEmail.errors &&(ClientForm.controls.shopOwnerEmail.touched)}" type="text" placeholder="Email ID">
+          <input
+            formControlName="shopOwnerEmail"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopOwnerEmail.errors &&
+                ClientForm.controls.shopOwnerEmail.touched
+            }"
+            type="text"
+            placeholder="Email ID"
+          />
         </div>
 
         <div class="col-sm-3 p-1">
           <!-- <span class="text-danger" *ngIf="ClientForm.controls.shopOwnerInstaId.errors &&ClientForm.controls.shopOwnerInstaId.touched">
         <sub *ngIf="ClientForm.controls.shopOwnerInstaId.errors['required']">Required</sub>
         </span> -->
-          <input formControlName="shopOwnerInstaId" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerInstaId.errors &&(ClientForm.controls.shopOwnerInstaId.touched)}" type="text" placeholder="Instagram ID" >
+          <input
+            formControlName="shopOwnerInstaId"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopOwnerInstaId.errors &&
+                ClientForm.controls.shopOwnerInstaId.touched
+            }"
+            type="text"
+            placeholder="Instagram ID"
+          />
         </div>
         <div class="col-sm-3 p-1">
-          <input formControlName="shopOwnerGpay" [ngClass]="{'form-control':true,'form-control-sm':true,'is-invalid':ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)}" type="text" [placeholder]="ClientForm.controls.shopOwnerGpay.errors &&(ClientForm.controls.shopOwnerGpay.touched)?'Required UPI ID':'Any UPI Address'">
+          <input
+            formControlName="shopOwnerGpay"
+            [ngClass]="{
+              'form-control': true,
+              'form-control-sm': true,
+              'is-invalid':
+                ClientForm.controls.shopOwnerGpay.errors &&
+                ClientForm.controls.shopOwnerGpay.touched
+            }"
+            type="text"
+            [placeholder]="
+              ClientForm.controls.shopOwnerGpay.errors &&
+              ClientForm.controls.shopOwnerGpay.touched
+                ? 'Required UPI ID'
+                : 'Any UPI Address'
+            "
+          />
         </div>
 
-
-
         <div class="col-sm-3 p-1">
-          <input foromControlName="shopOwnerAddress" rows="3" cols="40" style="resize:none" class="form-control form-control-sm" placeholder="Address" >
+          <input
+            foromControlName="shopOwnerAddress"
+            rows="3"
+            cols="40"
+            style="resize:none"
+            class="form-control form-control-sm"
+            placeholder="Address"
+          />
         </div>
         <div class="col-sm-3 p-1">
-          <label for="uploadfile" class="btn btn-sm btn-outline-success">Shop LOGO</label>
-          <input #Logo
-      (change)="addLogo($event)"
-      class="form-control"
-      style="visibility:hidden"
-      name="uploadfile"
-      id="uploadfile"
-      type="file"
-      accept=".png,.jpg"
-    />
+          <label for="uploadfile" class="btn btn-sm btn-outline-success"
+            >Shop LOGO</label
+          >
+          <input
+            #Logo
+            (change)="addLogo($event)"
+            class="form-control"
+            style="visibility:hidden"
+            name="uploadfile"
+            id="uploadfile"
+            type="file"
+            accept=".png,.jpg"
+          />
           <button
-      class="btn btn-sm btn-outline-danger"
-      *ngIf="dummyLogo['src']"
-      (click)="deleteLogo('remove')"
-    >
-      Delete
-    </button>
+            class="btn btn-sm btn-outline-danger"
+            *ngIf="dummyLogo['src']"
+            (click)="deleteLogo('remove')"
+          >
+            Delete
+          </button>
           <div style="height:10rem;width:10rem">
             <img
-            *ngIf="dummyLogo['src']"
-            [src]="dummyLogo['src']"
-            alt="shop logo displayed here"
-            style="height:10rem;width:10rem" class="rounded"
-          />
+              *ngIf="dummyLogo['src']"
+              [src]="dummyLogo['src']"
+              alt="shop logo displayed here"
+              style="height:10rem;width:10rem"
+              class="rounded"
+            />
           </div>
-
-
         </div>
       </div>
-      <button (click)="see()">Clik</button>
-      <div id="product " class="row" formArrayName="ProductDetails" class="container"
-        *ngFor="let Product of ClientForm.get('ProductDetails')['controls']; let i=index;">
-        <h6>Product: {{i+1}}</h6>
+      <!-- <button (click)="see()">Clik</button> -->
+      <div
+        id="product "
+        class="row"
+        formArrayName="ProductDetails"
+        class="container"
+        *ngFor="
+          let Product of ClientForm.get('ProductDetails')['controls'];
+          let i = index
+        "
+      >
+        <h6>Product: {{ i + 1 }}</h6>
         <div [formGroupName]="i">
           <label class="switch">
-            <input type="checkbox" formControlName="productAvailability" (change)="setDisable(i)">
+            <input
+              type="checkbox"
+              formControlName="productAvailability"
+              (change)="setDisable(i)"
+            />
             <span class="slider"></span>
           </label>
           <div class="formGroup col-sm-6">
-            <input formControlName="productName" [ngClass]="{'form-control':true,'form-control-sm':true, 'is-invalid':Product.controls.productName.errors && Product.controls.productName.touched}" type="text" placeholder="Product Name">
+            <input
+              formControlName="productName"
+              [ngClass]="{
+                'form-control': true,
+                'form-control-sm': true,
+                'is-invalid':
+                  Product.controls.productName.errors &&
+                  Product.controls.productName.touched
+              }"
+              type="text"
+              placeholder="Product Name"
+            />
           </div>
 
           <div class="formGroup col-sm-5">
-            <label for="ProdImg" class="btn btn-sm btn-outline-success m-1">Product Image</label>
+            <label for="ProdImg" class="btn btn-sm btn-outline-success m-1"
+              >Product Image</label
+            >
             <input
-        type="file"
-        class=""
-        id="ProdImg"
-        (change)="addProductImage($event,i)"
-        accept=".png,.jpg"
-        style="visibility:hidden;display:none"
-        formControlName="productSrc"
-      />
+              type="file"
+              class=""
+              id="ProdImg"
+              (change)="addProductImage($event, i)"
+              accept=".png,.jpg"
+              style="visibility:hidden;display:none"
+              formControlName="productSrc"
+            />
 
             <img
-        *ngIf="ClientForm.get('ProductDetails')
-    ['controls'][i].get('productSrc').value"
-        [src]="ClientForm.get('ProductDetails')
-    ['controls'][i].get('productSrc').value"
-        alt="Product image displayed here"
-        style="height:10rem;width:10rem"
-      />
-            <button class="btn btn-outline-danger"  *ngIf="ClientForm.get('ProductDetails')
-    ['controls'][i].get('productSrc').value" (click)="deleteProductImage(i)">Delete image</button>
-            <button *ngIf="this.ClientForm.get('ProductDetails')['controls'].length>1" style="margin-top:0.5rem" class='btn btn-danger btn-sm m-1' (click)="RemoveProduct(i)" [disabled]="!ClientForm.get('ProductDetails')['controls'][i]['controls'][
-              'productAvailability'
-            ].value">
-           Remove Product
-          </button>
+              *ngIf="
+                ClientForm.get('ProductDetails')['controls'][i].get(
+                  'productSrc'
+                ).value
+              "
+              [src]="
+                ClientForm.get('ProductDetails')['controls'][i].get(
+                  'productSrc'
+                ).value
+              "
+              alt="Product image displayed here"
+              style="height:10rem;width:10rem"
+            />
+            <button
+              class="btn btn-outline-danger"
+              *ngIf="
+                ClientForm.get('ProductDetails')['controls'][i].get(
+                  'productSrc'
+                ).value
+              "
+              (click)="deleteProductImage(i)"
+            >
+              Delete image
+            </button>
+            <button
+              *ngIf="
+                this.ClientForm.get('ProductDetails')['controls'].length > 1
+              "
+              style="margin-top:0.5rem"
+              class="btn btn-danger btn-sm m-1"
+              (click)="RemoveProduct(i)"
+              [disabled]="
+                !ClientForm.get('ProductDetails')['controls'][i]['controls'][
+                  'productAvailability'
+                ].value
+              "
+            >
+              Remove Product
+            </button>
           </div>
           <div class="formGroup col-sm-6 mt-1">
-            <input formControlName="productColor" class="form-control form-control-sm" type="text" placeholder="Product Color">
+            <input
+              formControlName="productColor"
+              class="form-control form-control-sm"
+              type="text"
+              placeholder="Product Color"
+            />
           </div>
 
-          <div formArrayName="ProductVariance"
-            *ngFor="let Variance of Product.get('ProductVariance')['controls']; let j=index;">
+          <div
+            formArrayName="ProductVariance"
+            *ngFor="
+              let Variance of Product.get('ProductVariance')['controls'];
+              let j = index
+            "
+          >
             <div [formGroupName]="j">
-              <button class="btn btn-sm btn-danger" *ngIf="Product.get('ProductVariance')['controls'].length>1" style="margin-top:0.5rem" (click)="RemoveVariance(i,j)" [disabled]="!ClientForm.get('ProductDetails')['controls'][i]['controls'][
-                'productAvailability'
-              ].value">Remove
-                Variance</button>
+              <button
+                class="btn btn-sm btn-danger"
+                *ngIf="Product.get('ProductVariance')['controls'].length > 1"
+                style="margin-top:0.5rem"
+                (click)="RemoveVariance(i, j)"
+                [disabled]="
+                  !ClientForm.get('ProductDetails')['controls'][i]['controls'][
+                    'productAvailability'
+                  ].value
+                "
+              >
+                Remove Variance
+              </button>
               <div class="formGroup col-sm-6 pt-1">
-                <input formControlName="productPrice" [ngClass]="{'form-control':true,'form-control-sm':true, 'is-invalid':Variance.controls.productPrice.errors && Variance.controls.productPrice.touched}" type="number" placeholder="Price">
+                <input
+                  formControlName="productPrice"
+                  [ngClass]="{
+                    'form-control': true,
+                    'form-control-sm': true,
+                    'is-invalid':
+                      Variance.controls.productPrice.errors &&
+                      Variance.controls.productPrice.touched
+                  }"
+                  type="number"
+                  placeholder="Price"
+                />
               </div>
               <div class="formGroup col-sm-6 pt-1">
-                <input formControlName="quantity" [ngClass]="{'form-control':true,'form-control-sm':true, 'is-invalid':Variance.controls.quantity.errors && Variance.controls.quantity.touched}" type="number" placeholder="Quantity">
+                <input
+                  formControlName="quantity"
+                  [ngClass]="{
+                    'form-control': true,
+                    'form-control-sm': true,
+                    'is-invalid':
+                      Variance.controls.quantity.errors &&
+                      Variance.controls.quantity.touched
+                  }"
+                  type="number"
+                  placeholder="Quantity"
+                />
               </div>
               <div class="formGroup col-sm-6 pt-1">
-                <input formControlName="productSize" [ngClass]="{'form-control':true,'form-control-sm':true, 'is-invalid':Variance.controls.productSize.errors && Variance.controls.productSize.touched}" type="text" placeholder="Size">
+                <input
+                  formControlName="productSize"
+                  [ngClass]="{
+                    'form-control': true,
+                    'form-control-sm': true,
+                    'is-invalid':
+                      Variance.controls.productSize.errors &&
+                      Variance.controls.productSize.touched
+                  }"
+                  type="text"
+                  placeholder="Size"
+                />
               </div>
             </div>
           </div>
-          <button class="btn btn-outline-primary btn-sm m-3" style="margin-top:0.5rem" (click)="addProductVariance(i)" [disabled]="!ClientForm.get('ProductDetails')['controls'][i]['controls'][
-          'productAvailability'
-        ].value">Add
-            Variance +</button>
-
-
+          <button
+            class="btn btn-outline-primary btn-sm m-3"
+            style="margin-top:0.5rem"
+            (click)="addProductVariance(i)"
+            [disabled]="
+              !ClientForm.get('ProductDetails')['controls'][i]['controls'][
+                'productAvailability'
+              ].value
+            "
+          >
+            Add Variance +
+          </button>
         </div>
       </div>
 
-      <div class="btn btn-success btn-sm m-3" (click)="addProduct()">Add an Item +</div>
+      <div class="btn btn-success btn-sm m-3" (click)="addProduct()">
+        Add an Item +
+      </div>
     </form>
-    <button class="btn btn-success btn-sm m-1" *ngIf="!shopOwnerInstaId" [disabled]="!ClientForm.valid" (click)="CreateShop()">Submit</button>
-    <div class="btn btn-primary btn-sm p-1" *ngIf="shopOwnerInstaId" (click)="updateShop()">Submit</div>
+    <button
+      class="btn btn-success btn-sm m-1"
+      *ngIf="!shopOwnerInstaId"
+      [disabled]="!ClientForm.valid"
+      (click)="CreateShop()"
+    >
+      Submit
+    </button>
+    <div
+      class="btn btn-primary btn-sm p-1"
+      *ngIf="shopOwnerInstaId"
+      (click)="updateShop()"
+    >
+      Submit
+    </div>
   </div>
-
-
-
 </div>
