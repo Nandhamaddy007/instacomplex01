@@ -8,7 +8,10 @@ import { AdminGuardGuard } from './admin-guard.guard';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   { path: 'AddShop', component: AddShopAndProductsFormComponent },
   { path: 'complex/:shopOwnerInstaId', component: ShopViewComponent },
   { path: 'complex', component: ShopViewComponent },

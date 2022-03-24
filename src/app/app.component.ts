@@ -1,5 +1,5 @@
 import { Component, VERSION } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 // import firebase from 'firebase/compat/app';
 import { BackendTalkerService } from './backend-talker.service';
@@ -20,13 +20,24 @@ export class AppComponent {
   Shopname;
   ProfilePic;
   userData;
+  showlogin: boolean;
   constructor(
     private route: ActivatedRoute,
     private service: BackendTalkerService,
-    private router: Router
-  ) //public socialAuthService: SocialAuthService // public auth:AngularFireAuth
-  {}
-  ngOnInit() {}
+    private router: Router //public socialAuthService: SocialAuthService // public auth:AngularFireAuth
+  ) {}
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        console.log(event);
+        if (event['url'] == '/login') {
+          this.showlogin = false;
+        } else {
+          this.showlogin = true;
+        }
+      }
+    });
+  }
   logout() {}
   GoogleSignIn() {
     // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {

@@ -22,6 +22,7 @@ export class AuthService {
         console.log(this.service.decryptData(data['tkn']));
         localStorage.setItem('token', data['tkn']);
         localStorage.setItem('expiresIn', data['expiresIn']);
+        alert("Logged in successfully...")
       },
       error: (err) => {
         console.log(err);

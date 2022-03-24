@@ -2,7 +2,7 @@
   <div class="card center" style="width: 30%;">
     <div class="card-body">
       <h5 class="card-title">Instacomplex</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Login With OTP+4 digit PIN</h6>
+      <h6 class="card-subtitle mb-2 text-muted">Login With 6 digit OTP</h6>
       <div class="input-group mb3">
         <input
           class="form-control"
@@ -17,7 +17,7 @@
           (click)="SendOTP()"
           [disabled]="Email.errors"
         >
-          Send OTP
+          Get OTP
         </button>
       </div>
       <input
@@ -25,7 +25,7 @@
         type="text"
         style="margin-top:10px"
         [formControl]="OTP"
-        placeholder="Enter OTP+4 digit PIN"
+        placeholder="Enter 6 digit OTP"
       />
       <button
         class="btn btn-primary"
@@ -34,14 +34,14 @@
       >
         Submit
       </button>
-      <button
+      <!-- <button
         class="btn btn-danger"
         style="margin-top:10px"
         (click)="forceLogout()"
       >
         Force logout
       </button>
-      <button (click)="check()">Check</button>
+      <button (click)="check()">Check</button> -->
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -8,20 +9,25 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private AuthService: AuthService) {}
-  Email = new FormControl('nandhamaddy007@gmail.com', [
-    Validators.required,
-    Validators.email,
-  ]);
-  OTP = new FormControl('GSno9841', [Validators.required]);
-  ngOnInit() {}
+  constructor(private AuthService: AuthService, private router: Router) {}
+  Email = new FormControl('', [Validators.required, Validators.email]);
+  OTP = new FormControl('', [Validators.required]);
+  ngOnInit() {
+    var check = localStorage.getItem('token');
+    if (check) {
+      alert('Already logged in...');
+      this.router.navigate(['complex']);
+    }
+  }
   SendOTP() {
     this.AuthService.GenerateOTP(this.Email.value).subscribe(
       (data) => {
         console.log(data);
+        alert(data.Msg);
       },
       (err) => {
         console.log('error: ', err);
+        alert(err.error.Msg);
       }
     );
   }

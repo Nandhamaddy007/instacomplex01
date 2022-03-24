@@ -19,7 +19,7 @@
    
   </div> -->
   <!-- <button class="btn btn-danger" (click)="logout()">Logout</button> -->
-  <button
+  <!-- <button
     class="navbar-toggler"
     type="button"
     data-toggle="collapse"
@@ -29,8 +29,15 @@
     aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <button
+    *ngIf="showlogin"
+    class="btn btn-success"
+    routerLink="/login"
+    routerLinkActive="active"
+  >
+    Login
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
