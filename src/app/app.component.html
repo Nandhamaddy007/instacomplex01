@@ -38,6 +38,14 @@
   >
     Login
   </button>
+  <button
+    *ngIf="showlogout"
+    class="btn btn-danger"
+    routerLinkActive="active"
+    (click)="logout()"
+  >
+    Logout
+  </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">

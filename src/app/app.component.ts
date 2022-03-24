@@ -10,6 +10,7 @@ import { BackendTalkerService } from './backend-talker.service';
 // } from 'angularx-social-login';
 import { authState } from 'rxfire/auth';
 import { map, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'my-app',
@@ -21,9 +22,11 @@ export class AppComponent {
   ProfilePic;
   userData;
   showlogin: boolean;
+  showlogout: boolean;
   constructor(
     private route: ActivatedRoute,
     private service: BackendTalkerService,
+    private auth: AuthService,
     private router: Router //public socialAuthService: SocialAuthService // public auth:AngularFireAuth
   ) {}
   ngOnInit() {
@@ -33,12 +36,26 @@ export class AppComponent {
         if (event['url'] == '/login') {
           this.showlogin = false;
         } else {
-          this.showlogin = true;
+          if (localStorage.getItem('token')) {
+            this.showlogin = false;
+            this.showlogout = true;
+          } else {
+            this.showlogin = true;
+            this.showlogout = false;
+          }
         }
       }
     });
   }
-  logout() {}
+  logout() {
+    this.auth.Logout(this.auth.getMail()).subscribe((data) => {
+      alert(data['Msg']);
+      this.showlogin = true;
+      this.showlogout = false;
+      this.auth.removeLoginDetails();
+      this.router.navigate(['complex']);
+    });
+  }
   GoogleSignIn() {
     // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
     //   this.socialAuthService.authState.subscribe((user) => {
