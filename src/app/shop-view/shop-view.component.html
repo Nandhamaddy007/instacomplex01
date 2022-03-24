@@ -4,8 +4,7 @@
       <img [src]="logo" width="70" height="70" />
     </div>
     <div class="col-sm-7 text-white">
-      <h3 class="text-white">{{ shopOwnerInstaId }}</h3>
-      <h5>@instagramid</h5>
+      <h3 class="text-white">@{{ shopOwnerInstaId }}</h3>
     </div>
     <div class="col-sm-3 text-white float-right">
       <button class="btn float-right btn-sm btn-primary m-3">Pay</button>
@@ -21,6 +20,7 @@
   [cartValue]="Cart"
   (cartToView)="fromCart($event)"
 ></app-cart>
+
 <div class="">
   <div *ngIf="Products" class="row m-3">
     <div *ngFor="let product of Products; let i = index" class="col-sm-3">
@@ -112,7 +112,8 @@
       <p class="lead">
         <a
           class="btn btn-primary btn-sm text-white"
-          href="/AddShop"
+          routerLink="/AddShop"
+          routerLinkActive="active"
           role="button"
         >
           Add Shop</a

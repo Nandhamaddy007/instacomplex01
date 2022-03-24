@@ -15,11 +15,13 @@ export class CartComponent implements OnInit {
   @Output() cartToView = new EventEmitter<string>();
   @Input() cartValue: any;
   userDetails: FormGroup;
+  message;
   constructor(
     private formBuilder: FormBuilder,
     private service: BackendTalkerService
   ) {}
   ngOnInit(): void {
+    this.message = '';
     this.userDetails = this.formBuilder.group({
       shopperName: ['', Validators.required],
       shopperMobile: [
@@ -77,7 +79,8 @@ export class CartComponent implements OnInit {
         this.service.placeOrder(data).subscribe(
           (data) => {
             console.log(data);
-            alert(data['msg']);
+            //alert(data['msg']);
+            this.message = data['msg'];
             this.userDetails.reset();
             this.keys = [];
             this.cartToView.emit(this.orderId);

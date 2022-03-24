@@ -1,5 +1,7 @@
 <nav class="navbar navbar-dark bg-primary">
-  <a class="navbar-brand" href="/complex">InstaComplex.in </a>
+  <a class="navbar-brand" routerLink="/complex" routerLinkActive="active"
+    >InstaComplex.in
+  </a>
   <h3>{{ Shopname }}</h3>
   <!-- <button
     class="btn btn-success"
@@ -32,7 +34,7 @@
   </button> -->
   <button
     *ngIf="showlogin"
-    class="btn btn-success"
+    class="btn btn-success ms-3"
     routerLink="/login"
     routerLinkActive="active"
   >
