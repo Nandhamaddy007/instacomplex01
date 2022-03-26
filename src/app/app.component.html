@@ -48,13 +48,21 @@
     Login
   </button>
   <button
-  *ngIf="showlogout"
-  class="btn btn-outline-light"
-  routerLinkActive="active"
-  (click)="logout()"
->
-  Admin dashboard
-</button>
+    *ngIf="showlogout"
+    class="btn btn-outline-light"
+    routerLinkActive="active"
+    (click)="todashboard()"
+  >
+    Admin dashboard
+  </button>
+  <button
+    *ngIf="showlogout"
+    class="btn btn-outline-light"
+    routerLinkActive="active"
+    (click)="todashboard()"
+  >
+    Update Shop
+  </button>
   <button
     *ngIf="showlogout"
     class="btn btn-danger"
