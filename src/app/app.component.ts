@@ -47,6 +47,9 @@ export class AppComponent {
       }
     });
   }
+  todashboard(){
+    this.router.navigate([''])
+  }
   logout() {
     this.auth.Logout(this.auth.getMail()).subscribe((data) => {
       alert(data['Msg']);

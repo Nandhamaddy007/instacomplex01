@@ -19,10 +19,11 @@ export class AuthService {
     this.http.post(this.endpoint + 'Auth/SubmitOtp', b).subscribe({
       next: (data) => {
         console.log(data);
-        console.log(this.service.decryptData(data['tkn']));
+        console.log(this.service.decryptData(data['i']));
         localStorage.setItem('token', data['tkn']);
         localStorage.setItem('expiresIn', data['expiresIn']);
         localStorage.setItem('m', this.service.encryptData(data['m']));
+        localStorage.setItem('i', this.service.encryptData(data['i']));
         alert('Logged in successfully...');
         window.location.assign('/complex');
       },

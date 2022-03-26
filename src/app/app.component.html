@@ -33,8 +33,7 @@
     <span class="navbar-toggler-icon"></span>
   </button> -->
   <button
-    *ngIf="showlogin"
-    class="btn btn-success ms-3"
+    class="btn btn-secondary ms-3"
     routerLink="/checkStatus"
     routerLinkActive="active"
   >
@@ -48,6 +47,14 @@
   >
     Login
   </button>
+  <button
+  *ngIf="showlogout"
+  class="btn btn-outline-light"
+  routerLinkActive="active"
+  (click)="logout()"
+>
+  Admin dashboard
+</button>
   <button
     *ngIf="showlogout"
     class="btn btn-danger"
