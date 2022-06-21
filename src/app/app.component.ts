@@ -47,8 +47,15 @@ export class AppComponent {
       }
     });
   }
-  todashboard(){
-    this.router.navigate([''])
+  todashboard(value) {
+    let id = this.service.decryptData(localStorage.getItem('i'));
+    console.log(id);
+    this.router.navigate([value+id]);
+    if (value == 'UpdateShop') {
+      this.router.navigate(['']);
+    } else if (value == 'admin') {
+      this.router.navigate(['']);
+    }
   }
   logout() {
     this.auth.Logout(this.auth.getMail()).subscribe((data) => {

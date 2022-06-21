@@ -211,7 +211,8 @@ export class AddShopAndProductsFormComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   dummyLogo = {};
-  addProductImage(event, i) {
+  addProductImage(i, event) {
+    console.log('if part outside', i, event.target.name);
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (event) => {
@@ -228,7 +229,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
               this.ClientForm.value.ProductDetails[i].productId
             ] = this.ClientForm.value.ProductDetails[i].productSrc;
           }
-          // console.log('if part outside');
+
           // console.log(this.deletedProducts[i]);
           this.ClientForm.get('ProductDetails')
             ['controls'][i].get('productSrc')
@@ -312,6 +313,7 @@ export class AddShopAndProductsFormComponent implements OnInit {
     //console.log(this.ClientForm.get('ProductDetails')['controls'])
   }
   RemoveVariance(i, j) {
+    // console.log('variance', i, j);
     this.ProductVariance = this.ClientForm.get('ProductDetails')
       ['controls'][i].get('ProductVariance')
       ['controls'].splice(j, 1);

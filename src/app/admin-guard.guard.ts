@@ -27,6 +27,10 @@ export class AdminGuardGuard implements CanActivate {
         return true;
       } else {
         alert('Token expired... \n Please login again');
+        localStorage.removeItem('token');
+        localStorage.removeItem('expiresIn');
+        localStorage.removeItem('m');
+        localStorage.removeItem('i');
         this.router.navigate(['login']);
       }
     }

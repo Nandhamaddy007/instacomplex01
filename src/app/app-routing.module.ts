@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'UpdateShop/:shopOwnerInstaId',
     component: AddShopAndProductsFormComponent,
-    // canActivate: [AdminGuardGuard],
+    canActivate: [AdminGuardGuard],
   },
   { path: '**', redirectTo: 'complex' },
 ];

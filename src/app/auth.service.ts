@@ -19,7 +19,7 @@ export class AuthService {
     this.http.post(this.endpoint + 'Auth/SubmitOtp', b).subscribe({
       next: (data) => {
         console.log(data);
-        console.log(this.service.decryptData(data['i']));
+        // console.log(this.service.decryptData(data['i']));
         localStorage.setItem('token', data['tkn']);
         localStorage.setItem('expiresIn', data['expiresIn']);
         localStorage.setItem('m', this.service.encryptData(data['m']));

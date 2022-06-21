@@ -53,6 +53,7 @@ export class AdminDashboardComponent implements OnInit {
     this.service.updateOrderById(temp).subscribe(
       (data) => {
         console.log(data);
+        alert(data.msg);
       },
       (err) => console.log(err)
     );

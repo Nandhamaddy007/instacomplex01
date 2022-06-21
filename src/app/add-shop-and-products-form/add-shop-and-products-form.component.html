@@ -197,9 +197,10 @@
               type="file"
               class=""
               id="ProdImg"
-              (change)="addProductImage($event, i)"
+              name="{{ i }}"
+              (change)="addProductImage(i, $event)"
               accept=".png,.jpg"
-              style="visibility:hidden;display:none"
+              style="display:none"
               formControlName="productSrc"
             />
 
